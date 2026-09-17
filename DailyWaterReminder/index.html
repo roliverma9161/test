@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Daily Water Reminder</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .water-icon {
+      font-size: 70px;
+    }
+
+    .progress {
+      height: 25px;
+      border-radius: 20px;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+    }
+
+    .glass-btn {
+      font-size: 35px;
+      border-radius: 15px;
+      height: 75px;
+    }
+
+    .counter {
+      font-size: 42px;
+      font-weight: bold;
+      color: #0072ff;
+    }
+
+    .btn {
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card p-4 text-center mx-auto">
+
+      <div class="water-icon">💧</div>
+
+      <h2 class="fw-bold">Daily Water Reminder</h2>
+      <p class="text-muted">Stay hydrated, stay healthy!</p>
+
+      <div class="mb-3">
+        <label for="goal" class="form-label fw-bold">
+          Daily Goal: <span id="goalText">8</span> glasses
+        </label>
+
+        <input
+          type="range"
+          id="goal"
+          class="form-range"
+          min="4"
+          max="20"
+          value="8"
+          oninput="changeGoal()"
+        >
+      </div>
+
+      <div class="counter">
+        <span id="count">0</span>
+        <span class="text-muted">/ <span id="total">8</span></span>
+      </div>
+
+      <p id="status" class="text-muted">
+        Start drinking water today!
+      </p>
+
+      <div class="progress mb-4">
+        <div
+          id="progressBar"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 0%"
+        >
+          0%
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6">
+          <button
+            class="btn btn-primary w-100 glass-btn"
+            onclick="addWater()"
+          >
+            + 💧
+          </button>
+          <small class="text-muted">Add Glass</small>
+        </div>
+
+        <div class="col-6">
+          <button
+            class="btn btn-outline-danger w-100 glass-btn"
+            onclick="removeWater()"
+          >
+            −
+          </button>
+          <small class="text-muted">Remove Glass</small>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-danger w-100 mt-4"
+        onclick="resetWater()"
+      >
+        Reset Today
+      </button>
+
+      <p class="small text-muted mt-3 mb-0">
+        1 glass = approximately 250 ml
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    let count = Number(localStorage.getItem("waterCount")) || 0;
+    let goal = Number(localStorage.getItem("waterGoal")) || 8;
+
+    const countElement = document.getElementById("count");
+    const totalElement = document.getElementById("total");
+    const goalElement = document.getElementById("goal");
+    const goalText = document.getElementById("goalText");
+    const progressBar = document.getElementById("progressBar");
+    const status = document.getElementById("status");
+
+    goalElement.value = goal;
+
+    function updateUI() {
+      countElement.textContent = count;
+      totalElement.textContent = goal;
+      goalText.textContent = goal;
+
+      const percentage = Math.min((count / goal) * 100, 100);
+
+      progressBar.style.width = percentage + "%";
+      progressBar.textContent = Math.round(percentage) + "%";
+
+      if (count === 0) {
+        status.textContent = "Start drinking water today!";
+      } else if (count < goal) {
+        status.textContent =
+          `Only ${goal - count} glass(es) remaining. Keep going! 💪`;
+      } else {
+        status.textContent = "Congratulations! Daily goal completed 🎉";
+      }
+
+      localStorage.setItem("waterCount", count);
+      localStorage.setItem("waterGoal", goal);
+    }
+
+    function addWater() {
+      if (count < goal) {
+        count++;
+        updateUI();
+      } else {
+        status.textContent = "Your daily goal is already completed 🎉";
+      }
+    }
+
+    function removeWater() {
+      if (count > 0) {
+        count--;
+        updateUI();
+      }
+    }
+
+    function changeGoal() {
+      goal = Number(goalElement.value);
+
+      if (count > goal) {
+        count = goal;
+      }
+
+      updateUI();
+    }
+
+    function resetWater() {
+      count = 0;
+      updateUI();
+    }
+
+    updateUI();
+  </script>
+
+</body>
+</html>
