@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Random Story Generator</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 550px;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .story-box {
+      min-height: 180px;
+      background: #fff7f0;
+      border-left: 5px solid #ff6b6b;
+      border-radius: 12px;
+      padding: 20px;
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .btn {
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card p-4 mx-auto">
+
+      <h2 class="text-center fw-bold">📖 Random Story Generator</h2>
+
+      <p class="text-center text-muted">
+        Create your own funny and magical story
+      </p>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Your Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          placeholder="Enter your name"
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Choose Place</label>
+        <select id="place" class="form-select">
+          <option value="a magical forest">Magical Forest</option>
+          <option value="a mysterious castle">Mysterious Castle</option>
+          <option value="a futuristic city">Futuristic City</option>
+          <option value="a small village">Small Village</option>
+          <option value="the Moon">Moon</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Choose Mood</label>
+        <select id="mood" class="form-select">
+          <option value="funny">Funny</option>
+          <option value="magical">Magical</option>
+          <option value="adventure">Adventure</option>
+          <option value="mysterious">Mysterious</option>
+          <option value="romantic">Romantic</option>
+        </select>
+      </div>
+
+      <button
+        class="btn btn-primary w-100 mb-3"
+        onclick="generateStory()"
+      >
+        Generate Story ✨
+      </button>
+
+      <div id="story" class="story-box">
+        Your story will appear here...
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <button
+          class="btn btn-success w-50"
+          onclick="copyStory()"
+        >
+          Copy Story
+        </button>
+
+        <button
+          class="btn btn-danger w-50"
+          onclick="clearStory()"
+        >
+          Clear
+        </button>
+      </div>
+
+      <p id="message" class="text-center text-muted mt-3 mb-0"></p>
+
+    </div>
+  </div>
+
+  <script>
+    const stories = {
+      funny: [
+        "{name} went to {place} and found a talking potato. The potato offered career advice, but only knew how to cook fries. In the end, {name} became the world's first potato manager.",
+        "One day, {name} reached {place} and saw a chicken wearing sunglasses. The chicken challenged {name} to a dance battle. Surprisingly, the chicken won and became famous on the internet.",
+        "{name} visited {place} to find treasure, but discovered a giant pizza instead. After eating it, {name} realized the real treasure was unlimited cheese."
+      ],
+
+      magical: [
+        "In {place}, {name} discovered a glowing key hidden under a tree. The key opened a door to a magical world where every dream could become real.",
+        "{name} met a tiny dragon in {place}. The dragon gave {name} a magical stone that could turn ordinary days into wonderful adventures.",
+        "A mysterious fairy appeared before {name} in {place}. She granted one wish, and {name} wished for happiness for everyone."
+      ],
+
+      adventure: [
+        "{name} started an exciting journey through {place}. Along the way, {name} crossed dangerous rivers, solved ancient puzzles, and found a hidden treasure.",
+        "A secret map led {name} to {place}. After many challenges, {name} discovered a lost kingdom and became its brave protector.",
+        "While exploring {place}, {name} found a broken spaceship. After fixing it, {name} travelled to a new planet full of amazing creatures."
+      ],
+
+      mysterious: [
+        "At midnight, {name} heard strange footsteps in {place}. A hidden door appeared, leading to a room filled with secrets from the past.",
+        "{name} found an old diary in {place}. Every page predicted the next day's events, including a surprising meeting with a mysterious stranger.",
+        "A shadow followed {name} through {place}. When {name} finally turned around, the shadow revealed a secret that changed everything."
+      ],
+
+      romantic: [
+        "While walking through {place}, {name} met someone special. They talked for hours and discovered that sometimes the best stories begin with a simple hello.",
+        "Under the beautiful sky of {place}, {name} received a handwritten letter full of love and dreams. It became the most memorable day of {name}'s life.",
+        "{name} visited {place} and found a small gift waiting on a bench. The message said, 'You make every ordinary moment magical.'"
+      ]
+    };
+
+    function generateStory() {
+      const nameInput = document.getElementById("name").value.trim();
+      const place = document.getElementById("place").value;
+      const mood = document.getElementById("mood").value;
+      const storyBox = document.getElementById("story");
+      const message = document.getElementById("message");
+
+      const name = nameInput || "Alex";
+
+      const moodStories = stories[mood];
+      const randomIndex = Math.floor(Math.random() * moodStories.length);
+
+      let selectedStory = moodStories[randomIndex];
+
+      selectedStory = selectedStory
+        .replaceAll("{name}", name)
+        .replaceAll("{place}", place);
+
+      storyBox.textContent = selectedStory;
+      message.textContent = "A new story has been created!";
+    }
+
+    function copyStory() {
+      const story = document.getElementById("story").textContent;
+      const message = document.getElementById("message");
+
+      if (
+        story === "Your story will appear here..." ||
+        story.trim() === ""
+      ) {
+        message.textContent = "First generate a story!";
+        return;
+      }
+
+      navigator.clipboard.writeText(story);
+      message.textContent = "Story copied successfully!";
+    }
+
+    function clearStory() {
+      document.getElementById("name").value = "";
+
+      document.getElementById("story").textContent =
+        "Your story will appear here...";
+
+      document.getElementById("message").textContent = "";
+    }
+  </script>
+
+</body>
+</html>
