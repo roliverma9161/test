@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypeRush - Typing Speed Test</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, #243b72, transparent 35%),
+        radial-gradient(circle at bottom right, #5d245f, transparent 35%),
+        #0b1020;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1050px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .brand p {
+      color: #aab4d0;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .best-score {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 12px 18px;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    .best-score span {
+      display: block;
+      color: #aab4d0;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .best-score strong {
+      font-size: 23px;
+      color: #67e8f9;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .stat-card span {
+      color: #aab4d0;
+      font-size: 13px;
+    }
+
+    .stat-card h2 {
+      font-size: 32px;
+      margin-top: 8px;
+    }
+
+    .timer h2 {
+      color: #facc15;
+    }
+
+    .accuracy h2 {
+      color: #86efac;
+    }
+
+    .errors h2 {
+      color: #fda4af;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      transition: width 0.2s ease;
+    }
+
+    .typing-panel {
+      background: rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 22px;
+      padding: 25px;
+    }
+
+    .panel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .panel-top h3 {
+      font-size: 18px;
+    }
+
+    .status {
+      color: #67e8f9;
+      font-size: 13px;
+      background: rgba(6, 182, 212, 0.12);
+      padding: 8px 12px;
+      border-radius: 20px;
+    }
+
+    .text-display {
+      min-height: 150px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px;
+      font-size: 21px;
+      line-height: 1.9;
+      color: #8f9bb8;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    .text-display span.correct {
+      color: #86efac;
+    }
+
+    .text-display span.incorrect {
+      color: #fb7185;
+      background: rgba(251, 113, 133, 0.15);
+      border-radius: 3px;
+    }
+
+    .text-display span.current {
+      border-bottom: 3px solid #67e8f9;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    #typingInput {
+      width: 100%;
+      min-height: 125px;
+      resize: vertical;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      outline: none;
+      padding: 18px;
+      font-family: inherit;
+      font-size: 17px;
+      color: white;
+      background: rgba(255, 255, 255, 0.08);
+      transition: 0.3s;
+    }
+
+    #typingInput:focus {
+      border-color: #06b6d4;
+      box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.12);
+    }
+
+    #typingInput:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hint {
+      color: #aab4d0;
+      font-size: 13px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 13px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      color: white;
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(6, 182, 212, 0.25);
+    }
+
+    .new-text-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .new-text-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .result {
+      display: none;
+      text-align: center;
+      margin-top: 25px;
+      padding: 30px;
+      border-radius: 20px;
+      background: linear-gradient(
+        135deg,
+        rgba(124, 58, 237, 0.22),
+        rgba(6, 182, 212, 0.18)
+      );
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .result p {
+      color: #b9c3dd;
+      margin-bottom: 25px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .result-item {
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+    }
+
+    .result-item span {
+      display: block;
+      color: #aab4d0;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .result-item strong {
+      font-size: 28px;
+      color: #67e8f9;
+    }
+
+    .footer {
+      text-align: center;
+      color: #7f8aa8;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 12px;
+      }
+
+      .app {
+        padding: 20px;
+        border-radius: 22px;
+      }
+
+      .header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-card h2 {
+        font-size: 27px;
+      }
+
+      .text-display {
+        font-size: 17px;
+        line-height: 1.8;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .buttons {
+        width: 100%;
+      }
+
+      button {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="header">
+      <div class="brand">
+        <div class="logo">⌨</div>
+        <div>
+          <h1>TypeRush</h1>
+          <p>Improve your typing speed every day</p>
+        </div>
+      </div>
+
+      <div class="best-score">
+        <span>Best WPM</span>
+        <strong id="bestScore">0</strong>
+      </div>
+    </header>
+
+    <section class="stats">
+      <div class="stat-card timer">
+        <span>Time Left</span>
+        <h2 id="time">60</h2>
+      </div>
+
+      <div class="stat-card">
+        <span>WPM</span>
+        <h2 id="wpm">0</h2>
+      </div>
+
+      <div class="stat-card accuracy">
+        <span>Accuracy</span>
+        <h2 id="accuracy">100%</h2>
+      </div>
+
+      <div class="stat-card errors">
+        <span>Errors</span>
+        <h2 id="errors">0</h2>
+      </div>
+    </section>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <section class="typing-panel">
+      <div class="panel-top">
+        <h3>Type the following text</h3>
+        <div class="status" id="status">Ready to start</div>
+      </div>
+
+      <div class="text-display" id="textDisplay"></div>
+
+      <textarea
+        id="typingInput"
+        placeholder="Start typing here..."
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+      ></textarea>
+
+      <div class="actions">
+        <p class="hint">Tip: Focus on accuracy first, speed will improve automatically.</p>
+
+        <div class="buttons">
+          <button class="new-text-btn" id="newTextBtn">
+            New Text
+          </button>
+
+          <button class="restart-btn" id="restartBtn">
+            Restart Test
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="result" id="result">
+      <h2>🎉 Test Completed!</h2>
+      <p>Your typing performance summary</p>
+
+      <div class="result-grid">
+        <div class="result-item">
+          <span>Final WPM</span>
+          <strong id="finalWpm">0</strong>
+        </div>
+
+        <div class="result-item">
+          <span>Accuracy</span>
+          <strong id="finalAccuracy">0%</strong>
+        </div>
+
+        <div class="result-item">
+          <span>Correct Characters</span>
+          <strong id="finalCorrect">0</strong>
+        </div>
+      </div>
+
+      <button class="restart-btn" id="resultRestartBtn">
+        Try Again
+      </button>
+    </section>
+
+    <footer class="footer">
+      Made with HTML, CSS & JavaScript • TypeRush
+    </footer>
+
+  </main>
+
+  <script>
+    const paragraphs = [
+      "Success is the result of consistent practice, patience, and a positive mindset.",
+      "Learning JavaScript becomes easier when you build small projects every day.",
+      "Great developers solve problems by breaking complex tasks into smaller steps.",
+      "Your typing speed will improve when you focus on accuracy and regular practice.",
+      "Technology is changing quickly, so keep learning new skills and exploring ideas.",
+      "A good user interface should be simple, beautiful, responsive, and easy to use."
+    ];
+
+    const textDisplay = document.getElementById("textDisplay");
+    const typingInput = document.getElementById("typingInput");
+    const timeElement = document.getElementById("time");
+    const wpmElement = document.getElementById("wpm");
+    const accuracyElement = document.getElementById("accuracy");
+    const errorsElement = document.getElementById("errors");
+    const progressBar = document.getElementById("progressBar");
+    const statusElement = document.getElementById("status");
+    const bestScoreElement = document.getElementById("bestScore");
+
+    const result = document.getElementById("result");
+    const finalWpm = document.getElementById("finalWpm");
+    const finalAccuracy = document.getElementById("finalAccuracy");
+    const finalCorrect = document.getElementById("finalCorrect");
+
+    const restartBtn = document.getElementById("restartBtn");
+    const resultRestartBtn = document.getElementById("resultRestartBtn");
+    const newTextBtn = document.getElementById("newTextBtn");
+
+    let currentText = "";
+    let timer = 60;
+    let interval = null;
+    let started = false;
+    let finished = false;
+
+    let bestWpm = Number(localStorage.getItem("typeRushBestWpm")) || 0;
+    bestScoreElement.textContent = bestWpm;
+
+    function getRandomText() {
+      const randomIndex = Math.floor(Math.random() * paragraphs.length);
+      return paragraphs[randomIndex];
+    }
+
+    function loadText() {
+      currentText = getRandomText();
+
+      textDisplay.innerHTML = "";
+
+      currentText.split("").forEach((character, index) => {
+        const span = document.createElement("span");
+        span.textContent = character;
+
+        if (index === 0) {
+          span.classList.add("current");
+        }
+
+        textDisplay.appendChild(span);
+      });
+    }
+
+    function resetStats() {
+      timer = 60;
+      started = false;
+      finished = false;
+
+      clearInterval(interval);
+      interval = null;
+
+      timeElement.textContent = timer;
+      wpmElement.textContent = "0";
+      accuracyElement.textContent = "100%";
+      errorsElement.textContent = "0";
+      progressBar.style.width = "0%";
+
+      typingInput.value = "";
+      typingInput.disabled = false;
+      typingInput.focus();
+
+      statusElement.textContent = "Ready to start";
+      result.classList.remove("show");
+    }
+
+    function startTimer() {
+      if (started) return;
+
+      started = true;
+      statusElement.textContent = "Test in progress";
+
+      interval = setInterval(() => {
+        timer--;
+
+        timeElement.textContent = timer;
+        progressBar.style.width = ((60 - timer) / 60) * 100 + "%";
+
+        if (timer <= 0) {
+          finishTest();
+        }
+      }, 1000);
+    }
+
+    function calculateStats() {
+      const typedText = typingInput.value;
+
+      let correctCharacters = 0;
+      let incorrectCharacters = 0;
+
+      typedText.split("").forEach((character, index) => {
+        if (character === currentText[index]) {
+          correctCharacters++;
+        } else {
+          incorrectCharacters++;
+        }
+      });
+
+      const elapsedTime = Math.max(1, 60 - timer);
+      const minutes = elapsedTime / 60;
+
+      const words = correctCharacters / 5;
+      const wpm = Math.round(words / minutes);
+
+      const totalTyped = correctCharacters + incorrectCharacters;
+      const accuracy = totalTyped === 0
+        ? 100
+        : Math.round((correctCharacters / totalTyped) * 100);
+
+      wpmElement.textContent = wpm;
+      accuracyElement.textContent = accuracy + "%";
+      errorsElement.textContent = incorrectCharacters;
+
+      return {
+        wpm,
+        accuracy,
+        correctCharacters,
+        incorrectCharacters
+      };
+    }
+
+    function updateTextHighlight() {
+      const typedText = typingInput.value;
+      const spans = textDisplay.querySelectorAll("span");
+
+      spans.forEach((span, index) => {
+        span.classList.remove("correct", "incorrect", "current");
+
+        if (index < typedText.length) {
+          if (typedText[index] === currentText[index]) {
+            span.classList.add("correct");
+          } else {
+            span.classList.add("incorrect");
+          }
+        }
+
+        if (index === typedText.length) {
+          span.classList.add("current");
+        }
+      });
+    }
+
+    function finishTest() {
+      clearInterval(interval);
+      interval = null;
+      finished = true;
+
+      typingInput.disabled = true;
+      statusElement.textContent = "Test completed";
+
+      const stats = calculateStats();
+
+      finalWpm.textContent = stats.wpm;
+      finalAccuracy.textContent = stats.accuracy + "%";
+      finalCorrect.textContent = stats.correctCharacters;
+
+      if (stats.wpm > bestWpm) {
+        bestWpm = stats.wpm;
+        localStorage.setItem("typeRushBestWpm", bestWpm);
+        bestScoreElement.textContent = bestWpm;
+      }
+
+      result.classList.add("show");
+    }
+
+    typingInput.addEventListener("input", () => {
+      if (finished) return;
+
+      if (!started && typingInput.value.length > 0) {
+        startTimer();
+      }
+
+      updateTextHighlight();
+      calculateStats();
+
+      if (typingInput.value.length >= currentText.length) {
+        finishTest();
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      loadText();
+      resetStats();
+    });
+
+    resultRestartBtn.addEventListener("click", () => {
+      loadText();
+      resetStats();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    newTextBtn.addEventListener("click", () => {
+      loadText();
+      resetStats();
+    });
+
+    loadText();
+    resetStats();
+  </script>
+</body>
+</html>
