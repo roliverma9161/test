@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>JobTrack - Mini Job Tracker</title>
+
+  <style>
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #eef2ff;
+
+      --success: #10b981;
+      --success-light: #d1fae5;
+
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+
+      --danger: #ef4444;
+      --danger-light: #fee2e2;
+
+      --blue: #3b82f6;
+      --blue-light: #dbeafe;
+
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+
+      --shadow:
+        0 10px 30px rgba(15, 23, 42, 0.07);
+
+      --radius: 18px;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+
+      --primary-light: #312e81;
+      --success-light: #064e3b;
+      --warning-light: #78350f;
+      --danger-light: #7f1d1d;
+      --blue-light: #1e3a8a;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(99, 102, 241, 0.08),
+          transparent 30%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      min-height: 100vh;
+      transition: 0.3s;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1200px, 92%);
+      margin: auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      padding: 25px 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          #8b5cf6
+        );
+
+      color: white;
+      border-radius: 15px;
+      font-size: 25px;
+
+      box-shadow:
+        0 10px 25px rgba(99, 102, 241, 0.3);
+    }
+
+    .brand h1 {
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .brand p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 18px;
+      transition: 0.2s;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      background:
+        linear-gradient(
+          135deg,
+          #4f46e5,
+          #7c3aed,
+          #9333ea
+        );
+
+      border-radius: 25px;
+      padding: 35px;
+
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 30px;
+
+      overflow: hidden;
+      position: relative;
+
+      box-shadow:
+        0 20px 50px rgba(79, 70, 229, 0.25);
+    }
+
+    .hero::before {
+      content: "";
+      width: 300px;
+      height: 300px;
+
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.08);
+
+      position: absolute;
+      right: -100px;
+      top: -130px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      font-size: clamp(28px, 5vw, 43px);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #e0e7ff;
+      max-width: 600px;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .hero-icon {
+      position: relative;
+      z-index: 1;
+      font-size: 90px;
+
+      animation:
+        floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* =========================
+       STATISTICS
+    ========================= */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(5, 1fr);
+
+      gap: 15px;
+
+      margin: 22px 0;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 20px;
+
+      box-shadow: var(--shadow);
+
+      transition: 0.25s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+
+      font-size: 18px;
+    }
+
+    .stat-card:nth-child(1) .stat-icon {
+      background: var(--primary-light);
+    }
+
+    .stat-card:nth-child(2) .stat-icon {
+      background: var(--blue-light);
+    }
+
+    .stat-card:nth-child(3) .stat-icon {
+      background: var(--warning-light);
+    }
+
+    .stat-card:nth-child(4) .stat-icon {
+      background: var(--success-light);
+    }
+
+    .stat-card:nth-child(5) .stat-icon {
+      background: var(--danger-light);
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 14px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 27px;
+      margin-top: 5px;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main-grid {
+      display: grid;
+
+      grid-template-columns:
+        380px 1fr;
+
+      gap: 22px;
+
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+
+      border: 1px solid var(--border);
+
+      border-radius: 22px;
+
+      padding: 24px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .card-title {
+      margin-bottom: 22px;
+    }
+
+    .card-title h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .card-title p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+
+      border: 1px solid var(--border);
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      border-radius: 12px;
+
+      padding: 12px 13px;
+
+      outline: none;
+
+      font-size: 13px;
+
+      transition: 0.2s;
+    }
+
+    textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(99, 102, 241, 0.1);
+
+      background: var(--card);
+    }
+
+    .two-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      border: none;
+
+      padding: 12px 17px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      flex: 1;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      opacity: 0.8;
+    }
+
+    /* =========================
+       JOB LIST HEADER
+    ========================= */
+
+    .jobs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 15px;
+
+      margin-bottom: 18px;
+    }
+
+    .jobs-header h3 {
+      font-size: 20px;
+    }
+
+    .jobs-header p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filters input {
+      min-width: 180px;
+    }
+
+    .filters select {
+      min-width: 140px;
+    }
+
+    /* =========================
+       JOB CARDS
+    ========================= */
+
+    .jobs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .job-card {
+      border: 1px solid var(--border);
+
+      border-radius: 17px;
+
+      padding: 17px;
+
+      transition: 0.25s;
+
+      background: var(--card);
+    }
+
+    .job-card:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 8px 25px
+        rgba(15, 23, 42, 0.08);
+    }
+
+    .job-top {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-start;
+
+      gap: 15px;
+    }
+
+    .company-info {
+      display: flex;
+      gap: 12px;
+    }
+
+    .company-logo {
+      width: 45px;
+      height: 45px;
+
+      border-radius: 13px;
+
+      display: grid;
+      place-items: center;
+
+      background: var(--primary-light);
+
+      color: var(--primary);
+
+      font-size: 20px;
+      font-weight: 800;
+
+      flex-shrink: 0;
+    }
+
+    .company-info h4 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .company-info p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .status {
+      display: inline-flex;
+
+      padding: 6px 10px;
+
+      border-radius: 20px;
+
+      font-size: 10px;
+
+      font-weight: 800;
+    }
+
+    .status-applied {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .status-shortlisted {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .status-interview {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .status-selected {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .status-rejected {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    .job-details {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 8px 18px;
+
+      margin: 15px 0;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .job-details span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .job-notes {
+      background: var(--bg);
+
+      border-radius: 10px;
+
+      padding: 10px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      line-height: 1.6;
+
+      margin-bottom: 13px;
+    }
+
+    .job-actions {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      border-top: 1px solid var(--border);
+
+      padding-top: 12px;
+    }
+
+    .job-actions small {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .small-btn {
+      border: 1px solid var(--border);
+
+      background: var(--card);
+
+      color: var(--text);
+
+      border-radius: 8px;
+
+      padding: 7px 9px;
+
+      font-size: 11px;
+    }
+
+    .small-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .delete-btn:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .job-link {
+      color: var(--primary);
+
+      text-decoration: none;
+
+      font-size: 11px;
+
+      font-weight: 700;
+    }
+
+    .job-link:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================
+       EMPTY STATE
+    ========================= */
+
+    .empty {
+      text-align: center;
+
+      padding: 60px 20px;
+
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .empty h4 {
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    .empty p {
+      font-size: 12px;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal-overlay {
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        rgba(15, 23, 42, 0.55);
+
+      display: none;
+
+      justify-content: center;
+      align-items: center;
+
+      padding: 20px;
+
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--card);
+
+      width: min(500px, 100%);
+
+      border-radius: 22px;
+
+      padding: 25px;
+
+      box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.25);
+
+      animation: modalIn 0.2s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      font-size: 20px;
+    }
+
+    .close-modal {
+      width: 35px;
+      height: 35px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      font-size: 18px;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast {
+      position: fixed;
+
+      right: 25px;
+      bottom: 25px;
+
+      background: #111827;
+
+      color: white;
+
+      padding: 13px 18px;
+
+      border-radius: 12px;
+
+      font-size: 12px;
+      font-weight: 600;
+
+      opacity: 0;
+
+      transform: translateY(100px);
+
+      pointer-events: none;
+
+      transition: 0.3s;
+
+      z-index: 2000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      text-align: center;
+
+      padding: 30px 0;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1050px) {
+      .stats {
+        grid-template-columns:
+          repeat(3, 1fr);
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding: 25px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-icon {
+        align-self: center;
+      }
+
+      .stats {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .jobs-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+
+      .filters input,
+      .filters select {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .navbar {
+        align-items: flex-start;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .two-inputs {
+        grid-template-columns: 1fr;
+      }
+
+      .job-top {
+        flex-direction: column;
+      }
+
+      .job-actions {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .action-buttons {
+        width: 100%;
+      }
+
+      .small-btn {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header>
+    <div class="container navbar">
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          💼
+        </div>
+
+        <div>
+          <h1>JobTrack</h1>
+
+          <p>
+            Track your career journey
+          </p>
+        </div>
+
+      </div>
+
+      <div class="header-actions">
+
+        <button
+          class="icon-btn"
+          id="themeBtn"
+          title="Toggle theme"
+        >
+          🌙
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <main class="container">
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <h2>
+          Organize your
+          <br />
+          job search 🚀
+        </h2>
+
+        <p>
+          Keep all your job applications in one place.
+          Track applications, interviews and offers
+          without losing anything.
+        </p>
+
+      </div>
+
+      <div class="hero-icon">
+        🎯
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================== -->
+
+    <section class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span>Applications</span>
+
+          <div class="stat-icon">
+            📋
+          </div>
+
+        </div>
+
+        <strong id="totalJobs">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span>Applied</span>
+
+          <div class="stat-icon">
+            📤
+          </div>
+
+        </div>
+
+        <strong id="appliedJobs">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span>Interviews</span>
+
+          <div class="stat-icon">
+            🎤
+          </div>
+
+        </div>
+
+        <strong id="interviewJobs">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span>Selected</span>
+
+          <div class="stat-icon">
+            🎉
+          </div>
+
+        </div>
+
+        <strong id="selectedJobs">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span>Rejected</span>
+
+          <div class="stat-icon">
+            ❌
+          </div>
+
+        </div>
+
+        <strong id="rejectedJobs">
+          0
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN GRID
+    ========================== -->
+
+    <section class="main-grid">
+
+
+      <!-- =========================
+           ADD JOB FORM
+      ========================== -->
+
+      <div class="card">
+
+        <div class="card-title">
+
+          <h3>
+            Add New Job
+          </h3>
+
+          <p>
+            Save your latest job application.
+          </p>
+
+        </div>
+
+
+        <form id="jobForm">
+
+          <div class="form-group">
+
+            <label>
+              Company Name
+            </label>
+
+            <input
+              type="text"
+              id="company"
+              placeholder="e.g. Google"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Job Role
+            </label>
+
+            <input
+              type="text"
+              id="role"
+              placeholder="e.g. Frontend Developer"
+              required
+            />
+
+          </div>
+
+
+          <div class="two-inputs">
+
+            <div class="form-group">
+
+              <label>
+                Location
+              </label>
+
+              <input
+                type="text"
+                id="location"
+                placeholder="Delhi / Remote"
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Application Date
+              </label>
+
+              <input
+                type="date"
+                id="date"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Status
+            </label>
+
+            <select id="status">
+
+              <option value="Applied">
+                Applied
+              </option>
+
+              <option value="Shortlisted">
+                Shortlisted
+              </option>
+
+              <option value="Interview">
+                Interview
+              </option>
+
+              <option value="Selected">
+                Selected
+              </option>
+
+              <option value="Rejected">
+                Rejected
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Job Link
+            </label>
+
+            <input
+              type="url"
+              id="jobLink"
+              placeholder="https://example.com/job"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Notes
+            </label>
+
+            <textarea
+              id="notes"
+              placeholder="Interview date, recruiter details, preparation notes..."
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-buttons">
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="submitBtn"
+            >
+              + Add Job
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="resetBtn"
+            >
+              Clear
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- =========================
+           JOB LIST
+      ========================== -->
+
+      <div class="card">
+
+        <div class="jobs-header">
+
+          <div>
+
+            <h3>
+              Your Applications
+            </h3>
+
+            <p>
+              Manage and track your applications.
+            </p>
+
+          </div>
+
+
+          <div class="filters">
+
+            <input
+              type="search"
+              id="search"
+              placeholder="🔍 Search..."
+            />
+
+            <select id="filterStatus">
+
+              <option value="All">
+                All Status
+              </option>
+
+              <option value="Applied">
+                Applied
+              </option>
+
+              <option value="Shortlisted">
+                Shortlisted
+              </option>
+
+              <option value="Interview">
+                Interview
+              </option>
+
+              <option value="Selected">
+                Selected
+              </option>
+
+              <option value="Rejected">
+                Rejected
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="jobs-list"
+          id="jobsList"
+        ></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    JobTrack © 2026 · Built with HTML, CSS & JavaScript
+  </footer>
+
+
+  <!-- =========================
+       EDIT MODAL
+  ========================== -->
+
+  <div
+    class="modal-overlay"
+    id="editModal"
+  >
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <h3>
+          Edit Job
+        </h3>
+
+        <button
+          class="close-modal"
+          id="closeModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="editForm">
+
+        <input
+          type="hidden"
+          id="editId"
+        />
+
+
+        <div class="form-group">
+
+          <label>
+            Company Name
+          </label>
+
+          <input
+            type="text"
+            id="editCompany"
+            required
+          />
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Job Role
+          </label>
+
+          <input
+            type="text"
+            id="editRole"
+            required
+          />
+
+        </div>
+
+
+        <div class="two-inputs">
+
+          <div class="form-group">
+
+            <label>
+              Location
+            </label>
+
+            <input
+              type="text"
+              id="editLocation"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Date
+            </label>
+
+            <input
+              type="date"
+              id="editDate"
+              required
+            />
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Status
+          </label>
+
+          <select id="editStatus">
+
+            <option value="Applied">
+              Applied
+            </option>
+
+            <option value="Shortlisted">
+              Shortlisted
+            </option>
+
+            <option value="Interview">
+              Interview
+            </option>
+
+            <option value="Selected">
+              Selected
+            </option>
+
+            <option value="Rejected">
+              Rejected
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Job Link
+          </label>
+
+          <input
+            type="url"
+            id="editJobLink"
+          />
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Notes
+          </label>
+
+          <textarea
+            id="editNotes"
+          ></textarea>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="width: 100%;"
+        >
+          Save Changes
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script>
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const jobForm =
+      document.getElementById("jobForm");
+
+    const editForm =
+      document.getElementById("editForm");
+
+    const jobsList =
+      document.getElementById("jobsList");
+
+    const search =
+      document.getElementById("search");
+
+    const filterStatus =
+      document.getElementById("filterStatus");
+
+    const themeBtn =
+      document.getElementById("themeBtn");
+
+    const resetBtn =
+      document.getElementById("resetBtn");
+
+    const editModal =
+      document.getElementById("editModal");
+
+    const closeModal =
+      document.getElementById("closeModal");
+
+    const toast =
+      document.getElementById("toast");
+
+
+    /* =========================================
+       DATA
+    ========================================= */
+
+    let jobs =
+      JSON.parse(
+        localStorage.getItem("jobTrackerData")
+      ) || [];
+
+    let editingId = null;
+
+
+    /* =========================================
+       DATE
+    ========================================= */
+
+    function getToday() {
+
+      const today = new Date();
+
+      const year =
+        today.getFullYear();
+
+      const month =
+        String(
+          today.getMonth() + 1
+        ).padStart(2, "0");
+
+      const day =
+        String(
+          today.getDate()
+        ).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+
+    document.getElementById("date").value =
+      getToday();
+
+
+    /* =========================================
+       LOCAL STORAGE
+    ========================================= */
+
+    function saveJobs() {
+
+      localStorage.setItem(
+        "jobTrackerData",
+        JSON.stringify(jobs)
+      );
+
+    }
+
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    function showToast(message) {
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 2500);
+
+    }
+
+
+    /* =========================================
+       SAFE HTML
+    ========================================= */
+
+    function escapeHTML(value) {
+
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    /* =========================================
+       FORMAT DATE
+    ========================================= */
+
+    function formatDate(dateString) {
+
+      if (!dateString) {
+        return "No date";
+      }
+
+      const date =
+        new Date(dateString + "T00:00:00");
+
+      return date.toLocaleDateString(
+        "en-IN",
+        {
+          day: "numeric",
+          month: "short",
+          year: "numeric"
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       STATUS CLASS
+    ========================================= */
+
+    function getStatusClass(status) {
+
+      return (
+        "status-" +
+        status.toLowerCase()
+      );
+
+    }
+
+
+    /* =========================================
+       UPDATE STATISTICS
+    ========================================= */
+
+    function updateStats() {
+
+      document.getElementById(
+        "totalJobs"
+      ).textContent = jobs.length;
+
+
+      document.getElementById(
+        "appliedJobs"
+      ).textContent =
+        jobs.filter(
+          job => job.status === "Applied"
+        ).length;
+
+
+      document.getElementById(
+        "interviewJobs"
+      ).textContent =
+        jobs.filter(
+          job =>
+            job.status === "Interview" ||
+            job.status === "Shortlisted"
+        ).length;
+
+
+      document.getElementById(
+        "selectedJobs"
+      ).textContent =
+        jobs.filter(
+          job =>
+            job.status === "Selected"
+        ).length;
+
+
+      document.getElementById(
+        "rejectedJobs"
+      ).textContent =
+        jobs.filter(
+          job =>
+            job.status === "Rejected"
+        ).length;
+
+    }
+
+
+    /* =========================================
+       RENDER JOBS
+    ========================================= */
+
+    function renderJobs() {
+
+      const searchTerm =
+        search.value
+          .trim()
+          .toLowerCase();
+
+
+      const selectedStatus =
+        filterStatus.value;
+
+
+      let filteredJobs =
+        jobs.filter(job => {
+
+          const matchesSearch =
+            job.company
+              .toLowerCase()
+              .includes(searchTerm) ||
+
+            job.role
+              .toLowerCase()
+              .includes(searchTerm) ||
+
+            job.location
+              .toLowerCase()
+              .includes(searchTerm);
+
+
+          const matchesStatus =
+            selectedStatus === "All" ||
+            job.status === selectedStatus;
+
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
+
+        });
+
+
+      filteredJobs.sort(
+        (a, b) =>
+          new Date(b.date) -
+          new Date(a.date)
+      );
+
+
+      if (filteredJobs.length === 0) {
+
+        jobsList.innerHTML = `
+
+          <div class="empty">
+
+            <div class="empty-icon">
+              📭
+            </div>
+
+            <h4>
+              No applications found
+            </h4>
+
+            <p>
+              Add your first job application
+              to start tracking your journey.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      jobsList.innerHTML =
+        filteredJobs
+          .map(job => {
+
+            const companyInitial =
+              job.company
+                .charAt(0)
+                .toUpperCase();
+
+
+            const safeLink =
+              job.jobLink
+                ? escapeHTML(job.jobLink)
+                : "";
+
+
+            return `
+
+              <article
+                class="job-card"
+              >
+
+                <div class="job-top">
+
+                  <div
+                    class="company-info"
+                  >
+
+                    <div
+                      class="company-logo"
+                    >
+                      ${companyInitial}
+                    </div>
+
+                    <div>
+
+                      <h4>
+                        ${escapeHTML(
+                          job.company
+                        )}
+                      </h4>
+
+                      <p>
+                        ${escapeHTML(
+                          job.role
+                        )}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+
+                  <span
+                    class="status ${getStatusClass(
+                      job.status
+                    )}"
+                  >
+                    ${escapeHTML(
+                      job.status
+                    )}
+                  </span>
+
+                </div>
+
+
+                <div
+                  class="job-details"
+                >
+
+                  <span>
+                    📍
+                    ${escapeHTML(
+                      job.location ||
+                      "Not specified"
+                    )}
+                  </span>
+
+                  <span>
+                    📅
+                    ${formatDate(
+                      job.date
+                    )}
+                  </span>
+
+                  ${
+                    safeLink
+                      ? `
+                        <a
+                          href="${safeLink}"
+                          target="_blank"
+                          class="job-link"
+                          rel="noopener"
+                        >
+                          🔗 View Job
+                        </a>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+
+                ${
+                  job.notes
+                    ? `
+                      <div
+                        class="job-notes"
+                      >
+                        ${escapeHTML(
+                          job.notes
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+
+                <div
+                  class="job-actions"
+                >
+
+                  <small>
+                    Added
+                    ${formatDate(
+                      job.createdAt
+                    )}
+                  </small>
+
+
+                  <div
+                    class="action-buttons"
+                  >
+
+                    <button
+                      class="small-btn"
+                      onclick="editJob('${job.id}')"
+                    >
+                      ✏️ Edit
+                    </button>
+
+                    <button
+                      class="small-btn delete-btn"
+                      onclick="deleteJob('${job.id}')"
+                    >
+                      🗑️ Delete
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </article>
+
+            `;
+
+          })
+          .join("");
+
+    }
+
+
+    /* =========================================
+       ADD JOB
+    ========================================= */
+
+    jobForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+
+        const company =
+          document
+            .getElementById("company")
+            .value
+            .trim();
+
+
+        const role =
+          document
+            .getElementById("role")
+            .value
+            .trim();
+
+
+        const location =
+          document
+            .getElementById("location")
+            .value
+            .trim();
+
+
+        const date =
+          document
+            .getElementById("date")
+            .value;
+
+
+        const status =
+          document
+            .getElementById("status")
+            .value;
+
+
+        const jobLink =
+          document
+            .getElementById("jobLink")
+            .value
+            .trim();
+
+
+        const notes =
+          document
+            .getElementById("notes")
+            .value
+            .trim();
+
+
+        const newJob = {
+
+          id:
+            Date.now().toString(),
+
+          company,
+
+          role,
+
+          location,
+
+          date,
+
+          status,
+
+          jobLink,
+
+          notes,
+
+          createdAt:
+            getToday()
+
+        };
+
+
+        jobs.push(newJob);
+
+        saveJobs();
+
+        updateStats();
+
+        renderJobs();
+
+        jobForm.reset();
+
+        document.getElementById(
+          "date"
+        ).value = getToday();
+
+
+        showToast(
+          "Job application added successfully! 🎉"
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       DELETE JOB
+    ========================================= */
+
+    function deleteJob(id) {
+
+      const confirmDelete =
+        confirm(
+          "Are you sure you want to delete this job?"
+        );
+
+
+      if (!confirmDelete) {
+        return;
+      }
+
+
+      jobs =
+        jobs.filter(
+          job => job.id !== id
+        );
+
+
+      saveJobs();
+
+      updateStats();
+
+      renderJobs();
+
+
+      showToast(
+        "Job application deleted 🗑️"
+      );
+
+    }
+
+
+    /* =========================================
+       EDIT JOB
+    ========================================= */
+
+    function editJob(id) {
+
+      const job =
+        jobs.find(
+          item => item.id === id
+        );
+
+
+      if (!job) {
+        return;
+      }
+
+
+      editingId = id;
+
+
+      document.getElementById(
+        "editId"
+      ).value = job.id;
+
+
+      document.getElementById(
+        "editCompany"
+      ).value = job.company;
+
+
+      document.getElementById(
+        "editRole"
+      ).value = job.role;
+
+
+      document.getElementById(
+        "editLocation"
+      ).value = job.location;
+
+
+      document.getElementById(
+        "editDate"
+      ).value = job.date;
+
+
+      document.getElementById(
+        "editStatus"
+      ).value = job.status;
+
+
+      document.getElementById(
+        "editJobLink"
+      ).value = job.jobLink;
+
+
+      document.getElementById(
+        "editNotes"
+      ).value = job.notes;
+
+
+      editModal.classList.add(
+        "active"
+      );
+
+    }
+
+
+    /* =========================================
+       SAVE EDIT
+    ========================================= */
+
+    editForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+
+        const index =
+          jobs.findIndex(
+            job =>
+              job.id === editingId
+          );
+
+
+        if (index === -1) {
+          return;
+        }
+
+
+        jobs[index] = {
+
+          ...jobs[index],
+
+          company:
+            document
+              .getElementById(
+                "editCompany"
+              )
+              .value
+              .trim(),
+
+          role:
+            document
+              .getElementById(
+                "editRole"
+              )
+              .value
+              .trim(),
+
+          location:
+            document
+              .getElementById(
+                "editLocation"
+              )
+              .value
+              .trim(),
+
+          date:
+            document
+              .getElementById(
+                "editDate"
+              )
+              .value,
+
+          status:
+            document
+              .getElementById(
+                "editStatus"
+              )
+              .value,
+
+          jobLink:
+            document
+              .getElementById(
+                "editJobLink"
+              )
+              .value
+              .trim(),
+
+          notes:
+            document
+              .getElementById(
+                "editNotes"
+              )
+              .value
+              .trim()
+
+        };
+
+
+        saveJobs();
+
+        updateStats();
+
+        renderJobs();
+
+
+        editModal.classList.remove(
+          "active"
+        );
+
+
+        showToast(
+          "Job details updated successfully ✨"
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       CLOSE MODAL
+    ========================================= */
+
+    closeModal.addEventListener(
+      "click",
+      () => {
+
+        editModal.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+    editModal.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          editModal
+        ) {
+
+          editModal.classList.remove(
+            "active"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       SEARCH
+    ========================================= */
+
+    search.addEventListener(
+      "input",
+      renderJobs
+    );
+
+
+    /* =========================================
+       FILTER
+    ========================================= */
+
+    filterStatus.addEventListener(
+      "change",
+      renderJobs
+    );
+
+
+    /* =========================================
+       RESET FORM
+    ========================================= */
+
+    resetBtn.addEventListener(
+      "click",
+      () => {
+
+        jobForm.reset();
+
+        document.getElementById(
+          "date"
+        ).value = getToday();
+
+      }
+    );
+
+
+    /* =========================================
+       DARK / LIGHT MODE
+    ========================================= */
+
+    const savedTheme =
+      localStorage.getItem(
+        "jobTrackerTheme"
+      );
+
+
+    if (savedTheme === "dark") {
+
+      document.body.classList.add(
+        "dark"
+      );
+
+      themeBtn.textContent = "☀️";
+
+    }
+
+
+    themeBtn.addEventListener(
+      "click",
+      () => {
+
+        document.body.classList.toggle(
+          "dark"
+        );
+
+
+        const darkMode =
+          document.body.classList.contains(
+            "dark"
+          );
+
+
+        themeBtn.textContent =
+          darkMode
+            ? "☀️"
+            : "🌙";
+
+
+        localStorage.setItem(
+          "jobTrackerTheme",
+          darkMode
+            ? "dark"
+            : "light"
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       INITIALIZE
+    ========================================= */
+
+    updateStats();
+
+    renderJobs();
+
+  </script>
+
+</body>
+</html>
