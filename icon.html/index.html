@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Professional Windows Folder Icons</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at top,#162b50 0%,#071225 45%,#030812 100%);
+    color:white;
+    padding:40px 25px;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+}
+
+header{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+header h1{
+    font-size:36px;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+header p{
+    color:#91a0b8;
+    font-size:16px;
+}
+
+.icons-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(210px,1fr));
+    gap:25px;
+}
+
+.card{
+    position:relative;
+    padding:25px 15px 20px;
+    border-radius:22px;
+
+    background:rgba(15,28,53,.75);
+
+    border:1px solid rgba(120,160,220,.18);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.06);
+
+    backdrop-filter:blur(15px);
+
+    transition:.35s ease;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+
+    border-color:rgba(255,255,255,.25);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.5);
+}
+
+.icon-wrapper{
+    width:180px;
+    height:180px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.icon-wrapper svg{
+    width:170px;
+    height:170px;
+
+    overflow:visible;
+
+    transition:.35s ease;
+}
+
+.card:hover svg{
+    transform:scale(1.06);
+}
+
+.title{
+    text-align:center;
+    margin-top:10px;
+
+    font-size:16px;
+    font-weight:700;
+
+    letter-spacing:.5px;
+}
+
+.buttons{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+
+    margin-top:16px;
+}
+
+button{
+    border:none;
+    padding:9px 12px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    background:#eaf2ff;
+    color:#071225;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    background:white;
+}
+
+.download-all{
+    display:block;
+    margin:40px auto 0;
+
+    padding:13px 25px;
+
+    background:linear-gradient(
+        135deg,
+        #1da1ff,
+        #7c4dff
+    );
+
+    color:white;
+
+    font-size:15px;
+}
+
+.download-all:hover{
+    background:linear-gradient(
+        135deg,
+        #38b5ff,
+        #936fff
+    );
+}
+
+.note{
+    margin-top:30px;
+    text-align:center;
+
+    color:#71819b;
+    font-size:13px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+<header>
+
+<h1>Professional Folder Icons</h1>
+
+<p>
+Premium Windows-style • 256×256 • SVG + PNG
+</p>
+
+</header>
+
+
+<div class="icons-grid">
+
+
+<!-- DEVELOPMENT -->
+
+<div class="card">
+
+<div class="icon-wrapper">
+
+<svg id="development"
+viewBox="0 0 200 180"
+xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="dev"
+x1="0"
+y1="0"
+x2="1"
+y2="1">
+
+<stop stop-color="#0798ff"/>
+<stop offset="1" stop-color="#173c91"/>
+
+</linearGradient>
+
+<filter id="glowDev">
+
+<feGaussianBlur
+stdDeviation="5"
+result="blur"/>
+
+<feMerge>
+
+<feMergeNode in="blur"/>
+<feMergeNode in="SourceGraphic"/>
+
+</feMerge>
+
+</filter>
+
+</defs>
+
+
+<path
+d="M18 55Q18 40 33 40h45l17 18h58q18 0 18 18v55q0 17-18 17H33q-15 0-15-17z"
+fill="#083568"
+filter="url(#glowDev)"
+/>
+
+
+<path
+d="M18 61q0-15 15-15h47l15 16h61q15 0 15 15v43q0 13-15 13H33q-15 0-15-13z"
+fill="url(#dev)"
+stroke="#14b9ff"
+stroke-width="2"
+/>
+
+
+<rect
+x="45"
+y="73"
+width="110"
+height="47"
+rx="8"
+fill="#06162d"
+opacity=".82"
+/>
+
+
+<text
+x="100"
+y="105"
+text-anchor="middle"
+font-size="28"
+font-weight="700"
+fill="#20c8ff">
+
+&lt;/&gt;
+
+</text>
+
+</svg>
+
+</div>
+
+<div class="title">
+01_DEVELOPMENT
+</div>
+
+<div class="buttons">
+
+<button onclick="downloadSVG('development','01_DEVELOPMENT')">
+SVG
+</button>
+
+<button onclick="downloadPNG('development','01_DEVELOPMENT')">
+PNG
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- COLLEGE -->
+
+<div class="card">
+
+<div class="icon-wrapper">
+
+<svg id="college"
+viewBox="0 0 200 180"
+xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="collegeGradient"
+x1="0"
+y1="0"
+x2="1"
+y2="1">
+
+<stop stop-color="#00d9b5"/>
+<stop offset="1" stop-color="#08756f"/>
+
+</linearGradient>
+
+</defs>
+
+
+<path
+d="M18 55Q18 40 33 40h45l17 18h58q18 0 18 18v55q0 17-18 17H33q-15 0-15-17z"
+fill="#07594f"
+/>
+
+
+<path
+d="M18 61q0-15 15-15h47l15 16h61q15 0 15 15v43q0 13-15 13H33q-15 0-15-13z"
+fill="url(#collegeGradient)"
+stroke="#1affdb"
+stroke-width="2"
+/>
+
+
+<path
+d="M61 85l39-18 39 18-39 18z"
+fill="#5fffea"
+/>
+
+
+<path
+d="M72 91v15q28 18 56 0V91l-28 13z"
+fill="#17bfa9"
+/>
+
+
+<path
+d="M139 87v22"
+stroke="#d8fff9"
+stroke-width="4"
+/>
+
+</svg>
+
+</div>
+
+<div class="title">
+02_COLLEGE
+</div>
+
+<div class="buttons">
+
+<button onclick="downloadSVG('college','02_COLLEGE')">
+SVG
+</button>
+
+<button onclick="downloadPNG('college','02_COLLEGE')">
+PNG
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- PROJECTS -->
+
+<div class="card">
+
+<div class="icon-wrapper">
+
+<svg id="projects"
+viewBox="0 0 200 180"
+xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="projectGradient"
+x1="0"
+y1="0"
+x2="1"
+y2="1">
+
+<stop stop-color="#8b5cff"/>
+<stop offset="1" stop-color="#48208e"/>
+
+</linearGradient>
+
+</defs>
+
+
+<path
+d="M18 55Q18 40 33 40h45l17 18h58q18 0 18 18v55q0 17-18 17H33q-15 0-15-17z"
+fill="#422074"
+/>
+
+
+<path
+d="M18 61q0-15 15-15h47l15 16h61q15 0 15 15v43q0 13-15 13H33q-15 0-15-13z"
+fill="url(#projectGradient)"
+stroke="#a77bff"
+stroke-width="2"
+/>
+
+
+<path
+d="M91 111c-4-28 12-43 35-50 2 19-2 35-18 47l-10 7z"
+fill="#e0d4ff"
+/>
+
+
+<path
+d="M108 101l25 8-20 9zM88 111l-17 13 5-21z"
+fill="#a98aff"
+/>
+
+
+<circle
+cx="112"
+cy="82"
+r="5"
+fill="#6f45dc"
+/>
+
+</svg>
+
+</div>
+
+<div class="title">
+03_PROJECTS
+</div>
+
+<div class="buttons">
+
+<button onclick="downloadSVG('projects','03_PROJECTS')">
+SVG
+</button>
+
+<button onclick="downloadPNG('projects','03_PROJECTS')">
+PNG
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- RESOURCES -->
+
+<div class="card">
+
+<div class="icon-wrapper">
+
+<svg id="resources"
+viewBox="0 0 200 180"
+xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="resourceGradient"
+x1="0"
+y1="0"
+x2="1"
+y2="1">
+
+<stop stop-color="#ffb33d"/>
+<stop offset="1" stop-color="#a85c0b"/>
+
+</linearGradient>
+
+</defs>
+
+
+<path
+d="M18 55Q18 40 33 40h45l17 18h58q18 0 18 18v55q0 17-18 17H33q-15 0-15-17z"
+fill="#7a460b"
+/>
+
+
+<path
+d="M18 61q0-15 15-15h47l15 16h61q15 0 15 15v43q0 13-15 13H33q-15 0-15-13z"
+fill="url(#resourceGradient)"
+stroke="#ffc75b"
+stroke-width="2"
+/>
+
+
+<path
+d="M100 68l31 18-31 18-31-18z"
+fill="#ffe1a1"
+/>
+
+
+<path
+d="M69 86v29l31 18v-29z"
+fill="#d98a22"
+/>
+
+
+<path
+d="M131 86v29l-31 18v-29z"
+fill="#f4a62e"
+/>
+
+</svg>
+
+</div>
+
+<div class="title">
+04_RESOURCES
+</div>
+
+<div class="buttons">
+
+<button onclick="downloadSVG('resources','04_RESOURCES')">
+SVG
+</button>
+
+<button onclick="downloadPNG('resources','04_RESOURCES')">
+PNG
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- PERSONAL -->
+
+<div class="card">
+
+<div class="icon-wrapper">
+
+<svg id="personal"
+viewBox="0 0 200 180"
+xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="personalGradient"
+x1="0"
+y1="0"
+x2="1"
+y2="1">
+
+<stop stop-color="#ff4f9a"/>
+<stop offset="1" stop-color="#8b1e72"/>
+
+</linearGradient>
+
+</defs>
+
+
+<path
+d="M18 55Q18 40 33 40h45l17 18h58q18 0 18 18v55q0 17-18 17H33q-15 0-15-17z"
+fill="#7d1e68"
+/>
+
+
+<path
+d="M18 61q0-15 15-15h47l15 16h61q15 0 15 15v43q0 13-15 13H33q-15 0-15-13z"
+fill="url(#personalGradient)"
+stroke="#ff75b1"
+stroke-width="2"
+/>
+
+
+<circle
+cx="100"
+cy="81"
+r="13"
+fill="#ffd2e6"
+/>
+
+
+<path
+d="M70 119q5-27 30-27t30 27z"
+fill="#ffd2e6"
+/>
+
+</svg>
+
+</div>
+
+<div class="title">
+05_PERSONAL
+</div>
+
+<div class="buttons">
+
+<button onclick="downloadSVG('personal','05_PERSONAL')">
+SVG
+</button>
+
+<button onclick="downloadPNG('personal','05_PERSONAL')">
+PNG
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="download-all"
+onclick="downloadAll()">
+
+⬇ Download All PNG Icons
+
+</button>
+
+
+<div class="note">
+
+PNG icons are generated at exactly 256 × 256 pixels.
+
+</div>
+
+</div>
+
+
+<script>
+
+
+// ======================================
+// DOWNLOAD SVG
+// ======================================
+
+function downloadSVG(id,name){
+
+    const svg =
+        document.getElementById(id);
+
+    const serializer =
+        new XMLSerializer();
+
+    let source =
+        serializer.serializeToString(svg);
+
+
+    if(!source.includes("xmlns=")){
+
+        source =
+        source.replace(
+            "<svg",
+            '<svg xmlns="http://www.w3.org/2000/svg"'
+        );
+
+    }
+
+
+    const blob =
+        new Blob(
+            [source],
+            {
+                type:"image/svg+xml"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        name + ".svg";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+
+// ======================================
+// SVG → PNG 256×256
+// ======================================
+
+function downloadPNG(id,name){
+
+    const svg =
+        document.getElementById(id);
+
+
+    const serializer =
+        new XMLSerializer();
+
+
+    let source =
+        serializer.serializeToString(svg);
+
+
+    if(!source.includes("xmlns=")){
+
+        source =
+        source.replace(
+            "<svg",
+            '<svg xmlns="http://www.w3.org/2000/svg"'
+        );
+
+    }
+
+
+    const svgBlob =
+        new Blob(
+            [source],
+            {
+                type:"image/svg+xml"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(svgBlob);
+
+
+    const img =
+        new Image();
+
+
+    img.onload = function(){
+
+        const canvas =
+            document.createElement("canvas");
+
+
+        // EXACT 256 × 256
+
+        canvas.width = 256;
+        canvas.height = 256;
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        ctx.clearRect(
+            0,
+            0,
+            256,
+            256
+        );
+
+
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            256,
+            256
+        );
+
+
+        canvas.toBlob(
+            function(blob){
+
+                const pngURL =
+                    URL.createObjectURL(blob);
+
+
+                const link =
+                    document.createElement("a");
+
+
+                link.href =
+                    pngURL;
+
+
+                link.download =
+                    name + "_256x256.png";
+
+
+                link.click();
+
+
+                URL.revokeObjectURL(pngURL);
+
+            },
+            "image/png"
+        );
+
+
+        URL.revokeObjectURL(url);
+
+    };
+
+
+    img.src = url;
+
+}
+
+
+
+// ======================================
+// DOWNLOAD ALL
+// ======================================
+
+function downloadAll(){
+
+    const icons = [
+
+        ["development","01_DEVELOPMENT"],
+        ["college","02_COLLEGE"],
+        ["projects","03_PROJECTS"],
+        ["resources","04_RESOURCES"],
+        ["personal","05_PERSONAL"]
+
+    ];
+
+
+    icons.forEach(
+        function(icon,index){
+
+            setTimeout(
+                function(){
+
+                    downloadPNG(
+                        icon[0],
+                        icon[1]
+                    );
+
+                },
+                index * 700
+            );
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
