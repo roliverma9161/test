@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerLens — Resume & Skill Analyzer</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #748096;
+      --border: #e6eaf0;
+      --primary: #6c63ff;
+      --primary2: #5148e5;
+      --success: #18a66b;
+      --danger: #e45151;
+      --warning: #e7a82f;
+      --sidebar: #111827;
+      --shadow: 0 12px 35px rgba(20, 30, 50, .08);
+    }
+
+    body.dark {
+      --bg: #0d1117;
+      --card: #151b24;
+      --text: #f2f5f9;
+      --muted: #98a3b5;
+      --border: #27303d;
+      --sidebar: #080c12;
+      --shadow: 0 12px 35px rgba(0,0,0,.25);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: .3s;
+    }
+
+    button,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: var(--sidebar);
+      color: white;
+      padding: 25px 16px;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 12px 30px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #7c72ff, #48d6c8);
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .logo h2 {
+      font-size: 21px;
+    }
+
+    .logo span {
+      color: #8f87ff;
+    }
+
+    .nav-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7e899c;
+      margin: 20px 12px 10px;
+    }
+
+    .nav-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: #9da7b8;
+      padding: 13px 14px;
+      border-radius: 11px;
+      margin-bottom: 5px;
+      transition: .2s;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: rgba(108, 99, 255, .18);
+      color: white;
+    }
+
+    .nav-item.active {
+      border-left: 3px solid #7b72ff;
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 250px;
+      padding: 28px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .topbar p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      font-size: 18px;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      background: linear-gradient(135deg, #635bff, #8b5cf6 55%, #22c7b8);
+      color: white;
+      border-radius: 22px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 18px 45px rgba(99,91,255,.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 35px solid rgba(255,255,255,.08);
+      border-radius: 50%;
+      right: -70px;
+      top: -80px;
+    }
+
+    .hero h2 {
+      font-size: 25px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: rgba(255,255,255,.83);
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(108,99,255,.12);
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    .stat-card h3 {
+      font-size: 27px;
+      margin-top: 15px;
+    }
+
+    .stat-card p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* ================= GRID ================= */
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 23px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .card-header h2 {
+      font-size: 18px;
+    }
+
+    .card-header span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ================= FORM ================= */
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 13px;
+      outline: none;
+      transition: .2s;
+    }
+
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(108,99,255,.1);
+    }
+
+    textarea {
+      min-height: 250px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .analyze-btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .analyze-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(108,99,255,.25);
+    }
+
+    /* ================= SCORE ================= */
+
+    .score-box {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .score-circle {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) 0deg, #e8ebf1 0deg);
+      display: grid;
+      place-items: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    body.dark .score-circle {
+      background: conic-gradient(var(--primary) 0deg, #29313d 0deg);
+    }
+
+    .score-circle::before {
+      content: "";
+      position: absolute;
+      width: 98px;
+      height: 98px;
+      background: var(--card);
+      border-radius: 50%;
+    }
+
+    .score-number {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .score-number strong {
+      display: block;
+      font-size: 28px;
+    }
+
+    .score-number small {
+      color: var(--muted);
+    }
+
+    .score-info h3 {
+      margin-bottom: 7px;
+    }
+
+    .score-info p {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    /* ================= SKILLS ================= */
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill {
+      padding: 8px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .skill.match {
+      background: rgba(24,166,107,.12);
+      color: var(--success);
+    }
+
+    .skill.missing {
+      background: rgba(228,81,81,.12);
+      color: var(--danger);
+    }
+
+    /* ================= RECOMMENDATIONS ================= */
+
+    .recommendation {
+      display: flex;
+      gap: 13px;
+      padding: 14px;
+      background: var(--bg);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .rec-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(108,99,255,.12);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .recommendation p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ================= PROGRESS ================= */
+
+    .progress-item {
+      margin-bottom: 17px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 7px;
+      font-size: 13px;
+    }
+
+    .progress-label span:last-child {
+      color: var(--muted);
+    }
+
+    .progress {
+      height: 8px;
+      border-radius: 20px;
+      background: var(--border);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), #22c7b8);
+      border-radius: inherit;
+      transition: width .7s ease;
+    }
+
+    /* ================= REPORT ================= */
+
+    .report-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #111827;
+      color: white;
+      padding: 13px 18px;
+      border-radius: 11px;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: .3s;
+      z-index: 1000;
+      font-size: 13px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 15px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1100px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:750px) {
+      .sidebar {
+        width: 70px;
+        padding: 18px 9px;
+      }
+
+      .logo {
+        justify-content: center;
+        padding: 5px 0 25px;
+      }
+
+      .logo h2,
+      .nav-item span,
+      .nav-title {
+        display: none;
+      }
+
+      .nav-item {
+        justify-content: center;
+        padding: 13px;
+      }
+
+      .main {
+        margin-left: 70px;
+        padding: 18px;
+      }
+
+      .topbar h1 {
+        font-size: 22px;
+      }
+
+      .hero {
+        padding: 23px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .score-box {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media(max-width:500px) {
+      .main {
+        padding: 12px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .topbar p {
+        max-width: 220px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .hero h2 {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= SIDEBAR ================= -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      <div class="logo-icon">🎯</div>
+      <h2>Career<span>Lens</span></h2>
+    </div>
+
+    <div class="nav-title">Workspace</div>
+
+    <div class="nav-item active">
+      <span>🏠</span>
+      <span>Dashboard</span>
+    </div>
+
+    <div class="nav-item">
+      <span>📄</span>
+      <span>Resume Analyzer</span>
+    </div>
+
+    <div class="nav-item">
+      <span>🧠</span>
+      <span>Skills</span>
+    </div>
+
+    <div class="nav-item">
+      <span>📊</span>
+      <span>Reports</span>
+    </div>
+
+    <div class="nav-title">Account</div>
+
+    <div class="nav-item">
+      <span>⚙️</span>
+      <span>Settings</span>
+    </div>
+
+  </aside>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="main">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+      <div>
+        <h1>Career Dashboard</h1>
+        <p>Analyze your resume and discover your career skill gaps.</p>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn">🌙</button>
+      </div>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <h2>🚀 Build a Resume That Matches Your Career Goal</h2>
+
+      <p>
+        Paste your resume, select your target role and let CareerLens
+        analyze your skills, keywords and improvement areas.
+      </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div>
+            <h3 id="scoreStat">0%</h3>
+            <p>Resume Match</p>
+          </div>
+
+          <div class="stat-icon">🎯</div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div>
+            <h3 id="matchedStat">0</h3>
+            <p>Matched Skills</p>
+          </div>
+
+          <div class="stat-icon">✓</div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div>
+            <h3 id="missingStat">0</h3>
+            <p>Missing Skills</p>
+          </div>
+
+          <div class="stat-icon">⚡</div>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div>
+            <h3 id="wordStat">0</h3>
+            <p>Resume Words</p>
+          </div>
+
+          <div class="stat-icon">📝</div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ANALYZER -->
+
+    <section class="workspace">
+
+      <!-- LEFT -->
+
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h2>📄 Resume Analyzer</h2>
+            <span>Paste your resume content below</span>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+
+          <label>Target Career Role</label>
+
+          <select id="role">
+
+            <option value="frontend">
+              Frontend Developer
+            </option>
+
+            <option value="backend">
+              Backend Developer
+            </option>
+
+            <option value="fullstack">
+              Full Stack Developer
+            </option>
+
+            <option value="data">
+              Data Analyst
+            </option>
+
+            <option value="uiux">
+              UI/UX Designer
+            </option>
+
+            <option value="cyber">
+              Cybersecurity Analyst
+            </option>
+
+            <option value="java">
+              Java Developer
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>Your Resume</label>
+
+          <textarea
+            id="resume"
+            placeholder="Paste your resume text here...
+
+Example:
+
+Roli Verma
+B.Tech Computer Science
+
+Skills:
+HTML, CSS, JavaScript, React, Java, SQL, Git
+
+Projects:
+E-commerce website
+Expense Tracker
+
+Experience:
+MERN Stack Developer Intern..."
+          ></textarea>
+
+        </div>
+
+
+        <button class="analyze-btn" id="analyzeBtn">
+          🔍 Analyze Resume
+        </button>
+
+      </div>
+
+
+      <!-- RIGHT -->
+
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h2>🎯 Resume Score</h2>
+            <span>Keyword-based demo analysis</span>
+          </div>
+        </div>
+
+
+        <div class="score-box">
+
+          <div class="score-circle" id="scoreCircle">
+
+            <div class="score-number">
+              <strong id="score">0%</strong>
+              <small>Match</small>
+            </div>
+
+          </div>
+
+
+          <div class="score-info">
+
+            <h3 id="scoreTitle">
+              Waiting for analysis
+            </h3>
+
+            <p id="scoreDescription">
+              Analyze your resume to see how well
+              your skills match the selected career role.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="card-header">
+          <h2>💡 Skill Match</h2>
+        </div>
+
+        <div class="skill-list" id="skills">
+
+          <span class="skill missing">
+            No analysis yet
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RESULTS -->
+
+    <section class="workspace">
+
+      <!-- MATCHED -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>✅ Matched Skills</h2>
+            <span>Skills detected in your resume</span>
+          </div>
+
+        </div>
+
+        <div class="skill-list" id="matchedSkills">
+          <span class="skill match">Waiting...</span>
+        </div>
+
+      </div>
+
+
+      <!-- MISSING -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>⚠️ Missing Skills</h2>
+            <span>Skills you may want to develop</span>
+          </div>
+
+        </div>
+
+        <div class="skill-list" id="missingSkills">
+          <span class="skill missing">Waiting...</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SKILL PROGRESS -->
+
+    <section class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>📊 Skill Coverage</h2>
+          <span>Target role skill analysis</span>
+        </div>
+
+      </div>
+
+      <div id="progressContainer">
+
+        <div class="progress-item">
+
+          <div class="progress-label">
+            <span>Overall Skill Coverage</span>
+            <span id="coverageText">0%</span>
+          </div>
+
+          <div class="progress">
+            <div
+              class="progress-bar"
+              id="coverageBar"
+            ></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <br>
+
+
+    <!-- RECOMMENDATIONS -->
+
+    <section class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>💡 Career Recommendations</h2>
+          <span>Suggestions based on your analysis</span>
+        </div>
+
+      </div>
+
+      <div id="recommendations">
+
+        <div class="recommendation">
+
+          <div class="rec-icon">🔍</div>
+
+          <div>
+            <strong>Analyze your resume</strong>
+
+            <p>
+              Select your target role and analyze your
+              resume to receive personalized skill suggestions.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <br>
+
+
+    <!-- REPORT -->
+
+    <section class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>📋 Career Report</h2>
+          <span>Save or copy your analysis</span>
+        </div>
+
+      </div>
+
+      <div class="report-actions">
+
+        <button class="secondary-btn" id="copyReport">
+          📋 Copy Report
+        </button>
+
+        <button class="secondary-btn" id="downloadReport">
+          ⬇️ Download Report
+        </button>
+
+        <button class="secondary-btn" id="clearData">
+          🗑️ Clear Data
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <footer>
+      CareerLens © 2026 • Built with HTML, CSS & JavaScript
+    </footer>
+
+  </main>
+
+
+  <!-- TOAST -->
+
+  <div class="toast" id="toast">
+    Analysis completed!
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       ROLE SKILL DATABASE
+    ========================================= */
+
+    const roles = {
+
+      frontend: {
+        name: "Frontend Developer",
+        skills: [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "React",
+          "Git",
+          "REST API",
+          "Responsive Design",
+          "TypeScript",
+          "Tailwind"
+        ]
+      },
+
+      backend: {
+        name: "Backend Developer",
+        skills: [
+          "Node.js",
+          "Express",
+          "SQL",
+          "MongoDB",
+          "REST API",
+          "Git",
+          "Authentication",
+          "API",
+          "Docker"
+        ]
+      },
+
+      fullstack: {
+        name: "Full Stack Developer",
+        skills: [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "React",
+          "Node.js",
+          "Express",
+          "MongoDB",
+          "SQL",
+          "REST API",
+          "Git",
+          "Authentication"
+        ]
+      },
+
+      data: {
+        name: "Data Analyst",
+        skills: [
+          "Excel",
+          "SQL",
+          "Python",
+          "Pandas",
+          "NumPy",
+          "Power BI",
+          "Tableau",
+          "Statistics",
+          "Data Visualization"
+        ]
+      },
+
+      uiux: {
+        name: "UI/UX Designer",
+        skills: [
+          "Figma",
+          "Wireframing",
+          "Prototyping",
+          "User Research",
+          "Typography",
+          "Responsive Design",
+          "UI Design",
+          "UX Design",
+          "Design System"
+        ]
+      },
+
+      cyber: {
+        name: "Cybersecurity Analyst",
+        skills: [
+          "Linux",
+          "Networking",
+          "Python",
+          "Cybersecurity",
+          "SIEM",
+          "OWASP",
+          "Cryptography",
+          "Penetration Testing",
+          "Firewalls"
+        ]
+      },
+
+      java: {
+        name: "Java Developer",
+        skills: [
+          "Java",
+          "OOP",
+          "SQL",
+          "Spring Boot",
+          "Spring",
+          "Hibernate",
+          "REST API",
+          "Maven",
+          "Git",
+          "JDBC"
+        ]
+      }
+
+    };
+
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const resumeInput =
+      document.getElementById("resume");
+
+    const roleInput =
+      document.getElementById("role");
+
+    const analyzeBtn =
+      document.getElementById("analyzeBtn");
+
+    const score =
+      document.getElementById("score");
+
+    const scoreCircle =
+      document.getElementById("scoreCircle");
+
+    const scoreTitle =
+      document.getElementById("scoreTitle");
+
+    const scoreDescription =
+      document.getElementById("scoreDescription");
+
+    const matchedSkills =
+      document.getElementById("matchedSkills");
+
+    const missingSkills =
+      document.getElementById("missingSkills");
+
+    const skills =
+      document.getElementById("skills");
+
+    const recommendations =
+      document.getElementById("recommendations");
+
+    const scoreStat =
+      document.getElementById("scoreStat");
+
+    const matchedStat =
+      document.getElementById("matchedStat");
+
+    const missingStat =
+      document.getElementById("missingStat");
+
+    const wordStat =
+      document.getElementById("wordStat");
+
+    const coverageBar =
+      document.getElementById("coverageBar");
+
+    const coverageText =
+      document.getElementById("coverageText");
+
+    const toast =
+      document.getElementById("toast");
+
+
+    /* =========================================
+       ESCAPE HTML
+    ========================================= */
+
+    function escapeHTML(text) {
+
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    function showToast(message) {
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 2500);
+
+    }
+
+
+    /* =========================================
+       NORMALIZE TEXT
+    ========================================= */
+
+    function normalize(text) {
+
+      return text
+        .toLowerCase()
+        .replace(/[^\w\s+#.-]/g, " ");
+
+    }
+
+
+    /* =========================================
+       ANALYZE RESUME
+    ========================================= */
+
+    function analyzeResume() {
+
+      const resume =
+        resumeInput.value.trim();
+
+      if (!resume) {
+
+        showToast("Please paste your resume first.");
+
+        resumeInput.focus();
+
+        return;
+
+      }
+
+
+      const roleKey =
+        roleInput.value;
+
+      const role =
+        roles[roleKey];
+
+      const text =
+        normalize(resume);
+
+
+      /* WORD COUNT */
+
+      const words =
+        resume.split(/\s+/).filter(Boolean);
+
+      wordStat.textContent =
+        words.length;
+
+
+      /* MATCH SKILLS */
+
+      const matched = [];
+
+      const missing = [];
+
+
+      role.skills.forEach(skill => {
+
+        const normalizedSkill =
+          normalize(skill);
+
+        if (
+          text.includes(normalizedSkill)
+        ) {
+
+          matched.push(skill);
+
+        } else {
+
+          missing.push(skill);
+
+        }
+
+      });
+
+
+      const percentage =
+        Math.round(
+          (matched.length / role.skills.length) * 100
+        );
+
+
+      /* SCORE */
+
+      score.textContent =
+        percentage + "%";
+
+      scoreStat.textContent =
+        percentage + "%";
+
+      matchedStat.textContent =
+        matched.length;
+
+      missingStat.textContent =
+        missing.length;
+
+
+      /* CIRCLE */
+
+      const degrees =
+        percentage * 3.6;
+
+      scoreCircle.style.background =
+        `conic-gradient(
+          var(--primary) ${degrees}deg,
+          var(--border) ${degrees}deg
+        )`;
+
+
+      /* SCORE MESSAGE */
+
+      if (percentage >= 80) {
+
+        scoreTitle.textContent =
+          "Strong Skill Match 🚀";
+
+        scoreDescription.textContent =
+          `Your resume contains many keywords relevant to ${role.name}.`;
+
+      }
+
+      else if (percentage >= 50) {
+
+        scoreTitle.textContent =
+          "Good Foundation 👍";
+
+        scoreDescription.textContent =
+          "You have several relevant skills, but there are still some areas to improve.";
+
+      }
+
+      else {
+
+        scoreTitle.textContent =
+          "More Skills Needed 📚";
+
+        scoreDescription.textContent =
+          `Consider developing more skills related to ${role.name}.`;
+
+      }
+
+
+      /* SKILL SUMMARY */
+
+      skills.innerHTML = "";
+
+      matched.forEach(skill => {
+
+        skills.innerHTML += `
+          <span class="skill match">
+            ✓ ${escapeHTML(skill)}
+          </span>
+        `;
+
+      });
+
+      missing.forEach(skill => {
+
+        skills.innerHTML += `
+          <span class="skill missing">
+            + ${escapeHTML(skill)}
+          </span>
+        `;
+
+      });
+
+
+      /* MATCHED */
+
+      if (matched.length === 0) {
+
+        matchedSkills.innerHTML =
+          `<span class="skill missing">
+             No matching skills detected
+           </span>`;
+
+      } else {
+
+        matchedSkills.innerHTML =
+          matched.map(skill => `
+            <span class="skill match">
+              ✓ ${escapeHTML(skill)}
+            </span>
+          `).join("");
+
+      }
+
+
+      /* MISSING */
+
+      if (missing.length === 0) {
+
+        missingSkills.innerHTML =
+          `<span class="skill match">
+             🎉 No major skill gaps detected
+           </span>`;
+
+      } else {
+
+        missingSkills.innerHTML =
+          missing.map(skill => `
+            <span class="skill missing">
+              + ${escapeHTML(skill)}
+            </span>
+          `).join("");
+
+      }
+
+
+      /* PROGRESS */
+
+      coverageBar.style.width =
+        percentage + "%";
+
+      coverageText.textContent =
+        percentage + "%";
+
+
+      /* RECOMMENDATIONS */
+
+      generateRecommendations(
+        missing,
+        role
+      );
+
+
+      /* SAVE */
+
+      localStorage.setItem(
+        "careerLensResume",
+        resume
+      );
+
+      localStorage.setItem(
+        "careerLensRole",
+        roleKey
+      );
+
+
+      showToast(
+        "Resume analysis completed! 🎯"
+      );
+
+    }
+
+
+    /* =========================================
+       RECOMMENDATIONS
+    ========================================= */
+
+    function generateRecommendations(
+      missing,
+      role
+    ) {
+
+      recommendations.innerHTML = "";
+
+
+      if (missing.length === 0) {
+
+        recommendations.innerHTML = `
+
+          <div class="recommendation">
+
+            <div class="rec-icon">
+              🚀
+            </div>
+
+            <div>
+
+              <strong>
+                Keep building projects
+              </strong>
+
+              <p>
+                Your resume contains the main
+                detected skills for ${escapeHTML(role.name)}.
+                Strengthen your profile with real projects,
+                measurable results and relevant experience.
+              </p>
+
+            </div>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      missing.slice(0, 5).forEach(
+        (skill, index) => {
+
+          const tips = [
+            `Consider learning ${skill} and adding a practical project to your portfolio.`,
+            `Practice ${skill} through a small real-world project.`,
+            `Add a measurable project demonstrating ${skill}.`,
+            `Study the fundamentals of ${skill} and document what you build.`,
+            `Use ${skill} in a project related to your target role.`
+          ];
+
+          recommendations.innerHTML += `
+
+            <div class="recommendation">
+
+              <div class="rec-icon">
+                ${index + 1}
+              </div>
+
+              <div>
+
+                <strong>
+                  Improve ${escapeHTML(skill)}
+                </strong>
+
+                <p>
+                  ${tips[index]}
+                </p>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       ANALYZE BUTTON
+    ========================================= */
+
+    analyzeBtn.addEventListener(
+      "click",
+      analyzeResume
+    );
+
+
+    /* =========================================
+       COPY REPORT
+    ========================================= */
+
+    document
+      .getElementById("copyReport")
+      .addEventListener("click", () => {
+
+        const role =
+          roles[roleInput.value];
+
+        const report = `
+
+CAREERLENS REPORT
+==============================
+
+Target Role:
+${role.name}
+
+Resume Match:
+${score.textContent}
+
+Matched Skills:
+${matchedSkills.innerText}
+
+Missing Skills:
+${missingSkills.innerText}
+
+Resume Words:
+${wordStat.textContent}
+
+Recommendations:
+${recommendations.innerText}
+
+==============================
+Generated by CareerLens
+
+        `.trim();
+
+
+        navigator.clipboard
+          .writeText(report)
+          .then(() => {
+
+            showToast(
+              "Report copied to clipboard! 📋"
+            );
+
+          });
+
+      });
+
+
+    /* =========================================
+       DOWNLOAD REPORT
+    ========================================= */
+
+    document
+      .getElementById("downloadReport")
+      .addEventListener("click", () => {
+
+        const role =
+          roles[roleInput.value];
+
+        const report = `
+
+CAREERLENS CAREER REPORT
+
+Target Role:
+${role.name}
+
+Resume Match:
+${score.textContent}
+
+Matched Skills:
+${matchedSkills.innerText}
+
+Missing Skills:
+${missingSkills.innerText}
+
+Resume Word Count:
+${wordStat.textContent}
+
+Recommendations:
+
+${recommendations.innerText}
+
+--------------------------------
+
+Note:
+This is a keyword-based demo analysis.
+It should not be treated as an actual hiring or ATS decision.
+
+Generated by CareerLens.
+
+        `.trim();
+
+
+        const blob =
+          new Blob(
+            [report],
+            { type: "text/plain" }
+          );
+
+
+        const url =
+          URL.createObjectURL(blob);
+
+
+        const link =
+          document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+          "CareerLens-Report.txt";
+
+        link.click();
+
+        URL.revokeObjectURL(url);
+
+        showToast(
+          "Report downloaded! ⬇️"
+        );
+
+      });
+
+
+    /* =========================================
+       CLEAR DATA
+    ========================================= */
+
+    document
+      .getElementById("clearData")
+      .addEventListener("click", () => {
+
+        resumeInput.value = "";
+
+        score.textContent = "0%";
+
+        scoreStat.textContent = "0%";
+
+        matchedStat.textContent = "0";
+
+        missingStat.textContent = "0";
+
+        wordStat.textContent = "0";
+
+        scoreTitle.textContent =
+          "Waiting for analysis";
+
+        scoreDescription.textContent =
+          "Analyze your resume to see how well your skills match the selected career role.";
+
+        scoreCircle.style.background =
+          "conic-gradient(var(--primary) 0deg, var(--border) 0deg)";
+
+        matchedSkills.innerHTML =
+          `<span class="skill match">Waiting...</span>`;
+
+        missingSkills.innerHTML =
+          `<span class="skill missing">Waiting...</span>`;
+
+        skills.innerHTML =
+          `<span class="skill missing">No analysis yet</span>`;
+
+        coverageBar.style.width = "0%";
+
+        coverageText.textContent = "0%";
+
+        recommendations.innerHTML = `
+
+          <div class="recommendation">
+
+            <div class="rec-icon">
+              🔍
+            </div>
+
+            <div>
+
+              <strong>
+                Analyze your resume
+              </strong>
+
+              <p>
+                Select your target role and analyze
+                your resume to receive suggestions.
+              </p>
+
+            </div>
+
+          </div>
+
+        `;
+
+        localStorage.removeItem(
+          "careerLensResume"
+        );
+
+        localStorage.removeItem(
+          "careerLensRole"
+        );
+
+        showToast("Data cleared.");
+
+      });
+
+
+    /* =========================================
+       THEME
+    ========================================= */
+
+    const themeBtn =
+      document.getElementById("themeBtn");
+
+
+    function updateThemeIcon() {
+
+      themeBtn.textContent =
+        document.body.classList.contains("dark")
+          ? "☀️"
+          : "🌙";
+
+    }
+
+
+    themeBtn.addEventListener(
+      "click",
+      () => {
+
+        document.body.classList.toggle(
+          "dark"
+        );
+
+        const dark =
+          document.body.classList.contains(
+            "dark"
+          );
+
+        localStorage.setItem(
+          "careerLensTheme",
+          dark ? "dark" : "light"
+        );
+
+        updateThemeIcon();
+
+      }
+    );
+
+
+    /* =========================================
+       LOAD SAVED DATA
+    ========================================= */
+
+    window.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        const savedTheme =
+          localStorage.getItem(
+            "careerLensTheme"
+          );
+
+        if (savedTheme === "dark") {
+
+          document.body.classList.add(
+            "dark"
+          );
+
+        }
+
+        updateThemeIcon();
+
+
+        const savedResume =
+          localStorage.getItem(
+            "careerLensResume"
+          );
+
+        const savedRole =
+          localStorage.getItem(
+            "careerLensRole"
+          );
+
+
+        if (savedResume) {
+
+          resumeInput.value =
+            savedResume;
+
+        }
+
+
+        if (savedRole &&
+            roles[savedRole]) {
+
+          roleInput.value =
+            savedRole;
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
+    document
+      .querySelectorAll(".nav-item")
+      .forEach(item => {
+
+        item.addEventListener(
+          "click",
+          () => {
+
+            document
+              .querySelectorAll(".nav-item")
+              .forEach(nav =>
+                nav.classList.remove(
+                  "active"
+                )
+              );
+
+            item.classList.add(
+              "active"
+            );
+
+          }
+        );
+
+      });
+
+  </script>
+
+</body>
+</html>
