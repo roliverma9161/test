@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MindMapX — Interactive Mind Mapping</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+:root{
+    --bg:#090d16;
+    --sidebar:#0d1320;
+    --card:#111827;
+    --card2:#172033;
+    --text:#f5f7fb;
+    --muted:#8994a7;
+    --border:#273246;
+    --primary:#7c5cff;
+    --primary2:#9b6cff;
+    --green:#22c55e;
+    --red:#ef4444;
+    --yellow:#f59e0b;
+}
+
+body{
+    min-height:100vh;
+    background:var(--bg);
+    color:var(--text);
+    overflow:hidden;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:245px;
+    height:100vh;
+    background:var(--sidebar);
+    border-right:1px solid var(--border);
+    padding:24px 17px;
+    z-index:20;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:43px;
+    height:43px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--primary),#b15cff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:21px;
+    box-shadow:0 10px 30px #7c5cff35;
+}
+
+.logo h2{
+    font-size:20px;
+}
+
+.logo h2 span{
+    color:var(--primary2);
+}
+
+.section-title{
+    color:#5f6b7f;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.6px;
+    margin:20px 10px 10px;
+}
+
+.menu{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 13px;
+    border-radius:11px;
+    color:var(--muted);
+    margin-bottom:6px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu:hover,
+.menu.active{
+    background:#7c5cff17;
+    color:white;
+}
+
+.menu.active{
+    border-left:3px solid var(--primary);
+}
+
+.menu-icon{
+    width:22px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    bottom:20px;
+    left:17px;
+    right:17px;
+}
+
+.theme-btn{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    padding:11px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:245px;
+    height:100vh;
+    position:relative;
+}
+
+.topbar{
+    height:75px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    background:var(--bg);
+    position:relative;
+    z-index:10;
+}
+
+.project-title h1{
+    font-size:21px;
+}
+
+.project-title p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:4px;
+}
+
+.top-actions{
+    display:flex;
+    gap:8px;
+}
+
+.top-btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    padding:9px 13px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.top-btn:hover{
+    border-color:var(--primary);
+}
+
+.top-btn.primary{
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    border:0;
+}
+
+/* ================= CANVAS ================= */
+
+.canvas{
+    position:absolute;
+    top:75px;
+    left:0;
+    right:0;
+    bottom:0;
+    overflow:hidden;
+
+    background-image:
+        linear-gradient(#ffffff06 1px,transparent 1px),
+        linear-gradient(90deg,#ffffff06 1px,transparent 1px);
+
+    background-size:30px 30px;
+}
+
+/* ================= SVG ================= */
+
+.connections{
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    pointer-events:none;
+}
+
+.connection{
+    fill:none;
+    stroke:#59657b;
+    stroke-width:2;
+    opacity:.8;
+}
+
+/* ================= NODES ================= */
+
+.node{
+    position:absolute;
+    min-width:150px;
+    max-width:220px;
+    padding:13px 17px;
+    border-radius:13px;
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:0 12px 35px #0005;
+    cursor:grab;
+    user-select:none;
+    z-index:5;
+    transition:border-color .2s,box-shadow .2s;
+}
+
+.node:hover{
+    border-color:var(--primary);
+    box-shadow:0 15px 40px #0007;
+}
+
+.node:active{
+    cursor:grabbing;
+}
+
+.node.selected{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px #7c5cff20,0 15px 40px #0007;
+}
+
+.node-title{
+    font-size:14px;
+    font-weight:600;
+    text-align:center;
+    word-break:break-word;
+}
+
+.node small{
+    display:block;
+    text-align:center;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:4px;
+}
+
+/* ROOT NODE */
+
+.node.root{
+    min-width:190px;
+    padding:18px 20px;
+    border:1px solid #7c5cff80;
+    background:linear-gradient(135deg,#17182f,#151827);
+}
+
+.node.root .node-title{
+    font-size:17px;
+}
+
+/* COLORS */
+
+.node.blue{
+    border-color:#3b82f655;
+}
+
+.node.green{
+    border-color:#22c55e55;
+}
+
+.node.orange{
+    border-color:#f59e0b55;
+}
+
+.node.pink{
+    border-color:#ec489955;
+}
+
+.node.cyan{
+    border-color:#06b6d455;
+}
+
+/* ================= TOOLBAR ================= */
+
+.canvas-toolbar{
+    position:absolute;
+    left:20px;
+    bottom:20px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:6px;
+    display:flex;
+    gap:5px;
+    z-index:15;
+    box-shadow:0 10px 30px #0005;
+}
+
+.tool-btn{
+    width:38px;
+    height:36px;
+    border:0;
+    background:transparent;
+    color:var(--text);
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.tool-btn:hover{
+    background:#7c5cff18;
+}
+
+/* ================= ZOOM ================= */
+
+.zoom{
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    padding:5px;
+    z-index:15;
+}
+
+.zoom button{
+    width:35px;
+    height:32px;
+    background:transparent;
+    border:0;
+    color:var(--text);
+    cursor:pointer;
+    border-radius:7px;
+}
+
+.zoom button:hover{
+    background:#7c5cff18;
+}
+
+.zoom-value{
+    width:55px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* ================= HELP ================= */
+
+.help{
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:10px 14px;
+    border-radius:10px;
+    color:var(--muted);
+    font-size:11px;
+    z-index:15;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:#0009;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:400px;
+    max-width:90%;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:25px;
+    box-shadow:0 25px 70px #0008;
+}
+
+.modal h2{
+    margin-bottom:7px;
+}
+
+.modal p{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.input{
+    width:100%;
+    padding:12px 14px;
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:9px;
+    color:var(--text);
+    outline:none;
+}
+
+.input:focus{
+    border-color:var(--primary);
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:9px;
+    margin-top:18px;
+}
+
+.modal-btn{
+    padding:10px 16px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text);
+    cursor:pointer;
+}
+
+.modal-btn.primary{
+    border:0;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#182133;
+    border:1px solid var(--border);
+    color:white;
+    padding:13px 18px;
+    border-radius:11px;
+    opacity:0;
+    transform:translateY(30px);
+    transition:.3s;
+    z-index:200;
+    box-shadow:0 15px 40px #0007;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+    .sidebar{
+        width:68px;
+        padding:20px 9px;
+    }
+
+    .logo{
+        justify-content:center;
+    }
+
+    .logo h2,
+    .section-title,
+    .menu span,
+    .sidebar-bottom{
+        display:none;
+    }
+
+    .menu{
+        justify-content:center;
+    }
+
+    .main{
+        margin-left:68px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .top-actions .top-btn span{
+        display:none;
+    }
+
+    .project-title h1{
+        font-size:17px;
+    }
+
+    .help{
+        display:none;
+    }
+}
+
+@media(max-width:500px){
+
+    .topbar{
+        height:65px;
+    }
+
+    .canvas{
+        top:65px;
+    }
+
+    .top-actions{
+        gap:4px;
+    }
+
+    .top-btn{
+        padding:8px 9px;
+    }
+
+    .node{
+        min-width:130px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">🧠</div>
+
+        <h2>Mind<span>MapX</span></h2>
+    </div>
+
+
+    <div class="section-title">
+        Workspace
+    </div>
+
+
+    <div class="menu active">
+        <div class="menu-icon">🗺️</div>
+        <span>Mind Map</span>
+    </div>
+
+
+    <div class="menu" id="newMapMenu">
+        <div class="menu-icon">✨</div>
+        <span>New Map</span>
+    </div>
+
+
+    <div class="menu" id="saveMenu">
+        <div class="menu-icon">💾</div>
+        <span>Save Map</span>
+    </div>
+
+
+    <div class="menu" id="exportMenu">
+        <div class="menu-icon">📥</div>
+        <span>Export</span>
+    </div>
+
+
+    <div class="section-title">
+        Tools
+    </div>
+
+
+    <div class="menu" id="addNodeMenu">
+        <div class="menu-icon">➕</div>
+        <span>Add Node</span>
+    </div>
+
+
+    <div class="menu" id="deleteMenu">
+        <div class="menu-icon">🗑️</div>
+        <span>Delete Node</span>
+    </div>
+
+
+    <div class="sidebar-bottom">
+
+        <button class="theme-btn" id="themeBtn">
+            🌙 &nbsp; Theme
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+    <header class="topbar">
+
+        <div class="project-title">
+
+            <h1>My Learning Map</h1>
+
+            <p>
+                Organize your ideas visually
+            </p>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button class="top-btn" id="clearBtn">
+                🗑️ <span>Clear</span>
+            </button>
+
+            <button class="top-btn" id="saveBtn">
+                💾 <span>Save</span>
+            </button>
+
+            <button class="top-btn primary" id="addBtn">
+                ＋ <span>Add Idea</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CANVAS ================= -->
+
+    <section class="canvas" id="canvas">
+
+
+        <svg class="connections" id="connections"></svg>
+
+
+        <!-- ROOT -->
+
+        <div
+            class="node root"
+            id="node-root"
+            data-id="root"
+            style="left:45%;top:40%;"
+        >
+
+            <div class="node-title">
+                🚀 My Learning Journey
+            </div>
+
+            <small>
+                Central Topic
+            </small>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="canvas-toolbar">
+
+            <button class="tool-btn" id="centerBtn" title="Center">
+                ⌖
+            </button>
+
+            <button class="tool-btn" id="addToolbar" title="Add Node">
+                ＋
+            </button>
+
+            <button class="tool-btn" id="editToolbar" title="Edit">
+                ✏️
+            </button>
+
+            <button class="tool-btn" id="deleteToolbar" title="Delete">
+                🗑️
+            </button>
+
+        </div>
+
+
+        <!-- ZOOM -->
+
+        <div class="zoom">
+
+            <button id="zoomOut">
+                −
+            </button>
+
+            <div class="zoom-value" id="zoomValue">
+                100%
+            </div>
+
+            <button id="zoomIn">
+                ＋
+            </button>
+
+        </div>
+
+
+        <div class="help">
+            Drag nodes • Click a node to select • Add ideas
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal-overlay" id="modal">
+
+    <div class="modal">
+
+        <h2 id="modalTitle">
+            Add New Idea
+        </h2>
+
+        <p>
+            Enter the name of your new mind-map node.
+        </p>
+
+        <input
+            type="text"
+            class="input"
+            id="nodeInput"
+            placeholder="e.g. Java, DBMS, React..."
+            maxlength="40"
+        >
+
+
+        <div class="modal-actions">
+
+            <button class="modal-btn" id="cancelBtn">
+                Cancel
+            </button>
+
+            <button class="modal-btn primary" id="confirmBtn">
+                Add Idea
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast">
+    Saved successfully!
+</div>
+
+
+<script>
+
+/* =========================================
+   STATE
+========================================= */
+
+let nodes = [];
+
+let selectedNode = null;
+
+let editingNode = null;
+
+let zoomLevel = 1;
+
+
+/* =========================================
+   DOM
+========================================= */
+
+const canvas =
+    document.getElementById("canvas");
+
+const svg =
+    document.getElementById("connections");
+
+const modal =
+    document.getElementById("modal");
+
+const nodeInput =
+    document.getElementById("nodeInput");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const confirmBtn =
+    document.getElementById("confirmBtn");
+
+const toast =
+    document.getElementById("toast");
+
+
+/* =========================================
+   DEFAULT ROOT
+========================================= */
+
+function defaultData(){
+
+    return [
+
+        {
+            id:"root",
+            parent:null,
+            text:"🚀 My Learning Journey",
+            x:45,
+            y:40,
+            root:true
+        }
+
+    ];
+
+}
+
+
+/* =========================================
+   LOAD
+========================================= */
+
+function loadData(){
+
+    const saved =
+        localStorage.getItem("mindmapxData");
+
+    if(saved){
+
+        try{
+
+            nodes = JSON.parse(saved);
+
+        }
+        catch{
+
+            nodes = defaultData();
+
+        }
+
+    }
+    else{
+
+        nodes = defaultData();
+
+    }
+
+    render();
+
+}
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        "mindmapxData",
+        JSON.stringify(nodes)
+    );
+
+    showToast("💾 Mind map saved");
+
+}
+
+
+/* =========================================
+   CREATE NODE
+========================================= */
+
+function createNode(data){
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "node " +
+        (data.root ? "root " : "") +
+        getColorClass(data.id);
+
+    div.id =
+        "node-" + data.id;
+
+    div.dataset.id =
+        data.id;
+
+    div.style.left =
+        data.x + "%";
+
+    div.style.top =
+        data.y + "%";
+
+
+    div.innerHTML = `
+
+        <div class="node-title">
+            ${escapeHTML(data.text)}
+        </div>
+
+        <small>
+            ${data.root ? "Central Topic" : "Idea"}
+        </small>
+
+    `;
+
+
+    div.addEventListener(
+        "click",
+        function(e){
+
+            e.stopPropagation();
+
+            selectNode(data.id);
+
+        }
+    );
+
+
+    makeDraggable(div,data);
+
+
+    canvas.appendChild(div);
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function render(){
+
+    document
+        .querySelectorAll(".node:not(.root)")
+        .forEach(el=>el.remove());
+
+
+    const root =
+        document.getElementById("node-root");
+
+    if(root){
+
+        const rootData =
+            nodes.find(n=>n.id==="root");
+
+        if(rootData){
+
+            root.style.left =
+                rootData.x + "%";
+
+            root.style.top =
+                rootData.y + "%";
+
+            root.querySelector(".node-title")
+                .textContent =
+                rootData.text;
+
+        }
+
+    }
+
+
+    nodes
+        .filter(n=>n.id!=="root")
+        .forEach(createNode);
+
+
+    if(selectedNode){
+
+        const exists =
+            nodes.some(n=>n.id===selectedNode);
+
+        if(exists){
+
+            document
+                .getElementById("node-"+selectedNode)
+                ?.classList.add("selected");
+
+        }
+        else{
+
+            selectedNode = null;
+
+        }
+
+    }
+
+
+    drawConnections();
+
+}
+
+
+/* =========================================
+   COLOR
+========================================= */
+
+function getColorClass(id){
+
+    const colors = [
+        "blue",
+        "green",
+        "orange",
+        "pink",
+        "cyan"
+    ];
+
+    let sum = 0;
+
+    for(let char of id){
+
+        sum += char.charCodeAt(0);
+
+    }
+
+    return colors[sum % colors.length];
+
+}
+
+
+/* =========================================
+   SELECT
+========================================= */
+
+function selectNode(id){
+
+    selectedNode = id;
+
+    document
+        .querySelectorAll(".node")
+        .forEach(n=>{
+            n.classList.remove("selected");
+        });
+
+
+    const node =
+        document.getElementById(
+            "node-"+id
+        );
+
+    if(node){
+
+        node.classList.add("selected");
+
+    }
+
+}
+
+
+/* =========================================
+   ADD NODE
+========================================= */
+
+function openAddModal(){
+
+    if(!selectedNode){
+
+        selectedNode = "root";
+
+    }
+
+    editingNode = null;
+
+    modalTitle.textContent =
+        "Add New Idea";
+
+    confirmBtn.textContent =
+        "Add Idea";
+
+    nodeInput.value = "";
+
+    modal.classList.add("show");
+
+    setTimeout(()=>{
+        nodeInput.focus();
+    },100);
+
+}
+
+
+/* =========================================
+   EDIT NODE
+========================================= */
+
+function editSelected(){
+
+    if(!selectedNode){
+
+        showToast("Select a node first");
+
+        return;
+
+    }
+
+
+    const data =
+        nodes.find(
+            n=>n.id===selectedNode
+        );
+
+    if(!data){
+
+        return;
+
+    }
+
+
+    editingNode = data.id;
+
+    modalTitle.textContent =
+        "Edit Idea";
+
+    confirmBtn.textContent =
+        "Save Changes";
+
+    nodeInput.value =
+        data.text;
+
+    modal.classList.add("show");
+
+    setTimeout(()=>{
+        nodeInput.focus();
+        nodeInput.select();
+    },100);
+
+}
+
+
+/* =========================================
+   CONFIRM MODAL
+========================================= */
+
+confirmBtn.onclick = ()=>{
+
+    const text =
+        nodeInput.value.trim();
+
+    if(!text){
+
+        showToast("⚠️ Enter an idea");
+
+        return;
+
+    }
+
+
+    /* EDIT */
+
+    if(editingNode){
+
+        const node =
+            nodes.find(
+                n=>n.id===editingNode
+            );
+
+        if(node){
+
+            node.text = text;
+
+        }
+
+        closeModal();
+
+        render();
+
+        saveData();
+
+        showToast("✏️ Idea updated");
+
+        return;
+
+    }
+
+
+    /* ADD */
+
+    const parent =
+        nodes.find(
+            n=>n.id===selectedNode
+        ) || nodes[0];
+
+
+    const id =
+        "node_" +
+        Date.now();
+
+
+    const index =
+        nodes.filter(
+            n=>n.parent===parent.id
+        ).length;
+
+
+    const angle =
+        index * 55 - 25;
+
+
+    const radians =
+        angle * Math.PI / 180;
+
+
+    const distance = 17;
+
+
+    let x =
+        parent.x +
+        Math.cos(radians) * distance;
+
+
+    let y =
+        parent.y +
+        Math.sin(radians) * distance;
+
+
+    /* Keep node inside canvas */
+
+    x = Math.max(5,Math.min(82,x));
+
+    y = Math.max(12,Math.min(82,y));
+
+
+    nodes.push({
+
+        id:id,
+
+        parent:parent.id,
+
+        text:text,
+
+        x:x,
+
+        y:y,
+
+        root:false
+
+    });
+
+
+    selectedNode = id;
+
+    closeModal();
+
+    render();
+
+    saveData();
+
+    showToast("✨ New idea added");
+
+};
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal(){
+
+    modal.classList.remove("show");
+
+    nodeInput.value = "";
+
+    editingNode = null;
+
+}
+
+
+document
+    .getElementById("cancelBtn")
+    .onclick = closeModal;
+
+
+modal.addEventListener(
+    "click",
+    e=>{
+
+        if(e.target===modal){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+nodeInput.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.key==="Enter"){
+
+            confirmBtn.click();
+
+        }
+
+        if(e.key==="Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   DELETE
+========================================= */
+
+function deleteSelected(){
+
+    if(!selectedNode){
+
+        showToast("Select a node first");
+
+        return;
+
+    }
+
+
+    if(selectedNode==="root"){
+
+        showToast(
+            "⚠️ Central topic cannot be deleted"
+        );
+
+        return;
+
+    }
+
+
+    const idsToDelete =
+        collectChildren(selectedNode);
+
+
+    idsToDelete.push(selectedNode);
+
+
+    nodes =
+        nodes.filter(
+            n=>!idsToDelete.includes(n.id)
+        );
+
+
+    selectedNode = null;
+
+    render();
+
+    saveData();
+
+    showToast("🗑️ Node deleted");
+
+}
+
+
+/* =========================================
+   COLLECT CHILDREN
+========================================= */
+
+function collectChildren(parentId){
+
+    let result = [];
+
+    const children =
+        nodes.filter(
+            n=>n.parent===parentId
+        );
+
+
+    children.forEach(child=>{
+
+        result.push(child.id);
+
+        result =
+            result.concat(
+                collectChildren(child.id)
+            );
+
+    });
+
+
+    return result;
+
+}
+
+
+/* =========================================
+   DRAG
+========================================= */
+
+function makeDraggable(element,data){
+
+    let dragging = false;
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+
+    element.addEventListener(
+        "mousedown",
+        e=>{
+
+            if(e.button!==0){
+
+                return;
+
+            }
+
+
+            dragging = true;
+
+            selectNode(data.id);
+
+
+            const rect =
+                element.getBoundingClientRect();
+
+
+            offsetX =
+                e.clientX - rect.left;
+
+            offsetY =
+                e.clientY - rect.top;
+
+
+            document.body.style.userSelect =
+                "none";
+
+        }
+    );
+
+
+    document.addEventListener(
+        "mousemove",
+        e=>{
+
+            if(!dragging){
+
+                return;
+
+            }
+
+
+            const canvasRect =
+                canvas.getBoundingClientRect();
+
+
+            let x =
+                ((e.clientX -
+                    canvasRect.left -
+                    offsetX)
+                    / canvasRect.width) * 100;
+
+
+            let y =
+                ((e.clientY -
+                    canvasRect.top -
+                    offsetY)
+                    / canvasRect.height) * 100;
+
+
+            x =
+                Math.max(
+                    1,
+                    Math.min(85,x)
+                );
+
+
+            y =
+                Math.max(
+                    10,
+                    Math.min(85,y)
+                );
+
+
+            data.x = x;
+            data.y = y;
+
+
+            element.style.left =
+                x + "%";
+
+            element.style.top =
+                y + "%";
+
+
+            drawConnections();
+
+        }
+    );
+
+
+    document.addEventListener(
+        "mouseup",
+        ()=>{
+
+            if(dragging){
+
+                dragging = false;
+
+                document.body.style.userSelect =
+                    "";
+
+                saveData();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CONNECTIONS
+========================================= */
+
+function drawConnections(){
+
+    svg.innerHTML = "";
+
+
+    nodes.forEach(node=>{
+
+        if(!node.parent){
+
+            return;
+
+        }
+
+
+        const parent =
+            nodes.find(
+                n=>n.id===node.parent
+            );
+
+
+        if(!parent){
+
+            return;
+
+        }
+
+
+        const parentEl =
+            document.getElementById(
+                "node-"+parent.id
+            );
+
+
+        const nodeEl =
+            document.getElementById(
+                "node-"+node.id
+            );
+
+
+        if(!parentEl || !nodeEl){
+
+            return;
+
+        }
+
+
+        const canvasRect =
+            canvas.getBoundingClientRect();
+
+
+        const p =
+            parentEl.getBoundingClientRect();
+
+        const c =
+            nodeEl.getBoundingClientRect();
+
+
+        const x1 =
+            p.left +
+            p.width/2 -
+            canvasRect.left;
+
+
+        const y1 =
+            p.top +
+            p.height/2 -
+            canvasRect.top;
+
+
+        const x2 =
+            c.left +
+            c.width/2 -
+            canvasRect.left;
+
+
+        const y2 =
+            c.top +
+            c.height/2 -
+            canvasRect.top;
+
+
+        const dx =
+            Math.abs(x2-x1) * .5;
+
+
+        const path =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "path"
+            );
+
+
+        const d =
+            `M ${x1} ${y1}
+             C ${x1+dx} ${y1},
+               ${x2-dx} ${y2},
+               ${x2} ${y2}`;
+
+
+        path.setAttribute(
+            "d",
+            d
+        );
+
+        path.classList.add(
+            "connection"
+        );
+
+
+        svg.appendChild(path);
+
+    });
+
+}
+
+
+/* =========================================
+   ZOOM
+========================================= */
+
+document
+    .getElementById("zoomIn")
+    .onclick = ()=>{
+
+        zoomLevel =
+            Math.min(
+                1.8,
+                zoomLevel + .1
+            );
+
+        applyZoom();
+
+    };
+
+
+document
+    .getElementById("zoomOut")
+    .onclick = ()=>{
+
+        zoomLevel =
+            Math.max(
+                .5,
+                zoomLevel - .1
+            );
+
+        applyZoom();
+
+    };
+
+
+function applyZoom(){
+
+    document.getElementById("zoomValue")
+        .textContent =
+        Math.round(zoomLevel*100) + "%";
+
+
+    const nodesElements =
+        document.querySelectorAll(".node");
+
+
+    nodesElements.forEach(node=>{
+
+        node.style.transform =
+            `scale(${zoomLevel})`;
+
+    });
+
+
+    drawConnections();
+
+}
+
+
+/* =========================================
+   CENTER
+========================================= */
+
+document
+    .getElementById("centerBtn")
+    .onclick = ()=>{
+
+        const root =
+            nodes.find(
+                n=>n.id==="root"
+            );
+
+        if(root){
+
+            root.x = 45;
+            root.y = 40;
+
+            render();
+
+            saveData();
+
+            showToast("⌖ Map centered");
+
+        }
+
+    };
+
+
+/* =========================================
+   CLEAR
+========================================= */
+
+function clearMap(){
+
+    const confirmClear =
+        confirm(
+            "Clear all ideas except the central topic?"
+        );
+
+    if(!confirmClear){
+
+        return;
+
+    }
+
+
+    nodes =
+        defaultData();
+
+    selectedNode = null;
+
+    render();
+
+    saveData();
+
+    showToast("🧹 Map cleared");
+
+}
+
+
+document
+    .getElementById("clearBtn")
+    .onclick = clearMap;
+
+
+/* =========================================
+   EXPORT JSON
+========================================= */
+
+function exportMap(){
+
+    const data =
+        JSON.stringify(
+            nodes,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:"application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href = url;
+
+    a.download =
+        "mindmapx-map.json";
+
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
+
+    showToast("📥 Map exported");
+
+}
+
+
+document
+    .getElementById("exportMenu")
+    .onclick = exportMap;
+
+
+/* =========================================
+   BUTTON EVENTS
+========================================= */
+
+document
+    .getElementById("addBtn")
+    .onclick = openAddModal;
+
+
+document
+    .getElementById("addToolbar")
+    .onclick = openAddModal;
+
+
+document
+    .getElementById("addNodeMenu")
+    .onclick = openAddModal;
+
+
+document
+    .getElementById("editToolbar")
+    .onclick = editSelected;
+
+
+document
+    .getElementById("deleteToolbar")
+    .onclick = deleteSelected;
+
+
+document
+    .getElementById("deleteMenu")
+    .onclick = deleteSelected;
+
+
+document
+    .getElementById("saveBtn")
+    .onclick = saveData;
+
+
+document
+    .getElementById("saveMenu")
+    .onclick = saveData;
+
+
+/* =========================================
+   NEW MAP
+========================================= */
+
+function newMap(){
+
+    const answer =
+        confirm(
+            "Create a new blank mind map?"
+        );
+
+    if(!answer){
+
+        return;
+
+    }
+
+
+    nodes =
+        defaultData();
+
+    selectedNode = null;
+
+    render();
+
+    saveData();
+
+    showToast("✨ New map created");
+
+}
+
+
+document
+    .getElementById("newMapMenu")
+    .onclick = newMap;
+
+
+/* =========================================
+   THEME
+========================================= */
+
+let lightMode =
+    localStorage.getItem(
+        "mindmapxTheme"
+    ) === "light";
+
+
+function applyTheme(){
+
+    if(lightMode){
+
+        document.documentElement
+            .style.setProperty(
+                "--bg",
+                "#f4f6fa"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--sidebar",
+                "#ffffff"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--card",
+                "#ffffff"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--card2",
+                "#f4f6fa"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--text",
+                "#172033"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--muted",
+                "#687386"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--border",
+                "#dfe4ec"
+            );
+
+        document.getElementById("themeBtn")
+            .textContent =
+            "☀️  Dark Mode";
+
+    }
+    else{
+
+        document.documentElement
+            .style.setProperty(
+                "--bg",
+                "#090d16"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--sidebar",
+                "#0d1320"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--card",
+                "#111827"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--card2",
+                "#172033"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--text",
+                "#f5f7fb"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--muted",
+                "#8994a7"
+            );
+
+        document.documentElement
+            .style.setProperty(
+                "--border",
+                "#273246"
+            );
+
+        document.getElementById("themeBtn")
+            .textContent =
+            "🌙  Light Mode";
+
+    }
+
+}
+
+
+document
+    .getElementById("themeBtn")
+    .onclick = ()=>{
+
+        lightMode = !lightMode;
+
+        localStorage.setItem(
+            "mindmapxTheme",
+            lightMode
+                ? "light"
+                : "dark"
+        );
+
+        applyTheme();
+
+    };
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            ()=>{
+                toast.classList.remove("show");
+            },
+            2200
+        );
+
+}
+
+
+/* =========================================
+   CANVAS CLICK
+========================================= */
+
+canvas.addEventListener(
+    "click",
+    e=>{
+
+        if(
+            e.target === canvas ||
+            e.target.classList.contains("connections")
+        ){
+
+            selectedNode = null;
+
+            document
+                .querySelectorAll(".node")
+                .forEach(
+                    n=>n.classList.remove("selected")
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   WINDOW RESIZE
+========================================= */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        drawConnections();
+    }
+);
+
+
+/* =========================================
+   START
+========================================= */
+
+applyTheme();
+
+loadData();
+
+</script>
+
+</body>
+</html>
