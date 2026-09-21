@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeQuest — Coding Challenge</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+:root{
+    --bg:#0b0f19;
+    --card:#111827;
+    --card2:#151d2d;
+    --text:#f5f7fb;
+    --muted:#8d98aa;
+    --border:#263044;
+    --primary:#6c63ff;
+    --primary2:#8b5cf6;
+    --green:#22c55e;
+    --yellow:#f59e0b;
+    --red:#ef4444;
+    --sidebar:250px;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    width:var(--sidebar);
+    height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#0d1320;
+    border-right:1px solid var(--border);
+    padding:25px 18px;
+    z-index:10;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:40px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    box-shadow:0 8px 25px #6c63ff35;
+}
+
+.logo h2{
+    font-size:20px;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.menu-title{
+    color:#596579;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin:20px 12px 10px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 14px;
+    border-radius:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+    transition:.25s;
+    user-select:none;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    color:white;
+    background:linear-gradient(90deg,#6c63ff25,#8b5cf610);
+}
+
+.nav-item.active{
+    border-left:3px solid var(--primary);
+}
+
+.nav-icon{
+    width:23px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    bottom:22px;
+    left:18px;
+    right:18px;
+}
+
+.theme-btn{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    padding:12px;
+    border-radius:12px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:var(--sidebar);
+    padding:28px 35px;
+}
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:28px;
+}
+
+.page-title h1{
+    font-size:27px;
+}
+
+.page-title p{
+    color:var(--muted);
+    margin-top:5px;
+    font-size:14px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6c63ff,#ec4899);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    right:-30px;
+    bottom:-40px;
+    background:#6c63ff20;
+    border-radius:50%;
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.stat-icon{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:#6c63ff18;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.stat-value{
+    font-size:28px;
+    font-weight:700;
+    margin-top:13px;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:4px;
+}
+
+/* ================= CONTENT ================= */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:22px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+}
+
+.challenge-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:20px;
+}
+
+.challenge-header h2{
+    font-size:21px;
+}
+
+.challenge-header p{
+    color:var(--muted);
+    margin-top:6px;
+    font-size:13px;
+}
+
+.badges{
+    display:flex;
+    gap:8px;
+}
+
+.badge{
+    padding:6px 11px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:600;
+}
+
+.easy{
+    color:#22c55e;
+    background:#22c55e18;
+}
+
+.medium{
+    color:#f59e0b;
+    background:#f59e0b18;
+}
+
+.hard{
+    color:#ef4444;
+    background:#ef444418;
+}
+
+/* ================= TIMER ================= */
+
+.timer-box{
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.timer{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+    font-weight:700;
+}
+
+.timer.warning{
+    color:var(--red);
+}
+
+.timer-controls button{
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text);
+    padding:7px 12px;
+    border-radius:8px;
+    font-size:12px;
+}
+
+/* ================= QUESTION ================= */
+
+.question{
+    font-size:17px;
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+.code-box{
+    background:#080c14;
+    border:1px solid #20293a;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+    overflow:auto;
+}
+
+.code-box pre{
+    color:#d7def0;
+    font-family:Consolas,monospace;
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* ================= OPTIONS ================= */
+
+.options{
+    display:grid;
+    gap:11px;
+}
+
+.option{
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:var(--text);
+    padding:14px;
+    border-radius:11px;
+    text-align:left;
+    transition:.2s;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.option:hover{
+    border-color:var(--primary);
+    transform:translateX(3px);
+}
+
+.option.selected{
+    border-color:var(--primary);
+    background:#6c63ff18;
+}
+
+.option.correct{
+    border-color:var(--green);
+    background:#22c55e15;
+}
+
+.option.wrong{
+    border-color:var(--red);
+    background:#ef444415;
+}
+
+.option-letter{
+    width:30px;
+    height:30px;
+    border-radius:8px;
+    background:#20283a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.challenge-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:22px;
+}
+
+.primary-btn{
+    border:0;
+    padding:12px 20px;
+    border-radius:10px;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    color:white;
+    font-weight:600;
+    box-shadow:0 8px 20px #6c63ff25;
+}
+
+.secondary-btn{
+    border:1px solid var(--border);
+    padding:11px 17px;
+    border-radius:10px;
+    background:transparent;
+    color:var(--text);
+}
+
+/* ================= PROGRESS ================= */
+
+.progress-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:9px;
+    font-size:13px;
+}
+
+.progress-title span:last-child{
+    color:var(--primary);
+}
+
+.progress{
+    height:8px;
+    background:#252e40;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--primary),#a855f7);
+    transition:.5s;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.level-box{
+    text-align:center;
+}
+
+.level-circle{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    margin:10px auto 17px;
+    background:conic-gradient(var(--primary) 0deg,#252e40 0deg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.level-circle::before{
+    content:"";
+    position:absolute;
+    inset:9px;
+    background:var(--card);
+    border-radius:50%;
+}
+
+.level-number{
+    position:relative;
+    z-index:2;
+    font-size:26px;
+    font-weight:800;
+}
+
+.xp-text{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.xp-text strong{
+    color:var(--text);
+}
+
+.divider{
+    height:1px;
+    background:var(--border);
+    margin:23px 0;
+}
+
+/* ================= DAILY ================= */
+
+.daily-list{
+    display:grid;
+    gap:10px;
+}
+
+.daily-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px;
+    background:var(--card2);
+    border-radius:10px;
+}
+
+.daily-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.daily-icon{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    background:#6c63ff18;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.daily-item small{
+    color:var(--muted);
+    display:block;
+    margin-top:3px;
+}
+
+.done{
+    color:var(--green);
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    padding:14px 20px;
+    border-radius:12px;
+    background:#182133;
+    border:1px solid var(--border);
+    box-shadow:0 15px 40px #0008;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.35s;
+    z-index:100;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* ================= MODAL ================= */
+
+.result{
+    display:none;
+    margin-top:18px;
+    padding:14px;
+    border-radius:10px;
+    font-size:14px;
+}
+
+.result.show{
+    display:block;
+}
+
+.result.success{
+    background:#22c55e15;
+    border:1px solid #22c55e55;
+    color:#4ade80;
+}
+
+.result.error{
+    background:#ef444415;
+    border:1px solid #ef444455;
+    color:#f87171;
+}
+
+/* ================= MOBILE ================= */
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        width:70px;
+        padding:20px 10px;
+    }
+
+    .logo h2,
+    .menu-title,
+    .nav-item span:not(.nav-icon),
+    .sidebar-bottom{
+        display:none;
+    }
+
+    .logo{
+        justify-content:center;
+    }
+
+    .nav-item{
+        justify-content:center;
+    }
+
+    .main{
+        margin-left:70px;
+        padding:20px 15px;
+    }
+}
+
+@media(max-width:550px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:15px;
+    }
+
+    .stat-value{
+        font-size:22px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .profile{
+        display:none;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .challenge-header{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .challenge-actions{
+        flex-direction:column;
+        gap:10px;
+        align-items:stretch;
+    }
+
+    .challenge-actions button{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <h2>Code<span>Quest</span></h2>
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <div class="nav-item active">
+        <div class="nav-icon">🏠</div>
+        <span>Dashboard</span>
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">💻</div>
+        <span>Challenges</span>
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">🏆</div>
+        <span>Leaderboard</span>
+    </div>
+
+    <div class="nav-item">
+        <div class="nav-icon">📊</div>
+        <span>Progress</span>
+    </div>
+
+    <div class="menu-title">Account</div>
+
+    <div class="nav-item">
+        <div class="nav-icon">⚙️</div>
+        <span>Settings</span>
+    </div>
+
+    <div class="sidebar-bottom">
+        <button class="theme-btn" id="themeBtn">
+            🌙 &nbsp; Change Theme
+        </button>
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div class="page-title">
+            <h1>Good Evening, Coder 👋</h1>
+            <p>Keep solving. Keep growing.</p>
+        </div>
+
+        <div class="profile">
+            <div>
+                <strong>Code Learner</strong>
+                <p style="font-size:12px;color:var(--muted)">Level <span id="profileLevel">1</span></p>
+            </div>
+
+            <div class="avatar">C</div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <span>Total XP</span>
+                <div class="stat-icon">⚡</div>
+            </div>
+
+            <div class="stat-value" id="xpStat">0</div>
+            <div class="stat-label">Keep earning XP</div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <span>Challenges</span>
+                <div class="stat-icon">💻</div>
+            </div>
+
+            <div class="stat-value" id="solvedStat">0</div>
+            <div class="stat-label">Challenges solved</div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <span>Streak</span>
+                <div class="stat-icon">🔥</div>
+            </div>
+
+            <div class="stat-value" id="streakStat">0</div>
+            <div class="stat-label">Days active</div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-top">
+                <span>Accuracy</span>
+                <div class="stat-icon">🎯</div>
+            </div>
+
+            <div class="stat-value" id="accuracyStat">0%</div>
+            <div class="stat-label">Answer accuracy</div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="content-grid">
+
+        <!-- LEFT -->
+
+        <div class="card">
+
+            <div class="challenge-header">
+
+                <div>
+                    <h2 id="challengeTitle">Today's Challenge</h2>
+                    <p id="challengeCategory">Arrays & Algorithms</p>
+                </div>
+
+                <div class="badges">
+                    <span class="badge easy" id="difficultyBadge">Easy</span>
+                    <span class="badge" style="background:#6c63ff18;color:#a78bfa" id="xpBadge">+100 XP</span>
+                </div>
+
+            </div>
+
+
+            <!-- TIMER -->
+
+            <div class="timer-box">
+
+                <div class="timer" id="timer">
+                    ⏱ <span id="timerValue">05:00</span>
+                </div>
+
+                <div class="timer-controls">
+                    <button id="pauseBtn">Pause</button>
+                    <button id="resetTimerBtn">Reset</button>
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION -->
+
+            <div class="question" id="question">
+                Which approach correctly finds the second largest element
+                in an array in a single traversal?
+            </div>
+
+
+            <div class="code-box" id="codeBox">
+<pre>
+int secondLargest(int arr[], int n) {
+
+    // Your logic here
+
+}</pre>
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div class="options" id="options"></div>
+
+
+            <div id="result" class="result"></div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="challenge-actions">
+
+                <button class="secondary-btn" id="skipBtn">
+                    Skip Challenge
+                </button>
+
+                <button class="primary-btn" id="submitBtn">
+                    Submit Answer →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <aside>
+
+            <div class="card level-box">
+
+                <h3>Your Progress</h3>
+
+                <div class="level-circle" id="levelCircle">
+                    <div class="level-number">
+                        <span id="levelNumber">1</span>
+                    </div>
+                </div>
+
+                <div class="xp-text">
+                    <strong id="currentXP">0 XP</strong>
+                    /
+                    <span id="nextXP">1000 XP</span>
+                </div>
+
+                <div style="margin-top:18px">
+
+                    <div class="progress-title">
+                        <span>Level Progress</span>
+                        <span id="progressText">0%</span>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="divider"></div>
+
+
+                <h3 style="text-align:left;margin-bottom:13px">
+                    🔥 Daily Goal
+                </h3>
+
+                <div class="daily-list">
+
+                    <div class="daily-item">
+                        <div class="daily-left">
+                            <div class="daily-icon">💻</div>
+                            <div>
+                                <strong>Solve Challenges</strong>
+                                <small>3 challenges</small>
+                            </div>
+                        </div>
+
+                        <span class="done" id="challengeGoal">0/3</span>
+                    </div>
+
+
+                    <div class="daily-item">
+                        <div class="daily-left">
+                            <div class="daily-icon">⚡</div>
+                            <div>
+                                <strong>Earn XP</strong>
+                                <small>300 XP</small>
+                            </div>
+                        </div>
+
+                        <span class="done" id="xpGoal">0/300</span>
+                    </div>
+
+
+                    <div class="daily-item">
+                        <div class="daily-left">
+                            <div class="daily-icon">🔥</div>
+                            <div>
+                                <strong>Keep Streak</strong>
+                                <small>Practice today</small>
+                            </div>
+                        </div>
+
+                        <span class="done">✓</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+</main>
+
+
+<div class="toast" id="toast">
+    🎉 +100 XP earned!
+</div>
+
+
+<script>
+
+/* =========================================
+   CHALLENGE DATA
+========================================= */
+
+const challenges = [
+
+{
+    title:"Find Second Largest Element",
+    category:"Arrays & Algorithms",
+    difficulty:"Easy",
+    xp:100,
+    time:300,
+
+    question:"Which approach correctly finds the second largest element in an array in a single traversal?",
+
+    code:`int secondLargest(int arr[], int n) {
+
+    // Your logic here
+
+}`,
+
+    options:[
+        "Sort the complete array and return arr[n-2]",
+        "Maintain largest and secondLargest variables during one traversal",
+        "Use nested loops for every pair",
+        "Reverse the array and return the second element"
+    ],
+
+    answer:1
+},
+
+{
+    title:"Binary Search Complexity",
+    category:"Searching",
+    difficulty:"Easy",
+    xp:100,
+    time:240,
+
+    question:"What is the time complexity of Binary Search on a sorted array?",
+
+    code:`int binarySearch(int arr[], int n, int key) {
+
+    // Binary Search
+
+}`,
+
+    options:[
+        "O(n)",
+        "O(n²)",
+        "O(log n)",
+        "O(1)"
+    ],
+
+    answer:2
+},
+
+{
+    title:"Stack Data Structure",
+    category:"Data Structures",
+    difficulty:"Easy",
+    xp:100,
+    time:240,
+
+    question:"Which principle does a Stack follow?",
+
+    code:`Stack:
+
+push(10);
+push(20);
+push(30);
+
+pop();`,
+
+    options:[
+        "FIFO",
+        "LIFO",
+        "Random Access",
+        "Priority Based"
+    ],
+
+    answer:1
+},
+
+{
+    title:"Merge Sort Complexity",
+    category:"Sorting Algorithms",
+    difficulty:"Medium",
+    xp:150,
+    time:300,
+
+    question:"What is the worst-case time complexity of Merge Sort?",
+
+    code:`mergeSort(arr, left, right);`,
+
+    options:[
+        "O(n)",
+        "O(n²)",
+        "O(log n)",
+        "O(n log n)"
+    ],
+
+    answer:3
+},
+
+{
+    title:"Binary Tree Traversal",
+    category:"Trees",
+    difficulty:"Medium",
+    xp:150,
+    time:300,
+
+    question:"Which traversal visits Root → Left → Right?",
+
+    code:`void traversal(Node* root){
+
+    // traversal
+}`,
+
+    options:[
+        "Inorder",
+        "Postorder",
+        "Preorder",
+        "Level Order"
+    ],
+
+    answer:2
+},
+
+{
+    title:"Hash Table Average Search",
+    category:"Data Structures",
+    difficulty:"Medium",
+    xp:150,
+    time:300,
+
+    question:"What is the average-case time complexity of searching in a well-designed hash table?",
+
+    code:`hashTable.search(key);`,
+
+    options:[
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "O(n log n)"
+    ],
+
+    answer:0
+},
+
+{
+    title:"Quick Sort Worst Case",
+    category:"Sorting Algorithms",
+    difficulty:"Hard",
+    xp:200,
+    time:360,
+
+    question:"What is the worst-case time complexity of Quick Sort?",
+
+    code:`quickSort(arr, low, high);`,
+
+    options:[
+        "O(n)",
+        "O(log n)",
+        "O(n log n)",
+        "O(n²)"
+    ],
+
+    answer:3
+}
+
+];
+
+
+/* =========================================
+   STATE
+========================================= */
+
+let state = JSON.parse(localStorage.getItem("codequestState")) || {
+
+    xp:0,
+    solved:0,
+    streak:0,
+    correct:0,
+    attempts:0,
+    current:0,
+    lastDate:null
+};
+
+let selectedAnswer = null;
+let answered = false;
+let timerInterval;
+let timeLeft = challenges[state.current].time;
+let timerRunning = true;
+
+
+/* =========================================
+   DOM
+========================================= */
+
+const xpStat = document.getElementById("xpStat");
+const solvedStat = document.getElementById("solvedStat");
+const streakStat = document.getElementById("streakStat");
+const accuracyStat = document.getElementById("accuracyStat");
+
+const levelNumber = document.getElementById("levelNumber");
+const profileLevel = document.getElementById("profileLevel");
+const currentXP = document.getElementById("currentXP");
+const nextXP = document.getElementById("nextXP");
+
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+const levelCircle = document.getElementById("levelCircle");
+
+const challengeTitle = document.getElementById("challengeTitle");
+const challengeCategory = document.getElementById("challengeCategory");
+const difficultyBadge = document.getElementById("difficultyBadge");
+const xpBadge = document.getElementById("xpBadge");
+const question = document.getElementById("question");
+const codeBox = document.getElementById("codeBox");
+const options = document.getElementById("options");
+
+const timerValue = document.getElementById("timerValue");
+const timer = document.getElementById("timer");
+
+const submitBtn = document.getElementById("submitBtn");
+const skipBtn = document.getElementById("skipBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetTimerBtn = document.getElementById("resetTimerBtn");
+
+const result = document.getElementById("result");
+const toast = document.getElementById("toast");
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+function saveState(){
+
+    localStorage.setItem(
+        "codequestState",
+        JSON.stringify(state)
+    );
+
+}
+
+
+/* =========================================
+   LEVEL SYSTEM
+========================================= */
+
+function getLevel(){
+
+    return Math.floor(state.xp / 1000) + 1;
+
+}
+
+function updateStats(){
+
+    const level = getLevel();
+
+    xpStat.textContent = state.xp;
+    solvedStat.textContent = state.solved;
+    streakStat.textContent = state.streak;
+
+    const accuracy =
+        state.attempts === 0
+        ? 0
+        : Math.round((state.correct / state.attempts) * 100);
+
+    accuracyStat.textContent = accuracy + "%";
+
+    levelNumber.textContent = level;
+    profileLevel.textContent = level;
+
+    const currentLevelXP = state.xp % 1000;
+    const percentage = currentLevelXP / 10;
+
+    currentXP.textContent = currentLevelXP + " XP";
+    nextXP.textContent = "1000 XP";
+
+    progressBar.style.width = percentage + "%";
+    progressText.textContent = Math.round(percentage) + "%";
+
+    levelCircle.style.background =
+        `conic-gradient(var(--primary) ${percentage * 3.6}deg,#252e40 0deg)`;
+
+    document.getElementById("challengeGoal").textContent =
+        Math.min(state.solved,3) + "/3";
+
+    document.getElementById("xpGoal").textContent =
+        Math.min(state.xp,300) + "/300";
+}
+
+
+/* =========================================
+   LOAD CHALLENGE
+========================================= */
+
+function loadChallenge(){
+
+    const challenge = challenges[state.current];
+
+    challengeTitle.textContent = challenge.title;
+    challengeCategory.textContent = challenge.category;
+
+    difficultyBadge.textContent = challenge.difficulty;
+    difficultyBadge.className =
+        "badge " + challenge.difficulty.toLowerCase();
+
+    xpBadge.textContent = "+" + challenge.xp + " XP";
+
+    question.textContent = challenge.question;
+
+    codeBox.innerHTML =
+        "<pre>" +
+        escapeHTML(challenge.code) +
+        "</pre>";
+
+    options.innerHTML = "";
+
+    selectedAnswer = null;
+    answered = false;
+
+    result.className = "result";
+    result.innerHTML = "";
+
+    submitBtn.textContent = "Submit Answer →";
+
+    challenge.options.forEach((option,index)=>{
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+
+        button.innerHTML = `
+            <span class="option-letter">
+                ${String.fromCharCode(65 + index)}
+            </span>
+
+            <span>${escapeHTML(option)}</span>
+        `;
+
+        button.onclick = ()=>selectOption(index);
+
+        options.appendChild(button);
+
+    });
+
+    resetTimer();
+
+}
+
+
+/* =========================================
+   SELECT ANSWER
+========================================= */
+
+function selectOption(index){
+
+    if(answered) return;
+
+    selectedAnswer = index;
+
+    document.querySelectorAll(".option")
+        .forEach((btn,i)=>{
+
+            btn.classList.toggle(
+                "selected",
+                i === index
+            );
+
+        });
+
+}
+
+
+/* =========================================
+   SUBMIT
+========================================= */
+
+function submitAnswer(){
+
+    if(answered){
+
+        nextChallenge();
+        return;
+
+    }
+
+    if(selectedAnswer === null){
+
+        showToast("⚠️ Select an answer first");
+
+        return;
+
+    }
+
+    const challenge = challenges[state.current];
+
+    state.attempts++;
+
+    answered = true;
+
+    const buttons =
+        document.querySelectorAll(".option");
+
+    buttons.forEach((button,index)=>{
+
+        if(index === challenge.answer){
+            button.classList.add("correct");
+        }
+
+        if(
+            index === selectedAnswer &&
+            selectedAnswer !== challenge.answer
+        ){
+            button.classList.add("wrong");
+        }
+
+    });
+
+
+    if(selectedAnswer === challenge.answer){
+
+        state.correct++;
+        state.solved++;
+        state.xp += challenge.xp;
+
+        updateStreak();
+
+        result.className =
+            "result show success";
+
+        result.innerHTML =
+            "🎉 Correct! You earned +" +
+            challenge.xp +
+            " XP.";
+
+        showToast(
+            "🎉 +" + challenge.xp + " XP earned!"
+        );
+
+    }
+    else{
+
+        result.className =
+            "result show error";
+
+        result.innerHTML =
+            "❌ Incorrect. Check the highlighted correct answer.";
+
+        showToast("❌ Better luck on the next one");
+
+    }
+
+    submitBtn.textContent = "Next Challenge →";
+
+    saveState();
+
+    updateStats();
+
+}
+
+
+/* =========================================
+   NEXT CHALLENGE
+========================================= */
+
+function nextChallenge(){
+
+    state.current++;
+
+    if(state.current >= challenges.length){
+
+        state.current = 0;
+
+        showToast(
+            "🏆 All challenges completed!"
+        );
+
+    }
+
+    saveState();
+
+    loadChallenge();
+
+}
+
+
+/* =========================================
+   SKIP
+========================================= */
+
+skipBtn.onclick = ()=>{
+
+    nextChallenge();
+
+};
+
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+submitBtn.onclick = submitAnswer;
+
+
+/* =========================================
+   STREAK
+========================================= */
+
+function updateStreak(){
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    if(state.lastDate === today){
+
+        return;
+
+    }
+
+    if(state.lastDate){
+
+        const previous =
+            new Date(state.lastDate);
+
+        const current =
+            new Date(today);
+
+        const difference =
+            Math.floor(
+                (current - previous) /
+                (1000 * 60 * 60 * 24)
+            );
+
+        if(difference === 1){
+
+            state.streak++;
+
+        }
+        else if(difference > 1){
+
+            state.streak = 1;
+
+        }
+
+    }
+    else{
+
+        state.streak = 1;
+
+    }
+
+    state.lastDate = today;
+
+}
+
+
+/* =========================================
+   TIMER
+========================================= */
+
+function startTimer(){
+
+    clearInterval(timerInterval);
+
+    timerRunning = true;
+
+    pauseBtn.textContent = "Pause";
+
+    timerInterval = setInterval(()=>{
+
+        if(!timerRunning) return;
+
+        if(timeLeft <= 0){
+
+            clearInterval(timerInterval);
+
+            timerValue.textContent = "00:00";
+
+            showToast("⏰ Time's up!");
+
+            return;
+
+        }
+
+        timeLeft--;
+
+        updateTimer();
+
+    },1000);
+
+}
+
+
+function updateTimer(){
+
+    const minutes =
+        Math.floor(timeLeft / 60);
+
+    const seconds =
+        timeLeft % 60;
+
+    timerValue.textContent =
+        String(minutes).padStart(2,"0")
+        + ":" +
+        String(seconds).padStart(2,"0");
+
+    if(timeLeft <= 30){
+
+        timer.classList.add("warning");
+
+    }
+    else{
+
+        timer.classList.remove("warning");
+
+    }
+
+}
+
+
+function resetTimer(){
+
+    clearInterval(timerInterval);
+
+    timeLeft =
+        challenges[state.current].time;
+
+    timerRunning = true;
+
+    pauseBtn.textContent = "Pause";
+
+    updateTimer();
+
+    startTimer();
+
+}
+
+
+pauseBtn.onclick = ()=>{
+
+    timerRunning = !timerRunning;
+
+    pauseBtn.textContent =
+        timerRunning ? "Pause" : "Resume";
+
+};
+
+
+resetTimerBtn.onclick = resetTimer;
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   THEME
+========================================= */
+
+const themeBtn =
+    document.getElementById("themeBtn");
+
+let lightMode =
+    localStorage.getItem("codequestTheme") === "light";
+
+
+function applyTheme(){
+
+    if(lightMode){
+
+        document.documentElement.style.setProperty(
+            "--bg",
+            "#f3f5f9"
+        );
+
+        document.documentElement.style.setProperty(
+            "--card",
+            "#ffffff"
+        );
+
+        document.documentElement.style.setProperty(
+            "--card2",
+            "#f5f7fb"
+        );
+
+        document.documentElement.style.setProperty(
+            "--text",
+            "#172033"
+        );
+
+        document.documentElement.style.setProperty(
+            "--muted",
+            "#687386"
+        );
+
+        document.documentElement.style.setProperty(
+            "--border",
+            "#dfe4ec"
+        );
+
+        themeBtn.innerHTML =
+            "☀️ &nbsp; Dark Mode";
+
+    }
+    else{
+
+        document.documentElement.style.setProperty(
+            "--bg",
+            "#0b0f19"
+        );
+
+        document.documentElement.style.setProperty(
+            "--card",
+            "#111827"
+        );
+
+        document.documentElement.style.setProperty(
+            "--card2",
+            "#151d2d"
+        );
+
+        document.documentElement.style.setProperty(
+            "--text",
+            "#f5f7fb"
+        );
+
+        document.documentElement.style.setProperty(
+            "--muted",
+            "#8d98aa"
+        );
+
+        document.documentElement.style.setProperty(
+            "--border",
+            "#263044"
+        );
+
+        themeBtn.innerHTML =
+            "🌙 &nbsp; Light Mode";
+
+    }
+
+}
+
+
+themeBtn.onclick = ()=>{
+
+    lightMode = !lightMode;
+
+    localStorage.setItem(
+        "codequestTheme",
+        lightMode ? "light" : "dark"
+    );
+
+    applyTheme();
+
+};
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+document.querySelectorAll(".nav-item")
+.forEach(item=>{
+
+    item.addEventListener("click",()=>{
+
+        document.querySelectorAll(".nav-item")
+        .forEach(i=>i.classList.remove("active"));
+
+        item.classList.add("active");
+
+        if(
+            item.innerText.includes("Challenges")
+        ){
+
+            showToast("💻 Challenge mode active");
+
+        }
+
+        if(
+            item.innerText.includes("Leaderboard")
+        ){
+
+            showToast("🏆 Leaderboard coming soon");
+
+        }
+
+        if(
+            item.innerText.includes("Progress")
+        ){
+
+            showToast("📊 Your progress is shown here");
+
+        }
+
+    });
+
+});
+
+
+/* =========================================
+   INIT
+========================================= */
+
+applyTheme();
+
+updateStats();
+
+loadChallenge();
+
+</script>
+
+</body>
+</html>
