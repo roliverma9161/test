@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusSphere — Productivity Workspace</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+:root{
+  --bg:#080b14;
+  --card:rgba(19,24,39,.78);
+  --card2:#111727;
+  --text:#f4f7ff;
+  --muted:#8993a8;
+  --border:rgba(255,255,255,.08);
+  --primary:#7c6cff;
+  --secondary:#26d9c2;
+  --danger:#ff637d;
+  --warning:#ffc857;
+  --shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+body.light{
+  --bg:#f4f6fb;
+  --card:rgba(255,255,255,.9);
+  --card2:#fff;
+  --text:#172033;
+  --muted:#748096;
+  --border:#e5e8ef;
+  --shadow:0 15px 40px rgba(40,50,80,.09);
+}
+
+body{
+  background:
+    radial-gradient(circle at 15% 20%,rgba(124,108,255,.14),transparent 28%),
+    radial-gradient(circle at 85% 75%,rgba(38,217,194,.10),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:.3s;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+.orb{
+  position:fixed;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.15;
+  pointer-events:none;
+  z-index:-1;
+}
+
+.orb.one{
+  background:#7c6cff;
+  top:10%;
+  left:25%;
+}
+
+.orb.two{
+  background:#26d9c2;
+  bottom:5%;
+  right:15%;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:245px;
+  height:100vh;
+  padding:25px 15px;
+  background:rgba(7,10,18,.78);
+  backdrop-filter:blur(20px);
+  border-right:1px solid var(--border);
+  z-index:100;
+}
+
+.light .sidebar{
+  background:rgba(255,255,255,.85);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:5px 12px 32px;
+}
+
+.logo-icon{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,#7c6cff,#26d9c2);
+  box-shadow:0 8px 25px rgba(124,108,255,.3);
+  font-size:21px;
+}
+
+.logo h2{
+  font-size:20px;
+}
+
+.logo span{
+  color:#8c82ff;
+}
+
+.nav-title{
+  color:#687388;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  padding:0 13px;
+  margin:10px 0;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:13px 14px;
+  margin-bottom:5px;
+  color:#8993a8;
+  border-radius:11px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+  background:rgba(124,108,255,.14);
+  color:var(--text);
+}
+
+.nav-item.active{
+  border-left:3px solid var(--primary);
+}
+
+/* MAIN */
+
+.main{
+  margin-left:245px;
+  padding:28px;
+  min-height:100vh;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:25px;
+}
+
+.topbar h1{
+  font-size:27px;
+}
+
+.topbar p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+}
+
+.icon-btn{
+  width:43px;
+  height:43px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  padding:28px;
+  border:1px solid var(--border);
+  border-radius:23px;
+  overflow:hidden;
+  margin-bottom:22px;
+  background:
+    linear-gradient(135deg,
+    rgba(124,108,255,.22),
+    rgba(38,217,194,.09));
+}
+
+.hero h2{
+  font-size:25px;
+  margin-bottom:7px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:650px;
+  line-height:1.6;
+}
+
+.focus-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:17px;
+  padding:8px 12px;
+  border-radius:20px;
+  background:rgba(38,217,194,.1);
+  color:var(--secondary);
+  font-size:12px;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.stat-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:rgba(124,108,255,.12);
+  margin-bottom:15px;
+}
+
+.stat h3{
+  font-size:25px;
+}
+
+.stat p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:20px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(15px);
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.card-header h2{
+  font-size:17px;
+}
+
+.card-header span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* TIMER */
+
+.timer-area{
+  text-align:center;
+  padding:15px 0 5px;
+}
+
+.timer-ring{
+  width:245px;
+  height:245px;
+  margin:10px auto 20px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(
+    var(--primary) 0deg,
+    var(--secondary) 280deg,
+    rgba(255,255,255,.08) 280deg
+  );
+  position:relative;
+}
+
+.timer-ring::before{
+  content:"";
+  position:absolute;
+  width:213px;
+  height:213px;
+  border-radius:50%;
+  background:var(--card2);
+}
+
+.timer-content{
+  position:relative;
+  z-index:2;
+}
+
+.timer{
+  font-size:48px;
+  font-weight:700;
+  letter-spacing:2px;
+}
+
+.mode{
+  color:var(--secondary);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  margin-top:5px;
+}
+
+.timer-buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.primary-btn{
+  border:0;
+  background:linear-gradient(135deg,var(--primary),#9a7dff);
+  color:white;
+  padding:12px 22px;
+  border-radius:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.secondary-btn{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  padding:11px 17px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.secondary-btn:hover{
+  border-color:var(--primary);
+}
+
+/* MODES */
+
+.modes{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-bottom:15px;
+}
+
+.mode-btn{
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  padding:7px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:11px;
+}
+
+.mode-btn.active{
+  color:white;
+  background:var(--primary);
+  border-color:var(--primary);
+}
+
+/* TASKS */
+
+.task-input{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.task-input input{
+  flex:1;
+  min-width:0;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg);
+  color:var(--text);
+  outline:none;
+}
+
+.task-list{
+  max-height:260px;
+  overflow:auto;
+}
+
+.task{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--border);
+  border-radius:11px;
+  margin-bottom:8px;
+}
+
+.check{
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  border:1px solid #59647a;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
+
+.task.done .check{
+  background:var(--secondary);
+  border-color:var(--secondary);
+  color:#06130f;
+}
+
+.task-text{
+  flex:1;
+  font-size:13px;
+}
+
+.task.done .task-text{
+  text-decoration:line-through;
+  color:var(--muted);
+}
+
+.delete-task{
+  border:0;
+  background:none;
+  color:#687388;
+  cursor:pointer;
+}
+
+.delete-task:hover{
+  color:var(--danger);
+}
+
+/* GOAL */
+
+.goal-input{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.goal-input input{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  outline:none;
+}
+
+.goal-text{
+  font-size:15px;
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+.progress{
+  height:9px;
+  background:var(--border);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:.5s;
+}
+
+/* QUICK STATS */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+
+.quick{
+  padding:15px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.quick strong{
+  display:block;
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+.quick span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* AMBIENT */
+
+.sound-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.sound{
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  border-radius:11px;
+  padding:13px 5px;
+  cursor:pointer;
+  text-align:center;
+}
+
+.sound:hover,
+.sound.active{
+  border-color:var(--secondary);
+  color:var(--secondary);
+}
+
+.sound div{
+  font-size:20px;
+  margin-bottom:5px;
+}
+
+.sound small{
+  color:var(--muted);
+}
+
+/* NOTES */
+
+.note{
+  width:100%;
+  min-height:115px;
+  resize:vertical;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  outline:none;
+  line-height:1.5;
+}
+
+/* QUOTE */
+
+.quote{
+  padding:20px;
+  text-align:center;
+  background:linear-gradient(
+    135deg,
+    rgba(124,108,255,.08),
+    rgba(38,217,194,.05)
+  );
+  border-radius:14px;
+  border:1px solid var(--border);
+}
+
+.quote p{
+  font-size:15px;
+  line-height:1.6;
+}
+
+.quote small{
+  display:block;
+  color:var(--muted);
+  margin-top:9px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  background:#111827;
+  color:white;
+  padding:13px 18px;
+  border-radius:11px;
+  opacity:0;
+  transform:translateY(20px);
+  pointer-events:none;
+  transition:.3s;
+  z-index:999;
+  font-size:13px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:25px 0 5px;
+  font-size:11px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:750px){
+
+  .sidebar{
+    width:70px;
+    padding:18px 8px;
+  }
+
+  .logo{
+    justify-content:center;
+    padding-left:0;
+    padding-right:0;
+  }
+
+  .logo h2,
+  .nav-title,
+  .nav-item span:last-child{
+    display:none;
+  }
+
+  .nav-item{
+    justify-content:center;
+    padding:13px;
+  }
+
+  .main{
+    margin-left:70px;
+    padding:18px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .topbar h1{
+    font-size:22px;
+  }
+
+  .timer-ring{
+    width:215px;
+    height:215px;
+  }
+
+  .timer-ring::before{
+    width:187px;
+    height:187px;
+  }
+
+  .timer{
+    font-size:41px;
+  }
+}
+
+@media(max-width:500px){
+
+  .main{
+    padding:12px;
+  }
+
+  .hero{
+    padding:21px;
+  }
+
+  .hero h2{
+    font-size:20px;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  .sound-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+    <div class="logo-icon">🌌</div>
+    <h2>Focus<span>Sphere</span></h2>
+  </div>
+
+  <div class="nav-title">Workspace</div>
+
+  <div class="nav-item active">
+    <span>🏠</span>
+    <span>Dashboard</span>
+  </div>
+
+  <div class="nav-item">
+    <span>⏱️</span>
+    <span>Focus Timer</span>
+  </div>
+
+  <div class="nav-item">
+    <span>✅</span>
+    <span>Tasks</span>
+  </div>
+
+  <div class="nav-item">
+    <span>📊</span>
+    <span>Analytics</span>
+  </div>
+
+  <div class="nav-title">Personal</div>
+
+  <div class="nav-item">
+    <span>📝</span>
+    <span>Notes</span>
+  </div>
+
+  <div class="nav-item">
+    <span>⚙️</span>
+    <span>Settings</span>
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+  <!-- TOPBAR -->
+
+  <div class="topbar">
+
+    <div>
+      <h1>Good Evening 👋</h1>
+      <p id="dateText">Let's make today productive.</p>
+    </div>
+
+    <div class="actions">
+      <button class="icon-btn" id="themeBtn">☀️</button>
+    </div>
+
+  </div>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <h2>Enter Your Focus Zone 🌌</h2>
+
+    <p>
+      Eliminate distractions, choose one important goal
+      and give it your complete attention.
+    </p>
+
+    <div class="focus-badge">
+      ● Deep Work Mode
+    </div>
+
+  </section>
+
+
+  <!-- STATS -->
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">⏱️</div>
+      <h3 id="focusMinutes">0</h3>
+      <p>Focus Minutes</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🔥</div>
+      <h3 id="streak">0</h3>
+      <p>Focus Streak</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">✅</div>
+      <h3 id="completed">0</h3>
+      <p>Tasks Completed</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🎯</div>
+      <h3 id="productivity">0%</h3>
+      <p>Today's Progress</p>
+    </div>
+
+  </section>
+
+
+  <!-- MAIN GRID -->
+
+  <section class="grid">
+
+
+    <!-- TIMER -->
+
+    <div class="card">
+
+      <div class="card-header">
+        <div>
+          <h2>⏱️ Focus Timer</h2>
+          <span>Stay focused, one session at a time</span>
+        </div>
+      </div>
+
+      <div class="modes">
+
+        <button class="mode-btn active" data-min="25">
+          Focus 25
+        </button>
+
+        <button class="mode-btn" data-min="5">
+          Short 5
+        </button>
+
+        <button class="mode-btn" data-min="15">
+          Long 15
+        </button>
+
+      </div>
+
+      <div class="timer-area">
+
+        <div class="timer-ring" id="timerRing">
+
+          <div class="timer-content">
+
+            <div class="timer" id="timer">
+              25:00
+            </div>
+
+            <div class="mode" id="timerMode">
+              Focus Session
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="timer-buttons">
+
+          <button
+            class="primary-btn"
+            id="startBtn"
+          >
+            ▶ Start
+          </button>
+
+          <button
+            class="secondary-btn"
+            id="resetBtn"
+          >
+            ↻ Reset
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- GOAL -->
+
+    <div class="card">
+
+      <div class="card-header">
+        <div>
+          <h2>🎯 Today's Focus</h2>
+          <span>Your main objective</span>
+        </div>
+      </div>
+
+      <div class="goal-input">
+
+        <input
+          id="goalInput"
+          type="text"
+          placeholder="What do you want to accomplish?"
+        >
+
+        <button
+          class="primary-btn"
+          id="goalBtn"
+        >
+          Save
+        </button>
+
+      </div>
+
+      <div
+        class="goal-text"
+        id="goalText"
+      >
+        No focus goal set yet.
+      </div>
+
+      <div class="progress">
+
+        <div
+          class="progress-bar"
+          id="goalProgress"
+        ></div>
+
+      </div>
+
+      <div class="quick-grid">
+
+        <div class="quick">
+          <strong id="sessionCount">0</strong>
+          <span>Sessions</span>
+        </div>
+
+        <div class="quick">
+          <strong id="taskCount">0</strong>
+          <span>Total Tasks</span>
+        </div>
+
+        <div class="quick">
+          <strong id="remainingCount">0</strong>
+          <span>Remaining</span>
+        </div>
+
+        <div class="quick">
+          <strong id="goalPercent">0%</strong>
+          <span>Goal Progress</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TASKS -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>✅ Focus Tasks</h2>
+          <span>Small steps create big results</span>
+        </div>
+
+      </div>
+
+      <div class="task-input">
+
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="Add a task..."
+        >
+
+        <button
+          class="primary-btn"
+          id="addTask"
+        >
+          +
+        </button>
+
+      </div>
+
+      <div
+        class="task-list"
+        id="taskList"
+      ></div>
+
+    </div>
+
+
+    <!-- AMBIENT -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>🎧 Ambient Space</h2>
+          <span>Create your focus environment</span>
+        </div>
+
+      </div>
+
+      <div class="sound-grid">
+
+        <button class="sound active" data-sound="none">
+          <div>🔇</div>
+          <small>Silent</small>
+        </button>
+
+        <button class="sound" data-sound="rain">
+          <div>🌧️</div>
+          <small>Rain</small>
+        </button>
+
+        <button class="sound" data-sound="forest">
+          <div>🌲</div>
+          <small>Forest</small>
+        </button>
+
+        <button class="sound" data-sound="ocean">
+          <div>🌊</div>
+          <small>Ocean</small>
+        </button>
+
+        <button class="sound" data-sound="cafe">
+          <div>☕</div>
+          <small>Café</small>
+        </button>
+
+        <button class="sound" data-sound="space">
+          <div>🌌</div>
+          <small>Space</small>
+        </button>
+
+      </div>
+
+      <p
+        style="
+        color:var(--muted);
+        font-size:11px;
+        margin-top:14px;
+        "
+      >
+        Ambient buttons are visual modes in this
+        frontend-only version.
+      </p>
+
+    </div>
+
+
+    <!-- NOTES -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>📝 Quick Notes</h2>
+          <span>Capture ideas without breaking focus</span>
+        </div>
+
+        <button
+          class="secondary-btn"
+          id="saveNote"
+        >
+          Save
+        </button>
+
+      </div>
+
+      <textarea
+        class="note"
+        id="note"
+        placeholder="Write something important..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- QUOTE -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>✨ Focus Thought</h2>
+          <span>A little motivation</span>
+        </div>
+
+      </div>
+
+      <div class="quote">
+
+        <p id="quote">
+          "Focus on being productive instead of busy."
+        </p>
+
+        <small>
+          — FocusSphere
+        </small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    FocusSphere © 2026 • Built with HTML, CSS & JavaScript
+  </footer>
+
+</main>
+
+
+<div class="toast" id="toast">
+  Saved successfully!
+</div>
+
+
+<script>
+
+/* =========================================
+   STORAGE
+========================================= */
+
+const STORAGE_KEY = "focusSphereData";
+
+
+let data = JSON.parse(
+  localStorage.getItem(STORAGE_KEY)
+) || {
+
+  tasks: [],
+
+  goal: "",
+
+  note: "",
+
+  focusMinutes: 0,
+
+  sessions: 0,
+
+  streak: 0,
+
+  lastSession: null
+
+};
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const timerEl =
+  document.getElementById("timer");
+
+const timerMode =
+  document.getElementById("timerMode");
+
+const startBtn =
+  document.getElementById("startBtn");
+
+const resetBtn =
+  document.getElementById("resetBtn");
+
+const timerRing =
+  document.getElementById("timerRing");
+
+const taskInput =
+  document.getElementById("taskInput");
+
+const taskList =
+  document.getElementById("taskList");
+
+const goalInput =
+  document.getElementById("goalInput");
+
+const goalText =
+  document.getElementById("goalText");
+
+const goalProgress =
+  document.getElementById("goalProgress");
+
+const note =
+  document.getElementById("note");
+
+const toast =
+  document.getElementById("toast");
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+function saveData(){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+function showToast(message){
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  },2200);
+
+}
+
+
+/* =========================================
+   TIMER
+========================================= */
+
+let timerSeconds = 25 * 60;
+
+let timerInterval = null;
+
+let timerRunning = false;
+
+let currentMinutes = 25;
+
+
+function updateTimer(){
+
+  const minutes =
+    Math.floor(timerSeconds / 60);
+
+  const seconds =
+    timerSeconds % 60;
+
+  timerEl.textContent =
+    String(minutes).padStart(2,"0")
+    + ":" +
+    String(seconds).padStart(2,"0");
+
+
+  const total =
+    currentMinutes * 60;
+
+  const passed =
+    total - timerSeconds;
+
+  const degree =
+    Math.max(
+      0,
+      Math.min(
+        360,
+        (passed / total) * 360
+      )
+    );
+
+
+  timerRing.style.background =
+    `conic-gradient(
+      var(--primary) ${degree}deg,
+      var(--secondary) ${degree + 45}deg,
+      rgba(255,255,255,.08) ${degree + 45}deg
+    )`;
+
+}
+
+
+function startTimer(){
+
+  if(timerRunning){
+
+    clearInterval(timerInterval);
+
+    timerRunning = false;
+
+    startBtn.textContent = "▶ Start";
+
+    return;
+
+  }
+
+
+  timerRunning = true;
+
+  startBtn.textContent = "⏸ Pause";
+
+
+  timerInterval = setInterval(() => {
+
+    if(timerSeconds <= 0){
+
+      clearInterval(timerInterval);
+
+      timerRunning = false;
+
+      startBtn.textContent = "▶ Start";
+
+      completeSession();
+
+      return;
+
+    }
+
+
+    timerSeconds--;
+
+    updateTimer();
+
+  },1000);
+
+}
+
+
+function resetTimer(){
+
+  clearInterval(timerInterval);
+
+  timerRunning = false;
+
+  timerSeconds =
+    currentMinutes * 60;
+
+  startBtn.textContent =
+    "▶ Start";
+
+  updateTimer();
+
+}
+
+
+function completeSession(){
+
+  data.sessions++;
+
+  data.focusMinutes +=
+    currentMinutes;
+
+  data.streak++;
+
+  saveData();
+
+  updateStats();
+
+  showToast(
+    "Focus session completed! 🔥"
+  );
+
+  resetTimer();
+
+}
+
+
+startBtn.addEventListener(
+  "click",
+  startTimer
+);
+
+
+resetBtn.addEventListener(
+  "click",
+  resetTimer
+);
+
+
+/* =========================================
+   TIMER MODES
+========================================= */
+
+document
+  .querySelectorAll(".mode-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(".mode-btn")
+          .forEach(btn =>
+            btn.classList.remove("active")
+          );
+
+        button.classList.add("active");
+
+        currentMinutes =
+          Number(button.dataset.min);
+
+        if(currentMinutes === 25){
+
+          timerMode.textContent =
+            "Focus Session";
+
+        }
+        else if(currentMinutes === 5){
+
+          timerMode.textContent =
+            "Short Break";
+
+        }
+        else{
+
+          timerMode.textContent =
+            "Long Break";
+
+        }
+
+        resetTimer();
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   TASKS
+========================================= */
+
+function renderTasks(){
+
+  taskList.innerHTML = "";
+
+
+  if(data.tasks.length === 0){
+
+    taskList.innerHTML = `
+
+      <div style="
+        text-align:center;
+        color:var(--muted);
+        padding:25px;
+        font-size:12px;
+      ">
+        No tasks yet. Add your first focus task.
+      </div>
+
+    `;
+
+  }
+
+
+  data.tasks.forEach((task,index) => {
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "task " +
+      (task.done ? "done" : "");
+
+
+    item.innerHTML = `
+
+      <div class="check">
+        ${task.done ? "✓" : ""}
+      </div>
+
+      <div class="task-text">
+        ${escapeHTML(task.text)}
+      </div>
+
+      <button
+        class="delete-task"
+        title="Delete task"
+      >
+        ✕
+      </button>
+
+    `;
+
+
+    item
+      .querySelector(".check")
+      .addEventListener(
+        "click",
+        () => {
+
+          task.done =
+            !task.done;
+
+          saveData();
+
+          renderTasks();
+
+          updateStats();
+
+        }
+      );
+
+
+    item
+      .querySelector(".delete-task")
+      .addEventListener(
+        "click",
+        () => {
+
+          data.tasks.splice(
+            index,
+            1
+          );
+
+          saveData();
+
+          renderTasks();
+
+          updateStats();
+
+          showToast(
+            "Task removed."
+          );
+
+        }
+      );
+
+
+    taskList.appendChild(item);
+
+  });
+
+}
+
+
+function addTask(){
+
+  const text =
+    taskInput.value.trim();
+
+
+  if(!text){
+
+    showToast(
+      "Enter a task first."
+    );
+
+    return;
+
+  }
+
+
+  data.tasks.push({
+
+    text:text,
+
+    done:false
+
+  });
+
+
+  taskInput.value = "";
+
+  saveData();
+
+  renderTasks();
+
+  updateStats();
+
+  showToast(
+    "Task added! ✅"
+  );
+
+}
+
+
+document
+  .getElementById("addTask")
+  .addEventListener(
+    "click",
+    addTask
+  );
+
+
+taskInput.addEventListener(
+  "keydown",
+  event => {
+
+    if(event.key === "Enter"){
+
+      addTask();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   GOAL
+========================================= */
+
+document
+  .getElementById("goalBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      const value =
+        goalInput.value.trim();
+
+
+      if(!value){
+
+        showToast(
+          "Write a goal first."
+        );
+
+        return;
+
+      }
+
+
+      data.goal = value;
+
+      saveData();
+
+      renderGoal();
+
+      showToast(
+        "Focus goal saved! 🎯"
+      );
+
+    }
+  );
+
+
+function renderGoal(){
+
+  if(data.goal){
+
+    goalText.textContent =
+      data.goal;
+
+    goalInput.value =
+      data.goal;
+
+  }
+  else{
+
+    goalText.textContent =
+      "No focus goal set yet.";
+
+  }
+
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+function updateStats(){
+
+  const total =
+    data.tasks.length;
+
+  const completed =
+    data.tasks.filter(
+      task => task.done
+    ).length;
+
+  const remaining =
+    total - completed;
+
+  const progress =
+    total === 0
+      ? 0
+      : Math.round(
+          completed / total * 100
+        );
+
+
+  document.getElementById(
+    "focusMinutes"
+  ).textContent =
+    data.focusMinutes;
+
+
+  document.getElementById(
+    "streak"
+  ).textContent =
+    data.streak;
+
+
+  document.getElementById(
+    "completed"
+  ).textContent =
+    completed;
+
+
+  document.getElementById(
+    "productivity"
+  ).textContent =
+    progress + "%";
+
+
+  document.getElementById(
+    "sessionCount"
+  ).textContent =
+    data.sessions;
+
+
+  document.getElementById(
+    "taskCount"
+  ).textContent =
+    total;
+
+
+  document.getElementById(
+    "remainingCount"
+  ).textContent =
+    remaining;
+
+
+  document.getElementById(
+    "goalPercent"
+  ).textContent =
+    progress + "%";
+
+
+  goalProgress.style.width =
+    progress + "%";
+
+}
+
+
+/* =========================================
+   NOTE
+========================================= */
+
+document
+  .getElementById("saveNote")
+  .addEventListener(
+    "click",
+    () => {
+
+      data.note =
+        note.value;
+
+      saveData();
+
+      showToast(
+        "Note saved! 📝"
+      );
+
+    }
+  );
+
+
+/* =========================================
+   AMBIENT SOUND UI
+========================================= */
+
+document
+  .querySelectorAll(".sound")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(".sound")
+          .forEach(btn =>
+            btn.classList.remove(
+              "active"
+            )
+          );
+
+        button.classList.add(
+          "active"
+        );
+
+        const sound =
+          button.dataset.sound;
+
+
+        if(sound === "none"){
+
+          showToast(
+            "Silent mode enabled 🔇"
+          );
+
+        }
+        else{
+
+          showToast(
+            button.innerText.trim()
+            + " mode selected 🎧"
+          );
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   THEME
+========================================= */
+
+const themeBtn =
+  document.getElementById(
+    "themeBtn"
+  );
+
+
+function updateThemeIcon(){
+
+  themeBtn.textContent =
+    document.body.classList.contains(
+      "light"
+    )
+      ? "🌙"
+      : "☀️";
+
+}
+
+
+themeBtn.addEventListener(
+  "click",
+  () => {
+
+    document.body.classList.toggle(
+      "light"
+    );
+
+
+    localStorage.setItem(
+      "focusSphereTheme",
+
+      document.body.classList.contains(
+        "light"
+      )
+        ? "light"
+        : "dark"
+    );
+
+
+    updateThemeIcon();
+
+  }
+);
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================================
+   DATE
+========================================= */
+
+function updateDate(){
+
+  const now =
+    new Date();
+
+  const options = {
+    weekday:"long",
+    year:"numeric",
+    month:"long",
+    day:"numeric"
+  };
+
+  document.getElementById(
+    "dateText"
+  ).textContent =
+    now.toLocaleDateString(
+      "en-IN",
+      options
+    );
+
+}
+
+
+/* =========================================
+   ROTATING QUOTES
+========================================= */
+
+const quotes = [
+
+  "Focus on being productive instead of busy.",
+
+  "Small progress is still progress.",
+
+  "One focused hour can change your entire day.",
+
+  "Discipline creates freedom.",
+
+  "Your attention is your most valuable resource.",
+
+  "Start before you're ready.",
+
+  "Consistency beats intensity."
+
+];
+
+
+function randomQuote(){
+
+  const random =
+    Math.floor(
+      Math.random() *
+      quotes.length
+    );
+
+  document.getElementById(
+    "quote"
+  ).textContent =
+    `"${quotes[random]}"`;
+
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+document
+  .querySelectorAll(".nav-item")
+  .forEach(item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(
+            ".nav-item"
+          )
+          .forEach(nav =>
+            nav.classList.remove(
+              "active"
+            )
+          );
+
+        item.classList.add(
+          "active"
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================
+   LOAD DATA
+========================================= */
+
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const savedTheme =
+      localStorage.getItem(
+        "focusSphereTheme"
+      );
+
+
+    if(savedTheme === "light"){
+
+      document.body.classList.add(
+        "light"
+      );
+
+    }
+
+
+    updateThemeIcon();
+
+    renderTasks();
+
+    renderGoal();
+
+    updateStats();
+
+    updateTimer();
+
+    updateDate();
+
+    randomQuote();
+
+
+    if(data.note){
+
+      note.value =
+        data.note;
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
