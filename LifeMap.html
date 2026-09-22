@@ -1,0 +1,2926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LifeMap — Personal Life Command Center</title>
+
+<style>
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --card2:#f9fafc;
+  --text:#182033;
+  --muted:#778198;
+  --border:#e5e9f0;
+
+  --primary:#6558f5;
+  --primary2:#8478ff;
+  --cyan:#13b9c8;
+  --green:#18a66b;
+  --orange:#f2a93b;
+  --red:#e85d6a;
+  --pink:#d75cff;
+
+  --sidebar:#101522;
+
+  --shadow:0 15px 40px rgba(30,40,70,.08);
+}
+
+body.dark{
+  --bg:#090d15;
+  --card:#121824;
+  --card2:#171e2b;
+  --text:#f3f6fc;
+  --muted:#929db1;
+  --border:#27303d;
+  --sidebar:#070a10;
+  --shadow:0 18px 45px rgba(0,0,0,.25);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(101,88,245,.10),
+      transparent 30%
+    ),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:.3s;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:245px;
+  height:100vh;
+  padding:24px 15px;
+  background:var(--sidebar);
+  color:white;
+  z-index:100;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:5px 12px 32px;
+}
+
+.logo-icon{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--cyan)
+    );
+
+  box-shadow:
+    0 10px 25px rgba(101,88,245,.35);
+
+  font-size:21px;
+}
+
+.logo h2{
+  font-size:21px;
+}
+
+.logo span{
+  color:#8c82ff;
+}
+
+.nav-title{
+  color:#69758a;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin:15px 12px 9px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:13px;
+
+  padding:13px 14px;
+  margin-bottom:5px;
+
+  border-radius:11px;
+
+  color:#919bad;
+
+  transition:.2s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+  background:rgba(101,88,245,.17);
+  color:white;
+}
+
+.nav-item.active{
+  border-left:3px solid var(--primary2);
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+  margin-left:245px;
+  padding:28px;
+  min-height:100vh;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:24px;
+}
+
+.topbar h1{
+  font-size:28px;
+  margin-bottom:5px;
+}
+
+.topbar p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.top-actions{
+  display:flex;
+  gap:10px;
+}
+
+.icon-btn{
+  width:43px;
+  height:43px;
+
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+
+  border-radius:12px;
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+  position:relative;
+
+  padding:30px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(101,88,245,.95),
+      rgba(126,103,245,.88),
+      rgba(19,185,200,.85)
+    );
+
+  color:white;
+
+  overflow:hidden;
+
+  margin-bottom:22px;
+
+  box-shadow:
+    0 20px 50px rgba(101,88,245,.20);
+}
+
+.hero::before{
+  content:"";
+
+  position:absolute;
+
+  width:250px;
+  height:250px;
+
+  border:40px solid rgba(255,255,255,.07);
+
+  border-radius:50%;
+
+  right:-70px;
+  top:-100px;
+}
+
+.hero::after{
+  content:"";
+
+  position:absolute;
+
+  width:140px;
+  height:140px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.05);
+
+  right:180px;
+  bottom:-80px;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.hero h2{
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.hero p{
+  max-width:680px;
+  line-height:1.6;
+  color:rgba(255,255,255,.82);
+}
+
+.hero-date{
+  display:inline-flex;
+  margin-top:18px;
+  padding:8px 13px;
+
+  background:rgba(255,255,255,.12);
+
+  border:1px solid rgba(255,255,255,.13);
+
+  border-radius:20px;
+
+  font-size:12px;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:16px;
+
+  margin-bottom:22px;
+}
+
+.stat{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:17px;
+
+  padding:20px;
+
+  box-shadow:var(--shadow);
+}
+
+.stat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.stat-icon{
+  width:41px;
+  height:41px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:12px;
+
+  background:
+    rgba(101,88,245,.11);
+
+  font-size:19px;
+}
+
+.stat h3{
+  font-size:27px;
+  margin-top:15px;
+}
+
+.stat p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:20px;
+
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:19px;
+
+  padding:22px;
+
+  box-shadow:var(--shadow);
+}
+
+.card.full{
+  grid-column:1/-1;
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:18px;
+}
+
+.card-header h2{
+  font-size:17px;
+}
+
+.card-header span{
+  color:var(--muted);
+  font-size:11px;
+  display:block;
+  margin-top:4px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.primary-btn{
+  border:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary2)
+    );
+
+  color:white;
+
+  padding:10px 16px;
+
+  border-radius:10px;
+
+  font-size:12px;
+  font-weight:700;
+
+  transition:.2s;
+}
+
+.primary-btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(101,88,245,.25);
+}
+
+.secondary-btn{
+  border:1px solid var(--border);
+
+  background:var(--card);
+
+  color:var(--text);
+
+  padding:9px 14px;
+
+  border-radius:9px;
+
+  font-size:12px;
+}
+
+
+/* =====================================================
+   GOALS
+===================================================== */
+
+.goal-input{
+  display:flex;
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.goal-input input{
+  flex:1;
+
+  min-width:0;
+
+  border:1px solid var(--border);
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  padding:12px;
+
+  border-radius:10px;
+
+  outline:none;
+}
+
+.goal{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  padding:13px;
+
+  background:var(--card2);
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  margin-bottom:9px;
+}
+
+.goal-check{
+  width:21px;
+  height:21px;
+
+  border:1px solid #8892a5;
+
+  border-radius:6px;
+
+  display:grid;
+  place-items:center;
+
+  cursor:pointer;
+
+  flex-shrink:0;
+}
+
+.goal.completed .goal-check{
+  background:var(--green);
+  border-color:var(--green);
+  color:white;
+}
+
+.goal.completed .goal-name{
+  text-decoration:line-through;
+  color:var(--muted);
+}
+
+.goal-name{
+  flex:1;
+  font-size:13px;
+}
+
+.goal-delete{
+  border:0;
+  background:none;
+  color:var(--muted);
+}
+
+.goal-delete:hover{
+  color:var(--red);
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-box{
+  margin-top:20px;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+
+  font-size:12px;
+
+  margin-bottom:7px;
+}
+
+.progress-label span:last-child{
+  color:var(--muted);
+}
+
+.progress{
+  width:100%;
+  height:8px;
+
+  background:var(--border);
+
+  border-radius:20px;
+
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+
+  width:0;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--primary),
+      var(--cyan)
+    );
+
+  transition:.5s;
+}
+
+
+/* =====================================================
+   HABITS
+===================================================== */
+
+.habit{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  padding:13px;
+
+  border:1px solid var(--border);
+
+  background:var(--card2);
+
+  border-radius:12px;
+
+  margin-bottom:9px;
+}
+
+.habit-icon{
+  width:36px;
+  height:36px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:10px;
+
+  background:
+    rgba(101,88,245,.10);
+}
+
+.habit-info{
+  flex:1;
+}
+
+.habit-info strong{
+  display:block;
+  font-size:13px;
+}
+
+.habit-info small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.habit-btn{
+  width:29px;
+  height:29px;
+
+  border:1px solid var(--border);
+
+  border-radius:8px;
+
+  background:transparent;
+
+  color:var(--muted);
+}
+
+.habit.done .habit-btn{
+  background:var(--green);
+  color:white;
+  border-color:var(--green);
+}
+
+
+/* =====================================================
+   TIMELINE
+===================================================== */
+
+.timeline{
+  position:relative;
+
+  padding-left:25px;
+}
+
+.timeline::before{
+  content:"";
+
+  position:absolute;
+
+  left:7px;
+  top:5px;
+  bottom:5px;
+
+  width:2px;
+
+  background:var(--border);
+}
+
+.timeline-item{
+  position:relative;
+
+  margin-bottom:20px;
+}
+
+.timeline-dot{
+  position:absolute;
+
+  left:-25px;
+  top:2px;
+
+  width:16px;
+  height:16px;
+
+  border-radius:50%;
+
+  background:var(--primary);
+
+  border:4px solid var(--card);
+}
+
+.timeline-item h4{
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+.timeline-item p{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+}
+
+.timeline-date{
+  color:var(--primary);
+  font-size:10px;
+  margin-bottom:4px;
+}
+
+
+/* =====================================================
+   FINANCE
+===================================================== */
+
+.finance-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:10px;
+}
+
+.finance{
+  padding:15px;
+
+  background:var(--card2);
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+}
+
+.finance span{
+  display:block;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+  margin-bottom:7px;
+}
+
+.finance strong{
+  font-size:20px;
+}
+
+.income{
+  color:var(--green);
+}
+
+.expense{
+  color:var(--red);
+}
+
+
+/* =====================================================
+   MOOD
+===================================================== */
+
+.moods{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.mood{
+  width:52px;
+  height:52px;
+
+  border:1px solid var(--border);
+
+  background:var(--card2);
+
+  border-radius:13px;
+
+  font-size:22px;
+
+  transition:.2s;
+}
+
+.mood:hover,
+.mood.active{
+  border-color:var(--primary);
+
+  transform:translateY(-3px);
+
+  background:
+    rgba(101,88,245,.10);
+}
+
+
+/* =====================================================
+   NOTES
+===================================================== */
+
+.note{
+  width:100%;
+
+  min-height:135px;
+
+  resize:vertical;
+
+  border:1px solid var(--border);
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  border-radius:11px;
+
+  padding:13px;
+
+  outline:none;
+
+  line-height:1.5;
+
+  font-size:12px;
+}
+
+
+/* =====================================================
+   ADD EVENT
+===================================================== */
+
+.event-input{
+  display:grid;
+
+  grid-template-columns:
+    1fr 130px auto;
+
+  gap:8px;
+
+  margin-bottom:15px;
+}
+
+.event-input input{
+  border:1px solid var(--border);
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  border-radius:9px;
+
+  padding:10px;
+
+  outline:none;
+}
+
+.event{
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:12px;
+
+  border:1px solid var(--border);
+
+  background:var(--card2);
+
+  border-radius:11px;
+
+  margin-bottom:8px;
+}
+
+.event-date{
+  width:50px;
+
+  text-align:center;
+
+  padding:7px;
+
+  border-radius:8px;
+
+  background:
+    rgba(101,88,245,.10);
+
+  color:var(--primary);
+
+  font-size:10px;
+}
+
+.event-info{
+  flex:1;
+}
+
+.event-info strong{
+  display:block;
+  font-size:12px;
+}
+
+.event-info small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+
+/* =====================================================
+   QUOTE
+===================================================== */
+
+.quote{
+  text-align:center;
+
+  padding:28px;
+
+  border-radius:15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(101,88,245,.08),
+      rgba(19,185,200,.06)
+    );
+
+  border:1px solid var(--border);
+}
+
+.quote p{
+  font-size:16px;
+
+  line-height:1.6;
+
+  font-style:italic;
+}
+
+.quote small{
+  color:var(--muted);
+
+  display:block;
+
+  margin-top:9px;
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast{
+  position:fixed;
+
+  right:25px;
+  bottom:25px;
+
+  background:#111827;
+
+  color:white;
+
+  padding:13px 18px;
+
+  border-radius:11px;
+
+  opacity:0;
+
+  transform:translateY(20px);
+
+  pointer-events:none;
+
+  transition:.3s;
+
+  z-index:1000;
+
+  font-size:12px;
+}
+
+.toast.show{
+  opacity:1;
+
+  transform:translateY(0);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  padding:20px 0 5px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1100px){
+
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .card.full{
+    grid-column:auto;
+  }
+}
+
+@media(max-width:750px){
+
+  .sidebar{
+    width:70px;
+    padding:18px 8px;
+  }
+
+  .logo{
+    justify-content:center;
+    padding-left:0;
+    padding-right:0;
+  }
+
+  .logo h2,
+  .nav-title,
+  .nav-item span:last-child{
+    display:none;
+  }
+
+  .nav-item{
+    justify-content:center;
+    padding:13px;
+  }
+
+  .main{
+    margin-left:70px;
+    padding:18px;
+  }
+
+  .topbar h1{
+    font-size:22px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .event-input{
+    grid-template-columns:1fr;
+  }
+
+  .finance-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:500px){
+
+  .main{
+    padding:12px;
+  }
+
+  .hero{
+    padding:22px;
+  }
+
+  .hero h2{
+    font-size:21px;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  .goal-input{
+    flex-direction:column;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+
+    <div class="logo-icon">
+      🗺️
+    </div>
+
+    <h2>
+      Life<span>Map</span>
+    </h2>
+
+  </div>
+
+
+  <div class="nav-title">
+    Command Center
+  </div>
+
+
+  <div class="nav-item active">
+    <span>🏠</span>
+    <span>Dashboard</span>
+  </div>
+
+
+  <div class="nav-item">
+    <span>🎯</span>
+    <span>Goals</span>
+  </div>
+
+
+  <div class="nav-item">
+    <span>🔥</span>
+    <span>Habits</span>
+  </div>
+
+
+  <div class="nav-item">
+    <span>🗓️</span>
+    <span>Timeline</span>
+  </div>
+
+
+  <div class="nav-title">
+    Personal
+  </div>
+
+
+  <div class="nav-item">
+    <span>💰</span>
+    <span>Finance</span>
+  </div>
+
+
+  <div class="nav-item">
+    <span>😊</span>
+    <span>Mood</span>
+  </div>
+
+
+  <div class="nav-item">
+    <span>📝</span>
+    <span>Journal</span>
+  </div>
+
+
+  <div class="nav-item">
+    <span>⚙️</span>
+    <span>Settings</span>
+  </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+  <!-- TOPBAR -->
+
+  <div class="topbar">
+
+    <div>
+
+      <h1>
+        Life Dashboard
+      </h1>
+
+      <p id="todayText">
+        Your life, organized in one place.
+      </p>
+
+    </div>
+
+
+    <div class="top-actions">
+
+      <button
+        class="icon-btn"
+        id="themeBtn"
+      >
+        🌙
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <h2>
+        Design the Life You Want 🚀
+      </h2>
+
+      <p>
+        Track your goals, habits, money, milestones
+        and personal growth from one beautiful dashboard.
+      </p>
+
+      <div class="hero-date">
+        📅 <span id="heroDate">Today</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- STATS -->
+
+  <section class="stats">
+
+    <div class="stat">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          🎯
+        </div>
+
+      </div>
+
+      <h3 id="goalStat">
+        0%
+      </h3>
+
+      <p>
+        Goal Progress
+      </p>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          🔥
+        </div>
+
+      </div>
+
+      <h3 id="habitStat">
+        0%
+      </h3>
+
+      <p>
+        Today's Habits
+      </p>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          💰
+        </div>
+
+      </div>
+
+      <h3 id="balanceStat">
+        ₹0
+      </h3>
+
+      <p>
+        Current Balance
+      </p>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          😊
+        </div>
+
+      </div>
+
+      <h3 id="moodStat">
+        —
+      </h3>
+
+      <p>
+        Today's Mood
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- GRID -->
+
+  <section class="grid">
+
+
+    <!-- GOALS -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            🎯 Goals
+          </h2>
+
+          <span>
+            Turn ideas into milestones
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="goal-input">
+
+        <input
+          id="goalInput"
+          type="text"
+          placeholder="Add a new goal..."
+        >
+
+        <button
+          class="primary-btn"
+          id="addGoal"
+        >
+          Add Goal
+        </button>
+
+      </div>
+
+
+      <div id="goalList"></div>
+
+
+      <div class="progress-box">
+
+        <div class="progress-label">
+
+          <span>
+            Overall Goal Progress
+          </span>
+
+          <span id="goalProgressText">
+            0%
+          </span>
+
+        </div>
+
+        <div class="progress">
+
+          <div
+            class="progress-bar"
+            id="goalProgress"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- HABITS -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            🔥 Daily Habits
+          </h2>
+
+          <span>
+            Small actions, big changes
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div id="habitList"></div>
+
+    </div>
+
+
+    <!-- TIMELINE -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            🗓️ Life Timeline
+          </h2>
+
+          <span>
+            Important milestones
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="event-input">
+
+        <input
+          id="eventInput"
+          type="text"
+          placeholder="Milestone or event"
+        >
+
+        <input
+          id="eventDate"
+          type="date"
+        >
+
+        <button
+          class="primary-btn"
+          id="addEvent"
+        >
+          Add
+        </button>
+
+      </div>
+
+
+      <div id="eventList"></div>
+
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+
+          <div class="timeline-dot"></div>
+
+          <div class="timeline-date">
+            TODAY
+          </div>
+
+          <h4>
+            Keep moving forward
+          </h4>
+
+          <p>
+            Every small step contributes to your
+            bigger life journey.
+          </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+          <div class="timeline-dot"></div>
+
+          <div class="timeline-date">
+            FUTURE
+          </div>
+
+          <h4>
+            Your next milestone
+          </h4>
+
+          <p>
+            Add important events above to build
+            your personal timeline.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- FINANCE -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            💰 Finance Snapshot
+          </h2>
+
+          <span>
+            Keep your money visible
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="finance-grid">
+
+        <div class="finance">
+
+          <span>
+            Income
+          </span>
+
+          <strong
+            class="income"
+            id="incomeValue"
+          >
+            ₹0
+          </strong>
+
+        </div>
+
+
+        <div class="finance">
+
+          <span>
+            Expenses
+          </span>
+
+          <strong
+            class="expense"
+            id="expenseValue"
+          >
+            ₹0
+          </strong>
+
+        </div>
+
+
+        <div class="finance">
+
+          <span>
+            Balance
+          </span>
+
+          <strong
+            id="financeBalance"
+          >
+            ₹0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <br>
+
+
+      <div class="goal-input">
+
+        <input
+          id="incomeInput"
+          type="number"
+          placeholder="Income ₹"
+        >
+
+        <input
+          id="expenseInput"
+          type="number"
+          placeholder="Expense ₹"
+        >
+
+        <button
+          class="primary-btn"
+          id="saveFinance"
+        >
+          Save
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- MOOD -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            😊 Mood Check
+          </h2>
+
+          <span>
+            How are you feeling today?
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="moods">
+
+        <button
+          class="mood"
+          data-mood="😄"
+        >
+          😄
+        </button>
+
+        <button
+          class="mood"
+          data-mood="🙂"
+        >
+          🙂
+        </button>
+
+        <button
+          class="mood"
+          data-mood="😐"
+        >
+          😐
+        </button>
+
+        <button
+          class="mood"
+          data-mood="😔"
+        >
+          😔
+        </button>
+
+        <button
+          class="mood"
+          data-mood="😫"
+        >
+          😫
+        </button>
+
+      </div>
+
+
+      <p
+        id="moodMessage"
+        style="
+        color:var(--muted);
+        font-size:12px;
+        margin-top:15px;
+        "
+      >
+        Select your mood for today.
+      </p>
+
+    </div>
+
+
+    <!-- JOURNAL -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            📝 Daily Journal
+          </h2>
+
+          <span>
+            Write down what's on your mind
+          </span>
+
+        </div>
+
+
+        <button
+          class="secondary-btn"
+          id="saveNote"
+        >
+          Save
+        </button>
+
+      </div>
+
+
+      <textarea
+        class="note"
+        id="note"
+        placeholder="Today I learned...
+Today I achieved...
+Tomorrow I want to..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- QUOTE -->
+
+    <div class="card full">
+
+      <div class="quote">
+
+        <p id="quote">
+          "Your future is created by what you do today,
+          not tomorrow."
+        </p>
+
+        <small>
+          — LifeMap
+        </small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    LifeMap © 2026 • Personal Life Command Center
+  </footer>
+
+</main>
+
+
+<!-- TOAST -->
+
+<div
+  class="toast"
+  id="toast"
+>
+  Saved successfully!
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+const STORAGE_KEY =
+  "lifeMapData";
+
+
+let data =
+  JSON.parse(
+    localStorage.getItem(
+      STORAGE_KEY
+    )
+  ) ||
+  {
+
+    goals:[],
+
+    habits:[
+      {
+        name:"Read for 20 minutes",
+        icon:"📚",
+        done:false
+      },
+      {
+        name:"Exercise",
+        icon:"🏃",
+        done:false
+      },
+      {
+        name:"Practice coding",
+        icon:"💻",
+        done:false
+      },
+      {
+        name:"Drink enough water",
+        icon:"💧",
+        done:false
+      }
+    ],
+
+    events:[],
+
+    income:0,
+
+    expense:0,
+
+    mood:"",
+
+    note:""
+
+  };
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function saveData(){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+
+function showToast(message){
+
+  toast.textContent =
+    message;
+
+  toast.classList.add(
+    "show"
+  );
+
+  setTimeout(
+    () => {
+
+      toast.classList.remove(
+        "show"
+      );
+
+    },
+    2200
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   GOALS
+===================================================== */
+
+const goalInput =
+  document.getElementById(
+    "goalInput"
+  );
+
+
+function renderGoals(){
+
+  const list =
+    document.getElementById(
+      "goalList"
+    );
+
+  list.innerHTML = "";
+
+
+  if(
+    data.goals.length === 0
+  ){
+
+    list.innerHTML = `
+
+      <div style="
+        text-align:center;
+        color:var(--muted);
+        padding:20px;
+        font-size:12px;
+      ">
+        No goals yet. Add your first goal 🎯
+      </div>
+
+    `;
+
+  }
+
+
+  data.goals.forEach(
+    (goal,index) => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "goal " +
+        (
+          goal.done
+            ? "completed"
+            : ""
+        );
+
+
+      item.innerHTML = `
+
+        <div class="goal-check">
+          ${
+            goal.done
+              ? "✓"
+              : ""
+          }
+        </div>
+
+        <div class="goal-name">
+          ${escapeHTML(goal.name)}
+        </div>
+
+        <button class="goal-delete">
+          ✕
+        </button>
+
+      `;
+
+
+      item
+        .querySelector(
+          ".goal-check"
+        )
+        .addEventListener(
+          "click",
+          () => {
+
+            goal.done =
+              !goal.done;
+
+            saveData();
+
+            renderGoals();
+
+            updateStats();
+
+          }
+        );
+
+
+      item
+        .querySelector(
+          ".goal-delete"
+        )
+        .addEventListener(
+          "click",
+          () => {
+
+            data.goals.splice(
+              index,
+              1
+            );
+
+            saveData();
+
+            renderGoals();
+
+            updateStats();
+
+            showToast(
+              "Goal removed."
+            );
+
+          }
+        );
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+document
+  .getElementById(
+    "addGoal"
+  )
+  .addEventListener(
+    "click",
+    addGoal
+  );
+
+
+goalInput.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "Enter"
+    ){
+
+      addGoal();
+
+    }
+
+  }
+);
+
+
+function addGoal(){
+
+  const value =
+    goalInput.value.trim();
+
+
+  if(!value){
+
+    showToast(
+      "Enter a goal first."
+    );
+
+    return;
+
+  }
+
+
+  data.goals.push({
+
+    name:value,
+
+    done:false
+
+  });
+
+
+  goalInput.value =
+    "";
+
+  saveData();
+
+  renderGoals();
+
+  updateStats();
+
+  showToast(
+    "Goal added! 🎯"
+  );
+
+}
+
+
+/* =====================================================
+   HABITS
+===================================================== */
+
+function renderHabits(){
+
+  const list =
+    document.getElementById(
+      "habitList"
+    );
+
+  list.innerHTML = "";
+
+
+  data.habits.forEach(
+    (habit,index) => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "habit " +
+        (
+          habit.done
+            ? "done"
+            : ""
+        );
+
+
+      item.innerHTML = `
+
+        <div class="habit-icon">
+          ${habit.icon}
+        </div>
+
+        <div class="habit-info">
+
+          <strong>
+            ${escapeHTML(habit.name)}
+          </strong>
+
+          <small>
+            Daily habit
+          </small>
+
+        </div>
+
+        <button class="habit-btn">
+          ${
+            habit.done
+              ? "✓"
+              : "+"
+          }
+        </button>
+
+      `;
+
+
+      item
+        .querySelector(
+          ".habit-btn"
+        )
+        .addEventListener(
+          "click",
+          () => {
+
+            habit.done =
+              !habit.done;
+
+            saveData();
+
+            renderHabits();
+
+            updateStats();
+
+            showToast(
+              habit.done
+                ? "Habit completed! 🔥"
+                : "Habit unchecked."
+            );
+
+          }
+        );
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+function renderEvents(){
+
+  const list =
+    document.getElementById(
+      "eventList"
+    );
+
+  list.innerHTML = "";
+
+
+  data.events
+    .sort(
+      (a,b) =>
+        new Date(a.date) -
+        new Date(b.date)
+    )
+    .forEach(
+      (event,index) => {
+
+        const date =
+          new Date(
+            event.date +
+            "T00:00:00"
+          );
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+        item.className =
+          "event";
+
+
+        item.innerHTML = `
+
+          <div class="event-date">
+
+            ${date.toLocaleDateString(
+              "en-IN",
+              {
+                day:"2-digit",
+                month:"short"
+              }
+            )}
+
+          </div>
+
+          <div class="event-info">
+
+            <strong>
+              ${escapeHTML(event.name)}
+            </strong>
+
+            <small>
+              ${date.toLocaleDateString(
+                "en-IN",
+                {
+                  weekday:"long",
+                  year:"numeric"
+                }
+              )}
+            </small>
+
+          </div>
+
+          <button
+            class="goal-delete"
+          >
+            ✕
+          </button>
+
+        `;
+
+
+        item
+          .querySelector(
+            "button"
+          )
+          .addEventListener(
+            "click",
+            () => {
+
+              data.events.splice(
+                index,
+                1
+              );
+
+              saveData();
+
+              renderEvents();
+
+              showToast(
+                "Event removed."
+              );
+
+            }
+          );
+
+
+        list.appendChild(
+          item
+        );
+
+      }
+    );
+
+}
+
+
+document
+  .getElementById(
+    "addEvent"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const name =
+        document.getElementById(
+          "eventInput"
+        ).value.trim();
+
+
+      const date =
+        document.getElementById(
+          "eventDate"
+        ).value;
+
+
+      if(
+        !name ||
+        !date
+      ){
+
+        showToast(
+          "Enter event and date."
+        );
+
+        return;
+
+      }
+
+
+      data.events.push({
+
+        name:name,
+
+        date:date
+
+      });
+
+
+      document.getElementById(
+        "eventInput"
+      ).value = "";
+
+      document.getElementById(
+        "eventDate"
+      ).value = "";
+
+
+      saveData();
+
+      renderEvents();
+
+      showToast(
+        "Timeline event added! 🗓️"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   FINANCE
+===================================================== */
+
+function renderFinance(){
+
+  document.getElementById(
+    "incomeValue"
+  ).textContent =
+    "₹" +
+    Number(data.income)
+      .toLocaleString("en-IN");
+
+
+  document.getElementById(
+    "expenseValue"
+  ).textContent =
+    "₹" +
+    Number(data.expense)
+      .toLocaleString("en-IN");
+
+
+  const balance =
+    Number(data.income) -
+    Number(data.expense);
+
+
+  document.getElementById(
+    "financeBalance"
+  ).textContent =
+    "₹" +
+    balance.toLocaleString(
+      "en-IN"
+    );
+
+
+  document.getElementById(
+    "balanceStat"
+  ).textContent =
+    "₹" +
+    balance.toLocaleString(
+      "en-IN"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "saveFinance"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const income =
+        Number(
+          document.getElementById(
+            "incomeInput"
+          ).value
+        );
+
+
+      const expense =
+        Number(
+          document.getElementById(
+            "expenseInput"
+          ).value
+        );
+
+
+      if(
+        income < 0 ||
+        expense < 0
+      ){
+
+        showToast(
+          "Enter valid amounts."
+        );
+
+        return;
+
+      }
+
+
+      data.income =
+        income;
+
+      data.expense =
+        expense;
+
+
+      saveData();
+
+      renderFinance();
+
+      updateStats();
+
+      showToast(
+        "Finance updated! 💰"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   MOOD
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".mood"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          data.mood =
+            button.dataset.mood;
+
+          document
+            .querySelectorAll(
+              ".mood"
+            )
+            .forEach(
+              mood =>
+                mood.classList.remove(
+                  "active"
+                )
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          saveData();
+
+          updateStats();
+
+          showToast(
+            "Mood saved! 😊"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+function renderMood(){
+
+  if(!data.mood)
+    return;
+
+
+  document
+    .querySelectorAll(
+      ".mood"
+    )
+    .forEach(
+      button => {
+
+        if(
+          button.dataset.mood ===
+          data.mood
+        ){
+
+          button.classList.add(
+            "active"
+          );
+
+        }
+
+      }
+    );
+
+
+  document.getElementById(
+    "moodMessage"
+  ).textContent =
+    "Today's mood: " +
+    data.mood;
+
+}
+
+
+/* =====================================================
+   JOURNAL
+===================================================== */
+
+document
+  .getElementById(
+    "saveNote"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      data.note =
+        document.getElementById(
+          "note"
+        ).value;
+
+
+      saveData();
+
+      showToast(
+        "Journal saved! 📝"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+  const totalGoals =
+    data.goals.length;
+
+
+  const completedGoals =
+    data.goals.filter(
+      goal => goal.done
+    ).length;
+
+
+  const goalPercent =
+    totalGoals === 0
+      ? 0
+      : Math.round(
+          completedGoals /
+          totalGoals *
+          100
+        );
+
+
+  const totalHabits =
+    data.habits.length;
+
+
+  const completedHabits =
+    data.habits.filter(
+      habit => habit.done
+    ).length;
+
+
+  const habitPercent =
+    totalHabits === 0
+      ? 0
+      : Math.round(
+          completedHabits /
+          totalHabits *
+          100
+        );
+
+
+  document.getElementById(
+    "goalStat"
+  ).textContent =
+    goalPercent + "%";
+
+
+  document.getElementById(
+    "habitStat"
+  ).textContent =
+    habitPercent + "%";
+
+
+  document.getElementById(
+    "moodStat"
+  ).textContent =
+    data.mood || "—";
+
+
+  document.getElementById(
+    "goalProgress"
+  ).style.width =
+    goalPercent + "%";
+
+
+  document.getElementById(
+    "goalProgressText"
+  ).textContent =
+    goalPercent + "%";
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+const themeBtn =
+  document.getElementById(
+    "themeBtn"
+  );
+
+
+function updateThemeIcon(){
+
+  themeBtn.textContent =
+    document.body.classList.contains(
+      "dark"
+    )
+      ? "☀️"
+      : "🌙";
+
+}
+
+
+themeBtn.addEventListener(
+  "click",
+  () => {
+
+    document.body.classList.toggle(
+      "dark"
+    );
+
+
+    localStorage.setItem(
+      "lifeMapTheme",
+
+      document.body.classList.contains(
+        "dark"
+      )
+        ? "dark"
+        : "light"
+    );
+
+
+    updateThemeIcon();
+
+  }
+);
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function updateDate(){
+
+  const now =
+    new Date();
+
+
+  const options = {
+
+    weekday:"long",
+
+    year:"numeric",
+
+    month:"long",
+
+    day:"numeric"
+
+  };
+
+
+  const date =
+    now.toLocaleDateString(
+      "en-IN",
+      options
+    );
+
+
+  document.getElementById(
+    "todayText"
+  ).textContent =
+    date;
+
+
+  document.getElementById(
+    "heroDate"
+  ).textContent =
+    date;
+
+}
+
+
+/* =====================================================
+   QUOTES
+===================================================== */
+
+const quotes = [
+
+  "Your future is created by what you do today, not tomorrow.",
+
+  "Small steps every day create extraordinary results.",
+
+  "Build a life you don't need to escape from.",
+
+  "Progress is better than perfection.",
+
+  "Your direction matters more than your speed.",
+
+  "Dream big. Start small. Keep going.",
+
+  "Consistency turns goals into reality."
+
+];
+
+
+function randomQuote(){
+
+  const index =
+    Math.floor(
+      Math.random() *
+      quotes.length
+    );
+
+
+  document.getElementById(
+    "quote"
+  ).textContent =
+    '"' +
+    quotes[index] +
+    '"';
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".nav-item"
+  )
+  .forEach(
+    item => {
+
+      item.addEventListener(
+        "click",
+        () => {
+
+          document
+            .querySelectorAll(
+              ".nav-item"
+            )
+            .forEach(
+              nav =>
+                nav.classList.remove(
+                  "active"
+                )
+            );
+
+
+          item.classList.add(
+            "active"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const savedTheme =
+      localStorage.getItem(
+        "lifeMapTheme"
+      );
+
+
+    if(
+      savedTheme === "dark"
+    ){
+
+      document.body.classList.add(
+        "dark"
+      );
+
+    }
+
+
+    updateThemeIcon();
+
+    renderGoals();
+
+    renderHabits();
+
+    renderEvents();
+
+    renderFinance();
+
+    renderMood();
+
+    updateStats();
+
+    updateDate();
+
+    randomQuote();
+
+
+    if(data.note){
+
+      document.getElementById(
+        "note"
+      ).value =
+        data.note;
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
