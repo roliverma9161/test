@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JobTrack Pro | Track Your Career. Land Your Next Opportunity.</title>
+
+    <meta
+        name="description"
+        content="JobTrack Pro helps students and professionals track job applications, interviews, saved jobs and career progress in one place."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #070b17;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           VARIABLES
+        ========================== */
+
+        :root {
+            --bg: #070b17;
+            --bg-light: #0d1324;
+            --card: rgba(255,255,255,0.05);
+            --border: rgba(255,255,255,0.09);
+
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #06b6d4;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
+            --gradient: linear-gradient(
+                135deg,
+                #6366f1,
+                #8b5cf6,
+                #06b6d4
+            );
+        }
+
+        /* =========================
+           BACKGROUND EFFECT
+        ========================== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: rgba(99,102,241,0.12);
+            filter: blur(120px);
+            border-radius: 50%;
+            top: -200px;
+            left: -150px;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: rgba(6,182,212,0.08);
+            filter: blur(120px);
+            border-radius: 50%;
+            bottom: -200px;
+            right: -150px;
+            z-index: -1;
+        }
+
+        .container {
+            width: min(1180px, 90%);
+            margin: auto;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+
+            background: rgba(7,11,23,0.72);
+            backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .navbar {
+            height: 74px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: var(--gradient);
+
+            box-shadow: 0 8px 30px rgba(99,102,241,0.35);
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+
+            padding: 12px 19px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #cbd5e1;
+        }
+
+        .btn-login:hover {
+            color: white;
+        }
+
+        .btn-primary {
+            color: white;
+            background: var(--gradient);
+
+            box-shadow:
+                0 10px 30px rgba(99,102,241,0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 15px 40px rgba(99,102,241,0.4);
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding-top: 100px;
+            padding-bottom: 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border-radius: 50px;
+
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(129,140,248,0.2);
+
+            color: #a5b4fc;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            margin-bottom: 24px;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow: 0 0 10px #22c55e;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 5vw, 68px);
+            line-height: 1.04;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 24px;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero-description {
+            color: var(--muted);
+
+            font-size: 17px;
+            line-height: 1.8;
+
+            max-width: 560px;
+
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 15px 24px;
+        }
+
+        .btn-outline {
+            background: rgba(255,255,255,0.04);
+            color: white;
+
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* =========================
+           DASHBOARD MOCKUP
+        ========================== */
+
+        .dashboard-wrapper {
+            position: relative;
+        }
+
+        .dashboard-glow {
+            position: absolute;
+            inset: 20px;
+
+            background: var(--primary);
+
+            filter: blur(90px);
+            opacity: 0.18;
+
+            z-index: -1;
+        }
+
+        .dashboard-card {
+            background: rgba(14,20,38,0.86);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            border-radius: 20px;
+
+            padding: 18px;
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45);
+
+            transform: perspective(1000px) rotateY(-4deg);
+
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: perspective(1000px) rotateY(-4deg) translateY(0);
+            }
+
+            50% {
+                transform: perspective(1000px) rotateY(-4deg) translateY(-10px);
+            }
+        }
+
+        .dashboard-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .window-dots span {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #475569;
+        }
+
+        .dashboard-title {
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+
+            margin-bottom: 15px;
+        }
+
+        .mini-stat {
+            padding: 14px;
+
+            background: rgba(255,255,255,0.04);
+
+            border: 1px solid rgba(255,255,255,0.06);
+
+            border-radius: 12px;
+        }
+
+        .mini-stat small {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            margin-bottom: 5px;
+        }
+
+        .mini-stat strong {
+            font-size: 18px;
+        }
+
+        .application-card {
+            background: rgba(255,255,255,0.035);
+
+            border: 1px solid rgba(255,255,255,0.06);
+
+            border-radius: 13px;
+
+            padding: 13px;
+
+            margin-bottom: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 9px;
+
+            display: grid;
+            place-items: center;
+
+            background: rgba(99,102,241,0.15);
+
+            color: #a5b4fc;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .company-info h4 {
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .company-info p {
+            color: #64748b;
+            font-size: 9px;
+        }
+
+        .status {
+            padding: 5px 9px;
+
+            border-radius: 50px;
+
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .interview {
+            background: rgba(59,130,246,0.12);
+            color: #60a5fa;
+        }
+
+        .applied {
+            background: rgba(168,85,247,0.12);
+            color: #c084fc;
+        }
+
+        .selected {
+            background: rgba(34,197,94,0.12);
+            color: #4ade80;
+        }
+
+        /* =========================
+           STATS
+        ========================== */
+
+        .stats-section {
+            padding: 25px 0 80px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.025);
+
+            overflow: hidden;
+        }
+
+        .stat-box {
+            padding: 28px;
+            text-align: center;
+
+            border-right: 1px solid var(--border);
+        }
+
+        .stat-box:last-child {
+            border-right: none;
+        }
+
+        .stat-box h3 {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .stat-box p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* =========================
+           SECTION
+        ========================== */
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 650px;
+
+            margin: 0 auto 55px;
+        }
+
+        .section-tag {
+            color: #818cf8;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(30px,4vw,46px);
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 16px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* =========================
+           FEATURES
+        ========================== */
+
+        .features-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3,1fr);
+
+            gap: 18px;
+        }
+
+        .feature-card {
+            padding: 28px;
+
+            background: rgba(255,255,255,0.035);
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            transition: 0.35s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+
+            border-color: rgba(129,140,248,0.3);
+
+            background: rgba(255,255,255,0.055);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 13px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 20px;
+
+            background: rgba(99,102,241,0.12);
+
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           HOW IT WORKS
+        ========================== */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns: repeat(4,1fr);
+
+            gap: 20px;
+
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 55px;
+            height: 55px;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: var(--gradient);
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 30px rgba(99,102,241,0.25);
+        }
+
+        .step h3 {
+            font-size: 16px;
+            margin-bottom: 9px;
+        }
+
+        .step p {
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           WHY SECTION
+        ========================== */
+
+        .why-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .why-content h2 {
+            font-size: clamp(30px,4vw,45px);
+
+            line-height: 1.15;
+
+            margin-bottom: 20px;
+        }
+
+        .why-content > p {
+            color: var(--muted);
+
+            line-height: 1.8;
+
+            margin-bottom: 25px;
+        }
+
+        .check-list {
+            list-style: none;
+
+            display: grid;
+
+            gap: 15px;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 14px;
+
+            color: #cbd5e1;
+        }
+
+        .check {
+            width: 24px;
+            height: 24px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: rgba(34,197,94,0.12);
+
+            color: #4ade80;
+
+            font-size: 12px;
+        }
+
+        .career-card {
+            padding: 30px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(99,102,241,0.12),
+                    rgba(6,182,212,0.06)
+                );
+
+            border: 1px solid rgba(129,140,248,0.15);
+        }
+
+        .career-card h3 {
+            margin-bottom: 25px;
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        .progress-bar {
+            height: 7px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.07);
+
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+
+            border-radius: inherit;
+
+            background: var(--gradient);
+        }
+
+        .p1 {
+            width: 78%;
+        }
+
+        .p2 {
+            width: 62%;
+        }
+
+        .p3 {
+            width: 45%;
+        }
+
+        /* =========================
+           CTA
+        ========================== */
+
+        .cta-section {
+            padding: 40px 0 100px;
+        }
+
+        .cta {
+            position: relative;
+
+            overflow: hidden;
+
+            text-align: center;
+
+            padding: 75px 30px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99,102,241,0.16),
+                    rgba(6,182,212,0.09)
+                );
+
+            border: 1px solid rgba(129,140,248,0.18);
+        }
+
+        .cta::before {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            background: #6366f1;
+
+            filter: blur(100px);
+
+            opacity: 0.15;
+
+            top: -100px;
+            left: 20%;
+        }
+
+        .cta h2 {
+            position: relative;
+
+            font-size: clamp(30px,4vw,46px);
+
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            position: relative;
+
+            color: var(--muted);
+
+            max-width: 550px;
+
+            margin: 0 auto 28px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            border-top: 1px solid var(--border);
+
+            padding: 45px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+
+            gap: 40px;
+
+            margin-bottom: 40px;
+        }
+
+        .footer-brand p {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            max-width: 300px;
+
+            margin-top: 15px;
+        }
+
+        .footer-column h4 {
+            font-size: 13px;
+
+            margin-bottom: 17px;
+        }
+
+        .footer-column a {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            margin-bottom: 12px;
+
+            transition: 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .copyright {
+            padding-top: 20px;
+
+            border-top: 1px solid var(--border);
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+        /* =========================
+           REVEAL ANIMATION
+        ========================== */
+
+        .reveal {
+            opacity: 0;
+
+            transform: translateY(25px);
+
+            transition: 0.7s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .nav-links,
+            .nav-buttons {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links.mobile-active {
+                display: flex;
+
+                position: absolute;
+
+                top: 74px;
+                left: 0;
+
+                width: 100%;
+
+                padding: 25px;
+
+                background: #0a0f1f;
+
+                flex-direction: column;
+
+                border-bottom: 1px solid var(--border);
+            }
+
+            .hero-grid,
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .dashboard-card {
+                transform: none;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .steps {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .stat-box:nth-child(2) {
+                border-right: none;
+            }
+
+            .stat-box:nth-child(-n+2) {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .features-grid,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .dashboard-card {
+                padding: 12px;
+            }
+
+            .mini-stat {
+                padding: 10px;
+            }
+
+            .mini-stat strong {
+                font-size: 15px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 75px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav>
+        <div class="container navbar">
+
+            <a href="#" class="logo">
+
+                <div class="logo-icon">
+                    ✓
+                </div>
+
+                <span>JobTrack Pro</span>
+
+            </a>
+
+            <div class="nav-links" id="navLinks">
+
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#why-us">Why Us</a>
+
+            </div>
+
+            <div class="nav-buttons">
+
+                <button class="btn btn-login">
+                    Login
+                </button>
+
+                <button class="btn btn-primary">
+                    Get Started
+                </button>
+
+            </div>
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                aria-label="Open Menu"
+            >
+                ☰
+            </button>
+
+        </div>
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <main id="home">
+
+        <section class="hero">
+
+            <div class="container hero-grid">
+
+                <div class="hero-content reveal">
+
+                    <div class="badge">
+
+                        <span class="badge-dot"></span>
+
+                        Your Career Command Center
+
+                    </div>
+
+                    <h1>
+
+                        Track Your Career.
+                        <br>
+
+                        <span class="gradient-text">
+                            Land Your Next Opportunity.
+                        </span>
+
+                    </h1>
+
+                    <p class="hero-description">
+
+                        Stop losing track of job applications,
+                        interviews and opportunities. JobTrack Pro
+                        brings your entire job search into one
+                        simple, powerful workspace.
+
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a
+                            href="#get-started"
+                            class="btn btn-primary btn-large"
+                        >
+                            Start Tracking Free →
+                        </a>
+
+                        <a
+                            href="#features"
+                            class="btn btn-outline btn-large"
+                        >
+                            Explore Features
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Dashboard Preview -->
+
+                <div class="dashboard-wrapper reveal">
+
+                    <div class="dashboard-glow"></div>
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-top">
+
+                            <div class="window-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div class="dashboard-title">
+                                JobTrack Dashboard
+                            </div>
+
+                            <div>
+                                ⋯
+                            </div>
+
+                        </div>
+
+
+                        <div class="stats-grid">
+
+                            <div class="mini-stat">
+
+                                <small>APPLICATIONS</small>
+
+                                <strong>48</strong>
+
+                            </div>
+
+                            <div class="mini-stat">
+
+                                <small>INTERVIEWS</small>
+
+                                <strong>12</strong>
+
+                            </div>
+
+                            <div class="mini-stat">
+
+                                <small>OFFERS</small>
+
+                                <strong>03</strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="application-card">
+
+                            <div class="company-info">
+
+                                <div class="company-icon">
+                                    G
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Google
+                                    </h4>
+
+                                    <p>
+                                        Software Engineer
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <span class="status interview">
+                                Interview
+                            </span>
+
+                        </div>
+
+
+                        <div class="application-card">
+
+                            <div class="company-info">
+
+                                <div class="company-icon">
+                                    M
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Microsoft
+                                    </h4>
+
+                                    <p>
+                                        SDE Intern
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <span class="status applied">
+                                Applied
+                            </span>
+
+                        </div>
+
+
+                        <div class="application-card">
+
+                            <div class="company-info">
+
+                                <div class="company-icon">
+                                    A
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Amazon
+                                    </h4>
+
+                                    <p>
+                                        Frontend Developer
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <span class="status selected">
+                                Selected
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STATS
+        ========================== -->
+
+        <section class="stats-section">
+
+            <div class="container">
+
+                <div class="stats-container reveal">
+
+                    <div class="stat-box">
+
+                        <h3>100+</h3>
+
+                        <p>
+                            Applications Tracked
+                        </p>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <h3>25+</h3>
+
+                        <p>
+                            Interviews Managed
+                        </p>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <h3>10+</h3>
+
+                        <p>
+                            Offers Organized
+                        </p>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <h3>24/7</h3>
+
+                        <p>
+                            Career Visibility
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FEATURES
+        ========================== -->
+
+        <section id="features">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div class="section-tag">
+                        Powerful Features
+                    </div>
+
+                    <h2>
+                        Everything You Need
+                        <span class="gradient-text">
+                            In One Place
+                        </span>
+                    </h2>
+
+                    <p>
+                        Organize your job search, manage interviews
+                        and understand your career progress without
+                        using multiple spreadsheets and apps.
+                    </p>
+
+                </div>
+
+
+                <div class="features-grid">
+
+                    <div class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            📋
+                        </div>
+
+                        <h3>
+                            Job Application Tracking
+                        </h3>
+
+                        <p>
+                            Keep every application organized with
+                            company, role, location, salary,
+                            application date and current status.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            🎯
+                        </div>
+
+                        <h3>
+                            Interview Management
+                        </h3>
+
+                        <p>
+                            Track upcoming interviews, interview
+                            rounds, dates and preparation notes
+                            from one dashboard.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            📊
+                        </div>
+
+                        <h3>
+                            Career Analytics
+                        </h3>
+
+                        <p>
+                            Understand your application activity,
+                            response rate and career progress with
+                            useful analytics.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            🔖
+                        </div>
+
+                        <h3>
+                            Saved Opportunities
+                        </h3>
+
+                        <p>
+                            Save interesting jobs and opportunities
+                            so you never lose track of the roles
+                            you want to apply for.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            🔔
+                        </div>
+
+                        <h3>
+                            Smart Reminders
+                        </h3>
+
+                        <p>
+                            Stay aware of interviews, follow-ups
+                            and important application deadlines.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card reveal">
+
+                        <div class="feature-icon">
+                            🚀
+                        </div>
+
+                        <h3>
+                            Career Progress
+                        </h3>
+
+                        <p>
+                            Turn your job hunt into a measurable
+                            process and see how your career journey
+                            is progressing.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             HOW IT WORKS
+        ========================== -->
+
+        <section id="how-it-works">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <div class="section-tag">
+                        Simple Process
+                    </div>
+
+                    <h2>
+                        From Application
+                        <span class="gradient-text">
+                            To Opportunity
+                        </span>
+                    </h2>
+
+                    <p>
+                        Manage your entire job search with a simple
+                        four-step workflow.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step reveal">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Add a Job
+                        </h3>
+
+                        <p>
+                            Save company details, role,
+                            salary and application information.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step reveal">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Track Status
+                        </h3>
+
+                        <p>
+                            Move applications between Applied,
+                            Interview, Selected and Rejected.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step reveal">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Prepare
+                        </h3>
+
+                        <p>
+                            Manage interview dates, notes and
+                            preparation tasks.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step reveal">
+
+                        <div class="step-number">
+                            04
+                        </div>
+
+                        <h3>
+                            Get Hired
+                        </h3>
+
+                        <p>
+                            Monitor your progress and keep
+                            moving toward your next opportunity.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             WHY JOBTRACK
+        ========================== -->
+
+        <section id="why-us">
+
+            <div class="container why-grid">
+
+                <div class="why-content reveal">
+
+                    <div class="section-tag">
+                        Built For Your Career
+                    </div>
+
+                    <h2>
+                        Your Job Search Shouldn't Feel Like a
+                        <span class="gradient-text">
+                            Spreadsheet.
+                        </span>
+                    </h2>
+
+                    <p>
+                        JobTrack Pro gives you a clear view of
+                        every opportunity you're pursuing, helping
+                        you stay organized and focused throughout
+                        your career journey.
+                    </p>
+
+
+                    <ul class="check-list">
+
+                        <li>
+
+                            <span class="check">
+                                ✓
+                            </span>
+
+                            One place for all your applications
+
+                        </li>
+
+                        <li>
+
+                            <span class="check">
+                                ✓
+                            </span>
+
+                            Easy interview and follow-up tracking
+
+                        </li>
+
+                        <li>
+
+                            <span class="check">
+                                ✓
+                            </span>
+
+                            Clear career progress insights
+
+                        </li>
+
+                        <li>
+
+                            <span class="check">
+                                ✓
+                            </span>
+
+                            Designed for students and professionals
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="career-card reveal">
+
+                    <h3>
+                        Career Progress
+                    </h3>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+
+                            <span>
+                                Applications
+                            </span>
+
+                            <span>
+                                78%
+                            </span>
+
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div class="progress p1"></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+
+                            <span>
+                                Interviews
+                            </span>
+
+                            <span>
+                                62%
+                            </span>
+
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div class="progress p2"></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+
+                            <span>
+                                Offers
+                            </span>
+
+                            <span>
+                                45%
+                            </span>
+
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div class="progress p3"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CTA
+        ========================== -->
+
+        <section
+            class="cta-section"
+            id="get-started"
+        >
+
+            <div class="container">
+
+                <div class="cta reveal">
+
+                    <h2>
+                        Ready to Take Control of
+                        <span class="gradient-text">
+                            Your Job Search?
+                        </span>
+                    </h2>
+
+                    <p>
+                        Start organizing your applications,
+                        interviews and career opportunities
+                        in one powerful workspace.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary btn-large"
+                    >
+                        Create Your Account →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+
+                    <a href="#" class="logo">
+
+                        <div class="logo-icon">
+                            ✓
+                        </div>
+
+                        <span>
+                            JobTrack Pro
+                        </span>
+
+                    </a>
+
+                    <p>
+                        A modern career management platform
+                        designed to help you organize your
+                        job search and move toward your next
+                        opportunity.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>
+                        Product
+                    </h4>
+
+                    <a href="#features">
+                        Features
+                    </a>
+
+                    <a href="#how-it-works">
+                        How It Works
+                    </a>
+
+                    <a href="#">
+                        Dashboard
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>
+                        Company
+                    </h4>
+
+                    <a href="#">
+                        About
+                    </a>
+
+                    <a href="#">
+                        Contact
+                    </a>
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>
+                        Account
+                    </h4>
+
+                    <a href="#">
+                        Login
+                    </a>
+
+                    <a href="#">
+                        Register
+                    </a>
+
+                    <a href="#">
+                        Support
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="copyright">
+
+                © 2026 JobTrack Pro. Built for ambitious careers.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           MOBILE MENU
+        ========================== */
+
+        const menuBtn = document.getElementById("menuBtn");
+        const navLinks = document.getElementById("navLinks");
+
+        menuBtn.addEventListener("click", () => {
+
+            navLinks.classList.toggle("mobile-active");
+
+            if (navLinks.classList.contains("mobile-active")) {
+
+                menuBtn.textContent = "✕";
+
+            } else {
+
+                menuBtn.textContent = "☰";
+
+            }
+
+        });
+
+
+        /* =========================
+           CLOSE MOBILE MENU
+        ========================== */
+
+        document.querySelectorAll(".nav-links a")
+            .forEach(link => {
+
+                link.addEventListener("click", () => {
+
+                    navLinks.classList.remove("mobile-active");
+
+                    menuBtn.textContent = "☰";
+
+                });
+
+            });
+
+
+        /* =========================
+           SCROLL REVEAL
+        ========================== */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
+
+        const revealOnScroll = () => {
+
+            const windowHeight =
+                window.innerHeight;
+
+            revealElements.forEach(element => {
+
+                const elementTop =
+                    element.getBoundingClientRect().top;
+
+                if (elementTop < windowHeight - 80) {
+
+                    element.classList.add("active");
+
+                }
+
+            });
+
+        };
+
+        window.addEventListener(
+            "scroll",
+            revealOnScroll
+        );
+
+        window.addEventListener(
+            "load",
+            revealOnScroll
+        );
+
+
+        /* =========================
+           NAVBAR SCROLL EFFECT
+        ========================== */
+
+        const navbar = document.querySelector("nav");
+
+        window.addEventListener("scroll", () => {
+
+            if (window.scrollY > 30) {
+
+                navbar.style.background =
+                    "rgba(7,11,23,0.92)";
+
+            } else {
+
+                navbar.style.background =
+                    "rgba(7,11,23,0.72)";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
