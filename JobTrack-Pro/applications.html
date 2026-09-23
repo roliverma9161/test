@@ -1,0 +1,3681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Applications | JobTrack Pro</title>
+
+    <meta
+        name="description"
+        content="Manage and track all your job applications with JobTrack Pro."
+    >
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+
+            --bg: #070b17;
+            --sidebar: #0b1020;
+            --card: #10172a;
+            --card-hover: #141d34;
+
+            --border: rgba(255,255,255,0.08);
+
+            --text: #f5f7ff;
+            --muted: #8e99b5;
+
+            --primary: #7c5cff;
+            --primary-light: #9a83ff;
+            --cyan: #22d3ee;
+
+            --green: #22c55e;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --blue: #3b82f6;
+
+            --shadow:
+                0 20px 50px rgba(0,0,0,0.25);
+        }
+
+
+        body {
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(124,92,255,0.12),
+                    transparent 30%
+                ),
+
+                var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        button,
+        input,
+        select {
+
+            font-family: inherit;
+
+        }
+
+
+        /* =========================
+           APP
+        ========================= */
+
+        .app {
+
+            display: flex;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+
+            width: 260px;
+
+            background:
+                rgba(11,16,32,0.96);
+
+            border-right:
+                1px solid var(--border);
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            padding: 24px 16px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: 0.3s ease;
+
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                4px 12px 28px;
+
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 30px
+                rgba(124,92,255,0.25);
+
+        }
+
+
+        .logo-text {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .logo-text span {
+
+            color:
+                var(--primary-light);
+
+        }
+
+
+        .menu-title {
+
+            font-size: 10px;
+
+            color: #64708d;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            padding: 0 13px;
+
+            margin: 10px 0;
+
+        }
+
+
+        .nav {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+
+        }
+
+
+        .nav-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px 13px;
+
+            border-radius: 12px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.25s;
+
+        }
+
+
+        .nav-link:hover {
+
+            background:
+                rgba(124,92,255,0.09);
+
+            color: white;
+
+        }
+
+
+        .nav-link.active {
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(124,92,255,0.2),
+                    rgba(124,92,255,0.06)
+                );
+
+            color: white;
+
+            border:
+                1px solid
+                rgba(124,92,255,0.18);
+
+        }
+
+
+        .nav-icon {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .sidebar-bottom {
+
+            margin-top: auto;
+
+        }
+
+
+        .help-card {
+
+            padding: 16px;
+
+            border-radius: 15px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.13),
+                    rgba(34,211,238,0.06)
+                );
+
+            border:
+                1px solid var(--border);
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .help-card h4 {
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .help-card p {
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            color: var(--muted);
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .help-btn {
+
+            border: none;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            padding: 8px 11px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+
+            margin-left: 260px;
+
+            width:
+                calc(100% - 260px);
+
+            min-height: 100vh;
+
+            padding:
+                24px 32px 40px;
+
+        }
+
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+
+            min-height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .mobile-menu {
+
+            display: none;
+
+            width: 42px;
+
+            height: 42px;
+
+            border:
+                1px solid var(--border);
+
+            background: var(--card);
+
+            color: white;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+        }
+
+
+        .page-title h1 {
+
+            font-size: 25px;
+
+            letter-spacing: -0.6px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .page-title p {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+        }
+
+
+        .top-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .search {
+
+            width: 220px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 12px;
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+        }
+
+
+        .search span {
+
+            color: var(--muted);
+
+            margin-right: 8px;
+
+        }
+
+
+        .search input {
+
+            width: 100%;
+
+            background: transparent;
+
+            border: none;
+
+            outline: none;
+
+            color: white;
+
+            font-size: 12px;
+
+        }
+
+
+        .search input::placeholder {
+
+            color: #69738e;
+
+        }
+
+
+        .icon-btn {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            color: white;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            position: relative;
+
+        }
+
+
+        .notification-dot {
+
+            position: absolute;
+
+            top: 8px;
+
+            right: 8px;
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--red);
+
+        }
+
+
+        .profile-mini {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+
+        .avatar {
+
+            width: 39px;
+
+            height: 39px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #4f46e5
+                );
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .profile-info strong {
+
+            display: block;
+
+            font-size: 12px;
+
+        }
+
+
+        .profile-info span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .page-header-text h2 {
+
+            font-size: 18px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .page-header-text p {
+
+            font-size: 12px;
+
+            color: var(--muted);
+
+        }
+
+
+        .add-btn {
+
+            border: none;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #5b4adf
+                );
+
+            color: white;
+
+            padding:
+                11px 16px;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px
+                rgba(124,92,255,0.18);
+
+            transition: 0.25s;
+
+        }
+
+
+        .add-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(124,92,255,0.28);
+
+        }
+
+
+        /* =========================
+           STATS
+        ========================= */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .stat {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 18px;
+
+            transition: 0.25s;
+
+        }
+
+
+        .stat:hover {
+
+            transform:
+                translateY(-3px);
+
+            background:
+                var(--card-hover);
+
+        }
+
+
+        .stat-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .stat-icon {
+
+            width: 36px;
+
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+        }
+
+
+        .purple {
+
+            color: var(--primary-light);
+
+            background:
+                rgba(124,92,255,0.12);
+
+        }
+
+
+        .blue {
+
+            color: #60a5fa;
+
+            background:
+                rgba(59,130,246,0.12);
+
+        }
+
+
+        .yellow {
+
+            color: #fbbf24;
+
+            background:
+                rgba(245,158,11,0.12);
+
+        }
+
+
+        .green {
+
+            color: #4ade80;
+
+            background:
+                rgba(34,197,94,0.12);
+
+        }
+
+
+        .stat h3 {
+
+            font-size: 23px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .stat p {
+
+            font-size: 10px;
+
+            color: var(--muted);
+
+        }
+
+
+        /* =========================
+           FILTER BAR
+        ========================= */
+
+        .filter-card {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 15px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .filters {
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr
+                1fr
+                auto;
+
+            gap: 10px;
+
+        }
+
+
+        .filter-search {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            height: 40px;
+
+            padding: 0 12px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border-radius: 9px;
+
+        }
+
+
+        .filter-search span {
+
+            color: var(--muted);
+
+        }
+
+
+        .filter-search input {
+
+            width: 100%;
+
+            background: transparent;
+
+            border: none;
+
+            outline: none;
+
+            color: white;
+
+            font-size: 11px;
+
+        }
+
+
+        .filter-search input::placeholder {
+
+            color: #69738e;
+
+        }
+
+
+        select {
+
+            height: 40px;
+
+            width: 100%;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: var(--muted);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            padding:
+                0 10px;
+
+            outline: none;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+        }
+
+
+        select option {
+
+            background:
+                #10172a;
+
+            color: white;
+
+        }
+
+
+        .clear-btn {
+
+            height: 40px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.03);
+
+            color: var(--muted);
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+        }
+
+
+        .clear-btn:hover {
+
+            color: white;
+
+            border-color:
+                rgba(124,92,255,0.4);
+
+        }
+
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-card {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+        }
+
+
+        .table-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 18px 20px;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .table-header h3 {
+
+            font-size: 14px;
+
+        }
+
+
+        .table-header span {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+
+        }
+
+
+        th {
+
+            padding:
+                13px 18px;
+
+            text-align: left;
+
+            color: #68738f;
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.6px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            white-space: nowrap;
+
+        }
+
+
+        td {
+
+            padding:
+                14px 18px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.045);
+
+            font-size: 11px;
+
+            white-space: nowrap;
+
+        }
+
+
+        tbody tr {
+
+            transition: 0.2s;
+
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                rgba(255,255,255,0.018);
+
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        .company {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .company-logo {
+
+            width: 35px;
+
+            height: 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(124,92,255,0.11);
+
+            color:
+                var(--primary-light);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        .company-name strong {
+
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .company-name span {
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+        }
+
+
+        .role {
+
+            font-size: 11px;
+
+        }
+
+
+        .location {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        .date {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        .salary {
+
+            font-size: 10px;
+
+            color: #dbe2f4;
+
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding:
+                5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+        }
+
+
+        .status-applied {
+
+            color: #60a5fa;
+
+            background:
+                rgba(59,130,246,0.12);
+
+        }
+
+
+        .status-interview {
+
+            color: #fbbf24;
+
+            background:
+                rgba(245,158,11,0.12);
+
+        }
+
+
+        .status-selected {
+
+            color: #4ade80;
+
+            background:
+                rgba(34,197,94,0.12);
+
+        }
+
+
+        .status-rejected {
+
+            color: #f87171;
+
+            background:
+                rgba(239,68,68,0.12);
+
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+        }
+
+
+        .action-btn {
+
+            width: 29px;
+
+            height: 29px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: var(--muted);
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .action-btn:hover {
+
+            color: white;
+
+            border-color:
+                rgba(124,92,255,0.35);
+
+            background:
+                rgba(124,92,255,0.08);
+
+        }
+
+
+        .favorite.active {
+
+            color: #fbbf24;
+
+        }
+
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 16px 20px;
+
+            border-top:
+                1px solid var(--border);
+
+        }
+
+
+        .pagination-info {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        .page-buttons {
+
+            display: flex;
+
+            gap: 5px;
+
+        }
+
+
+        .page-btn {
+
+            width: 29px;
+
+            height: 29px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: var(--muted);
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 10px;
+
+        }
+
+
+        .page-btn.active {
+
+            color: white;
+
+            background:
+                var(--primary);
+
+            border-color:
+                var(--primary);
+
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty {
+
+            display: none;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+        }
+
+
+        .empty-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background:
+                rgba(124,92,255,0.1);
+
+            color:
+                var(--primary-light);
+
+            font-size: 27px;
+
+        }
+
+
+        .empty h3 {
+
+            font-size: 15px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .empty p {
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+        }
+
+
+        /* =========================
+           MOBILE OVERLAY
+        ========================= */
+
+        .overlay {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,0.55);
+
+            z-index: 900;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .filters {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .clear-btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .overlay.active {
+
+                display: block;
+
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+
+                padding: 20px;
+
+            }
+
+
+            .mobile-menu {
+
+                display: block;
+
+            }
+
+
+            .profile-info {
+
+                display: none;
+
+            }
+
+
+            .search {
+
+                display: none;
+
+            }
+
+
+            .page-title h1 {
+
+                font-size: 20px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main {
+
+                padding: 16px;
+
+            }
+
+
+            .page-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+
+            .add-btn {
+
+                width: 100%;
+
+            }
+
+
+            .stats {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap: 10px;
+
+            }
+
+
+            .stat {
+
+                padding: 14px;
+
+            }
+
+
+            .filters {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .filter-card {
+
+                padding: 12px;
+
+            }
+
+
+            .table-header {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .pagination {
+
+                padding:
+                    14px 15px;
+
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .stats {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .top-actions {
+
+                gap: 6px;
+
+            }
+
+
+            .profile-mini {
+
+                display: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                JT
+            </div>
+
+            <div class="logo-text">
+                JobTrack<span>Pro</span>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+
+        <nav class="nav">
+
+            <a
+                href="dashboard.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="applications.html"
+                class="nav-link active"
+            >
+
+                <span class="nav-icon">
+                    ▣
+                </span>
+
+                Applications
+
+            </a>
+
+
+            <a
+                href="add-job.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ＋
+                </span>
+
+                Add Job
+
+            </a>
+
+
+            <a
+                href="interviews.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                Interviews
+
+            </a>
+
+
+            <a
+                href="saved.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ♡
+                </span>
+
+                Saved Jobs
+
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ◒
+                </span>
+
+                Analytics
+
+            </a>
+
+        </nav>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+
+        <nav class="nav">
+
+            <a
+                href="profile.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ◯
+                </span>
+
+                Profile
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                Settings
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="help-card">
+
+                <h4>
+                    Need some help?
+                </h4>
+
+                <p>
+                    Keep your applications organized
+                    and never miss an opportunity.
+                </p>
+
+                <button class="help-btn">
+                    View Guide →
+                </button>
+
+            </div>
+
+
+            <a
+                href="login.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <div
+        class="overlay"
+        id="overlay"
+    ></div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:12px;
+                "
+            >
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                >
+                    ☰
+                </button>
+
+
+                <div class="page-title">
+
+                    <h1>
+                        Applications
+                    </h1>
+
+                    <p>
+                        Manage and track your job applications.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="top-actions">
+
+
+                <div class="search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                    >
+
+                </div>
+
+
+                <button class="icon-btn">
+
+                    🔔
+
+                    <span
+                        class="notification-dot"
+                    ></span>
+
+                </button>
+
+
+                <div class="profile-mini">
+
+                    <div class="avatar">
+                        RV
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            Roli Verma
+                        </strong>
+
+                        <span>
+                            Job Seeker
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="page-header">
+
+
+            <div class="page-header-text">
+
+                <h2>
+                    Your Applications
+                </h2>
+
+                <p>
+                    Keep everything organized in one place.
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-btn"
+                onclick="addApplication()"
+            >
+
+                ＋ Add Application
+
+            </button>
+
+
+        </section>
+
+
+        <!-- =================================================
+             STATS
+        ================================================== -->
+
+        <section class="stats">
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div
+                        class="stat-icon purple"
+                    >
+                        ▣
+                    </div>
+
+                    <span
+                        style="
+                            color:var(--green);
+                            font-size:9px;
+                        "
+                    >
+                        All
+                    </span>
+
+                </div>
+
+                <h3 id="totalCount">
+                    12
+                </h3>
+
+                <p>
+                    Total Applications
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div
+                        class="stat-icon blue"
+                    >
+                        ↗
+                    </div>
+
+                    <span
+                        style="
+                            color:#60a5fa;
+                            font-size:9px;
+                        "
+                    >
+                        Active
+                    </span>
+
+                </div>
+
+                <h3 id="appliedCount">
+                    5
+                </h3>
+
+                <p>
+                    Applications Sent
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div
+                        class="stat-icon yellow"
+                    >
+                        ◷
+                    </div>
+
+                    <span
+                        style="
+                            color:#fbbf24;
+                            font-size:9px;
+                        "
+                    >
+                        Upcoming
+                    </span>
+
+                </div>
+
+                <h3 id="interviewCount">
+                    3
+                </h3>
+
+                <p>
+                    Interviews
+                </p>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div
+                        class="stat-icon green"
+                    >
+                        ✓
+                    </div>
+
+                    <span
+                        style="
+                            color:var(--green);
+                            font-size:9px;
+                        "
+                    >
+                        Success
+                    </span>
+
+                </div>
+
+                <h3 id="selectedCount">
+                    2
+                </h3>
+
+                <p>
+                    Selected
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FILTERS
+        ================================================== -->
+
+        <section class="filter-card">
+
+
+            <div class="filters">
+
+
+                <div class="filter-search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="applicationSearch"
+                        placeholder="Search company, role..."
+                    >
+
+                </div>
+
+
+                <select id="statusFilter">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="applied">
+                        Applied
+                    </option>
+
+                    <option value="interview">
+                        Interview
+                    </option>
+
+                    <option value="selected">
+                        Selected
+                    </option>
+
+                    <option value="rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+
+                <select id="typeFilter">
+
+                    <option value="all">
+                        All Job Types
+                    </option>
+
+                    <option value="full-time">
+                        Full Time
+                    </option>
+
+                    <option value="internship">
+                        Internship
+                    </option>
+
+                    <option value="part-time">
+                        Part Time
+                    </option>
+
+                    <option value="remote">
+                        Remote
+                    </option>
+
+                </select>
+
+
+                <select id="sortFilter">
+
+                    <option value="newest">
+                        Newest First
+                    </option>
+
+                    <option value="oldest">
+                        Oldest First
+                    </option>
+
+                    <option value="company">
+                        Company A-Z
+                    </option>
+
+                </select>
+
+
+                <button
+                    class="clear-btn"
+                    onclick="clearFilters()"
+                >
+                    Clear
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             APPLICATION TABLE
+        ================================================== -->
+
+        <section class="table-card">
+
+
+            <div class="table-header">
+
+                <h3>
+                    All Applications
+                </h3>
+
+                <span id="resultCount">
+                    Showing 12 applications
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                COMPANY
+                            </th>
+
+                            <th>
+                                ROLE
+                            </th>
+
+                            <th>
+                                LOCATION
+                            </th>
+
+                            <th>
+                                JOB TYPE
+                            </th>
+
+                            <th>
+                                APPLIED DATE
+                            </th>
+
+                            <th>
+                                SALARY
+                            </th>
+
+                            <th>
+                                STATUS
+                            </th>
+
+                            <th>
+                                ACTIONS
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="applicationTableBody">
+
+
+                        <!-- 1 -->
+
+                        <tr
+                            data-company="Google"
+                            data-role="Software Engineer"
+                            data-status="interview"
+                            data-type="full-time"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        G
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Google
+                                        </strong>
+
+                                        <span>
+                                            Technology
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    Software Engineer
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Bangalore, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Full Time
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 20, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹18 LPA
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-interview
+                                    "
+                                >
+                                    Interview
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                        title="Favorite"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                        title="Edit"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                        title="Delete"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 2 -->
+
+                        <tr
+                            data-company="Microsoft"
+                            data-role="Full Stack Developer"
+                            data-status="applied"
+                            data-type="full-time"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        M
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Microsoft
+                                        </strong>
+
+                                        <span>
+                                            Technology
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    Full Stack Developer
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Hyderabad, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Full Time
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 18, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹16 LPA
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-applied
+                                    "
+                                >
+                                    Applied
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 3 -->
+
+                        <tr
+                            data-company="Amazon"
+                            data-role="SDE Intern"
+                            data-status="selected"
+                            data-type="internship"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        A
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Amazon
+                                        </strong>
+
+                                        <span>
+                                            E-Commerce
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    SDE Intern
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Bangalore, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Internship
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 15, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹50K / Month
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-selected
+                                    "
+                                >
+                                    Selected
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 4 -->
+
+                        <tr
+                            data-company="TCS"
+                            data-role="Java Developer"
+                            data-status="rejected"
+                            data-type="full-time"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        T
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            TCS
+                                        </strong>
+
+                                        <span>
+                                            IT Services
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    Java Developer
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Noida, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Full Time
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 12, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹7 LPA
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-rejected
+                                    "
+                                >
+                                    Rejected
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 5 -->
+
+                        <tr
+                            data-company="Infosys"
+                            data-role="React Developer"
+                            data-status="applied"
+                            data-type="full-time"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        I
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Infosys
+                                        </strong>
+
+                                        <span>
+                                            IT Services
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    React Developer
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Pune, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Full Time
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 10, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹8 LPA
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-applied
+                                    "
+                                >
+                                    Applied
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 6 -->
+
+                        <tr
+                            data-company="Wipro"
+                            data-role="Frontend Developer"
+                            data-status="interview"
+                            data-type="internship"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        W
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Wipro
+                                        </strong>
+
+                                        <span>
+                                            IT Services
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    Frontend Developer
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Delhi NCR
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Internship
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 08, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹35K / Month
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-interview
+                                    "
+                                >
+                                    Interview
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 7 -->
+
+                        <tr
+                            data-company="Accenture"
+                            data-role="Associate Software Engineer"
+                            data-status="applied"
+                            data-type="full-time"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        A
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Accenture
+                                        </strong>
+
+                                        <span>
+                                            Consulting
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    Associate Software Engineer
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Gurgaon, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Full Time
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 05, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹6.5 LPA
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-applied
+                                    "
+                                >
+                                    Applied
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- 8 -->
+
+                        <tr
+                            data-company="Adobe"
+                            data-role="Software Engineer Intern"
+                            data-status="interview"
+                            data-type="internship"
+                        >
+
+                            <td>
+
+                                <div class="company">
+
+                                    <div class="company-logo">
+                                        A
+                                    </div>
+
+                                    <div class="company-name">
+
+                                        <strong>
+                                            Adobe
+                                        </strong>
+
+                                        <span>
+                                            Software
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                <span class="role">
+                                    Software Engineer Intern
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="location">
+                                    Noida, India
+                                </span>
+                            </td>
+
+
+                            <td>
+                                Internship
+                            </td>
+
+
+                            <td>
+                                <span class="date">
+                                    Sep 02, 2026
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <span class="salary">
+                                    ₹45K / Month
+                                </span>
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="
+                                        status
+                                        status-interview
+                                    "
+                                >
+                                    Interview
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn favorite"
+                                        onclick="toggleFavorite(this)"
+                                    >
+                                        ☆
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editApplication(this)"
+                                    >
+                                        ✎
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteApplication(this)"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+
+                <!-- EMPTY -->
+
+                <div
+                    class="empty"
+                    id="emptyState"
+                >
+
+                    <div class="empty-icon">
+                        ⌕
+                    </div>
+
+                    <h3>
+                        No applications found
+                    </h3>
+
+                    <p>
+                        Try changing your search or filters.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+                <div
+                    class="pagination-info"
+                    id="paginationInfo"
+                >
+                    Showing 1–8 of 8 applications
+                </div>
+
+
+                <div class="page-buttons">
+
+                    <button
+                        class="page-btn"
+                        disabled
+                    >
+                        ‹
+                    </button>
+
+                    <button
+                        class="page-btn active"
+                    >
+                        1
+                    </button>
+
+                    <button class="page-btn">
+                        2
+                    </button>
+
+                    <button class="page-btn">
+                        3
+                    </button>
+
+                    <button class="page-btn">
+                        ›
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("overlay");
+
+
+    mobileMenu.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.toggle("open");
+
+            overlay.classList.toggle("active");
+
+        }
+    );
+
+
+    overlay.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.remove("open");
+
+            overlay.classList.remove("active");
+
+        }
+    );
+
+
+    /* =====================================================
+       ADD APPLICATION
+    ===================================================== */
+
+    function addApplication() {
+
+        window.location.href =
+            "add-job.html";
+
+    }
+
+
+    /* =====================================================
+       SEARCH + FILTER
+    ===================================================== */
+
+    const searchInput =
+        document.getElementById(
+            "applicationSearch"
+        );
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+
+    const typeFilter =
+        document.getElementById(
+            "typeFilter"
+        );
+
+    const sortFilter =
+        document.getElementById(
+            "sortFilter"
+        );
+
+    const tableBody =
+        document.getElementById(
+            "applicationTableBody"
+        );
+
+    const emptyState =
+        document.getElementById(
+            "emptyState"
+        );
+
+    const resultCount =
+        document.getElementById(
+            "resultCount"
+        );
+
+
+    function filterApplications() {
+
+        const search =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+        const status =
+            statusFilter.value;
+
+        const type =
+            typeFilter.value;
+
+        const rows =
+            Array.from(
+                tableBody.querySelectorAll("tr")
+            );
+
+
+        let visibleRows = [];
+
+
+        rows.forEach(row => {
+
+            const company =
+                row.dataset.company
+                    .toLowerCase();
+
+            const role =
+                row.dataset.role
+                    .toLowerCase();
+
+            const rowStatus =
+                row.dataset.status;
+
+            const rowType =
+                row.dataset.type;
+
+
+            const matchesSearch =
+                company.includes(search) ||
+                role.includes(search);
+
+            const matchesStatus =
+                status === "all" ||
+                rowStatus === status;
+
+            const matchesType =
+                type === "all" ||
+                rowType === type;
+
+
+            const show =
+                matchesSearch &&
+                matchesStatus &&
+                matchesType;
+
+
+            row.style.display =
+                show ? "" : "none";
+
+
+            if (show) {
+
+                visibleRows.push(row);
+
+            }
+
+        });
+
+
+        /*
+            Sort
+        */
+
+        if (
+            sortFilter.value === "company"
+        ) {
+
+            visibleRows.sort(
+                (a, b) =>
+                    a.dataset.company
+                        .localeCompare(
+                            b.dataset.company
+                        )
+            );
+
+            visibleRows.forEach(
+                row =>
+                    tableBody.appendChild(row)
+            );
+
+        }
+
+
+        const count =
+            visibleRows.length;
+
+
+        resultCount.textContent =
+            `Showing ${count} applications`;
+
+
+        if (count === 0) {
+
+            emptyState.style.display =
+                "block";
+
+        } else {
+
+            emptyState.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        filterApplications
+    );
+
+
+    statusFilter.addEventListener(
+        "change",
+        filterApplications
+    );
+
+
+    typeFilter.addEventListener(
+        "change",
+        filterApplications
+    );
+
+
+    sortFilter.addEventListener(
+        "change",
+        filterApplications
+    );
+
+
+    /* =====================================================
+       CLEAR FILTERS
+    ===================================================== */
+
+    function clearFilters() {
+
+        searchInput.value = "";
+
+        statusFilter.value = "all";
+
+        typeFilter.value = "all";
+
+        sortFilter.value = "newest";
+
+        filterApplications();
+
+    }
+
+
+    /* =====================================================
+       FAVORITE
+    ===================================================== */
+
+    function toggleFavorite(button) {
+
+        button.classList.toggle("active");
+
+
+        if (
+            button.classList.contains("active")
+        ) {
+
+            button.textContent = "★";
+
+        } else {
+
+            button.textContent = "☆";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EDIT APPLICATION
+    ===================================================== */
+
+    function editApplication(button) {
+
+        const row =
+            button.closest("tr");
+
+        const company =
+            row.dataset.company;
+
+        const role =
+            row.dataset.role;
+
+
+        alert(
+            `Edit Application\n\nCompany: ${company}\nRole: ${role}\n\nThe full edit form will be connected to the backend later.`
+        );
+
+    }
+
+
+    /* =====================================================
+       DELETE APPLICATION
+    ===================================================== */
+
+    function deleteApplication(button) {
+
+        const row =
+            button.closest("tr");
+
+        const company =
+            row.dataset.company;
+
+
+        const confirmed =
+            confirm(
+                `Delete application for ${company}?`
+            );
+
+
+        if (confirmed) {
+
+            row.remove();
+
+            filterApplications();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATION
+    ===================================================== */
+
+    document
+        .querySelector(".icon-btn")
+        .addEventListener(
+            "click",
+            () => {
+
+                alert(
+                    "You have 3 upcoming interviews."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       INITIAL FILTER
+    ===================================================== */
+
+    filterApplications();
+
+
+</script>
+
+
+</body>
+
+</html>
