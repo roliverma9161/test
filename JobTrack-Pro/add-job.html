@@ -1,0 +1,3364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Application | JobTrack Pro</title>
+
+    <meta
+        name="description"
+        content="Add and manage your job applications with JobTrack Pro."
+    >
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --bg: #070b17;
+            --sidebar: #0b1020;
+
+            --card: #10172a;
+            --card-hover: #141d34;
+
+            --border: rgba(255,255,255,0.08);
+
+            --text: #f5f7ff;
+            --muted: #8e99b5;
+
+            --primary: #7c5cff;
+            --primary-light: #9a83ff;
+
+            --cyan: #22d3ee;
+
+            --green: #22c55e;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --blue: #3b82f6;
+
+            --shadow:
+                0 20px 50px rgba(0,0,0,0.25);
+
+        }
+
+
+        body {
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(124,92,255,0.12),
+                    transparent 30%
+                ),
+
+                var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+        }
+
+
+        button,
+        input,
+        select,
+        textarea {
+
+            font-family: inherit;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .app {
+
+            display: flex;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            width: 260px;
+
+            background:
+                rgba(11,16,32,0.96);
+
+            border-right:
+                1px solid var(--border);
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            padding: 24px 16px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: 0.3s ease;
+
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                4px 12px 28px;
+
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 30px
+                rgba(124,92,255,0.25);
+
+        }
+
+
+        .logo-text {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .logo-text span {
+
+            color:
+                var(--primary-light);
+
+        }
+
+
+        .menu-title {
+
+            font-size: 10px;
+
+            color: #64708d;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            padding:
+                0 13px;
+
+            margin:
+                10px 0;
+
+        }
+
+
+        .nav {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+
+        }
+
+
+        .nav-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                12px 13px;
+
+            border-radius: 12px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.25s;
+
+        }
+
+
+        .nav-link:hover {
+
+            background:
+                rgba(124,92,255,0.09);
+
+            color: white;
+
+        }
+
+
+        .nav-link.active {
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(124,92,255,0.2),
+                    rgba(124,92,255,0.06)
+                );
+
+            color: white;
+
+            border:
+                1px solid
+                rgba(124,92,255,0.18);
+
+        }
+
+
+        .nav-icon {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .sidebar-bottom {
+
+            margin-top: auto;
+
+        }
+
+
+        .help-card {
+
+            padding: 16px;
+
+            border-radius: 15px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.13),
+                    rgba(34,211,238,0.06)
+                );
+
+            border:
+                1px solid var(--border);
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .help-card h4 {
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .help-card p {
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            color: var(--muted);
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .help-btn {
+
+            border: none;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            padding:
+                8px 11px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            margin-left: 260px;
+
+            width:
+                calc(100% - 260px);
+
+            min-height: 100vh;
+
+            padding:
+                24px 32px 50px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .topbar {
+
+            min-height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .mobile-menu {
+
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                var(--card);
+
+            color: white;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+        }
+
+
+        .page-title h1 {
+
+            font-size: 25px;
+
+            letter-spacing: -0.6px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .page-title p {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+        }
+
+
+        .top-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .search {
+
+            width: 220px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding:
+                0 12px;
+
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+        }
+
+
+        .search span {
+
+            color: var(--muted);
+
+            margin-right: 8px;
+
+        }
+
+
+        .search input {
+
+            width: 100%;
+
+            background: transparent;
+
+            border: none;
+
+            outline: none;
+
+            color: white;
+
+            font-size: 12px;
+
+        }
+
+
+        .search input::placeholder {
+
+            color: #69738e;
+
+        }
+
+
+        .icon-btn {
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                var(--card);
+
+            color: white;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            position: relative;
+
+        }
+
+
+        .notification-dot {
+
+            position: absolute;
+
+            top: 8px;
+            right: 8px;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--red);
+
+        }
+
+
+        .profile-mini {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+
+        .avatar {
+
+            width: 39px;
+            height: 39px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #4f46e5
+                );
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .profile-info strong {
+
+            display: block;
+
+            font-size: 12px;
+
+        }
+
+
+        .profile-info span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           BREADCRUMB
+        ===================================================== */
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 22px;
+
+            font-size: 10px;
+
+            color: var(--muted);
+
+        }
+
+
+        .breadcrumb a:hover {
+
+            color: white;
+
+        }
+
+
+        .breadcrumb .current {
+
+            color:
+                var(--primary-light);
+
+        }
+
+
+        /* =====================================================
+           FORM LAYOUT
+        ===================================================== */
+
+        .form-layout {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                290px;
+
+            gap: 20px;
+
+            align-items: start;
+
+        }
+
+
+        /* =====================================================
+           FORM CARD
+        ===================================================== */
+
+        .form-card {
+
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                var(--shadow);
+
+        }
+
+
+        .section {
+
+            padding-bottom: 25px;
+
+            margin-bottom: 25px;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .section:last-child {
+
+            padding-bottom: 0;
+
+            margin-bottom: 0;
+
+            border-bottom: none;
+
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .section-number {
+
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(124,92,255,0.12);
+
+            color:
+                var(--primary-light);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        .section-header h2 {
+
+            font-size: 14px;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .section-header p {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           FORM GRID
+        ===================================================== */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 17px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        label {
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            color:
+                #d9def0;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        label span {
+
+            color:
+                var(--red);
+
+        }
+
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: white;
+
+            border:
+                1px solid var(--border);
+
+            outline: none;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            transition:
+                0.25s;
+
+        }
+
+
+        input,
+        select {
+
+            height: 43px;
+
+            padding:
+                0 12px;
+
+        }
+
+
+        textarea {
+
+            min-height: 120px;
+
+            padding:
+                12px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+
+        }
+
+
+        input::placeholder,
+        textarea::placeholder {
+
+            color:
+                #69738e;
+
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color:
+                rgba(124,92,255,0.65);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(124,92,255,0.08);
+
+        }
+
+
+        select option {
+
+            background:
+                #10172a;
+
+            color: white;
+
+        }
+
+
+        .input-help {
+
+            color:
+                #69738e;
+
+            font-size: 9px;
+
+            margin-top: 6px;
+
+        }
+
+
+        /* =====================================================
+           URL INPUT
+        ===================================================== */
+
+        .url-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .url-wrapper input {
+
+            padding-left:
+                40px;
+
+        }
+
+
+        .url-icon {
+
+            position: absolute;
+
+            left: 13px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color:
+                var(--muted);
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           SALARY
+        ===================================================== */
+
+        .salary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                110px 1fr;
+
+            gap: 9px;
+
+        }
+
+
+        /* =====================================================
+           TOGGLE
+        ===================================================== */
+
+        .toggle-row {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                13px 14px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 11px;
+
+        }
+
+
+        .toggle-info strong {
+
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .toggle-info span {
+
+            display: block;
+
+            color:
+                var(--muted);
+
+            font-size: 9px;
+
+        }
+
+
+        .switch {
+
+            width: 42px;
+
+            height: 23px;
+
+            position: relative;
+
+        }
+
+
+        .switch input {
+
+            display: none;
+
+        }
+
+
+        .slider {
+
+            position: absolute;
+
+            inset: 0;
+
+            cursor: pointer;
+
+            background:
+                #293149;
+
+            border-radius: 30px;
+
+            transition:
+                0.3s;
+
+        }
+
+
+        .slider::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 17px;
+            height: 17px;
+
+            left: 3px;
+            top: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition:
+                0.3s;
+
+        }
+
+
+        .switch input:checked + .slider {
+
+            background:
+                var(--primary);
+
+        }
+
+
+        .switch input:checked +
+        .slider::before {
+
+            transform:
+                translateX(19px);
+
+        }
+
+
+        /* =====================================================
+           REMINDER
+        ===================================================== */
+
+        .reminder-box {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .form-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .left-actions,
+        .right-actions {
+
+            display: flex;
+
+            gap: 9px;
+
+        }
+
+
+        .btn {
+
+            min-height: 42px;
+
+            padding:
+                0 16px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                0.25s;
+
+        }
+
+
+        .btn-secondary {
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid var(--border);
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .btn-secondary:hover {
+
+            color: white;
+
+            border-color:
+                rgba(255,255,255,0.15);
+
+        }
+
+
+        .btn-primary {
+
+            border: none;
+
+            color: white;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #5b4adf
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(124,92,255,0.18);
+
+        }
+
+
+        .btn-primary:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(124,92,255,0.28);
+
+        }
+
+
+        /* =====================================================
+           SIDE INFO
+        ===================================================== */
+
+        .side-column {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 17px;
+
+        }
+
+
+        .info-card {
+
+            background:
+                var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 17px;
+
+            padding: 19px;
+
+        }
+
+
+        .info-card h3 {
+
+            font-size: 13px;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .tips {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 13px;
+
+        }
+
+
+        .tip {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+        }
+
+
+        .tip-icon {
+
+            width: 28px;
+            height: 28px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background:
+                rgba(124,92,255,0.1);
+
+            color:
+                var(--primary-light);
+
+            font-size: 12px;
+
+        }
+
+
+        .tip-content strong {
+
+            display: block;
+
+            font-size: 10px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .tip-content p {
+
+            color:
+                var(--muted);
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           PROGRESS CARD
+        ===================================================== */
+
+        .progress-card {
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.15),
+                    rgba(34,211,238,0.06)
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 17px;
+
+            padding: 20px;
+
+        }
+
+
+        .progress-card h3 {
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .progress-card p {
+
+            color:
+                var(--muted);
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .progress-bar {
+
+            height: 6px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .progress-bar span {
+
+            display: block;
+
+            width: 65%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+        }
+
+
+        .progress-label {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 9px;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        /* =====================================================
+           SUCCESS MESSAGE
+        ===================================================== */
+
+        .success-message {
+
+            display: none;
+
+            position: fixed;
+
+            top: 25px;
+
+            right: 25px;
+
+            z-index: 2000;
+
+            max-width: 330px;
+
+            padding:
+                14px 17px;
+
+            background:
+                #101c17;
+
+            border:
+                1px solid
+                rgba(34,197,94,0.3);
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.3);
+
+        }
+
+
+        .success-message.show {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            animation:
+                slideIn 0.3s ease;
+
+        }
+
+
+        .success-icon {
+
+            width: 29px;
+            height: 29px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(34,197,94,0.12);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .success-message strong {
+
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .success-message span {
+
+            color:
+                var(--muted);
+
+            font-size: 9px;
+
+        }
+
+
+        @keyframes slideIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(30px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           OVERLAY
+        ===================================================== */
+
+        .overlay {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,0.55);
+
+            z-index: 900;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1050px) {
+
+            .form-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .side-column {
+
+                display: grid;
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .overlay.active {
+
+                display: block;
+
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+
+                padding:
+                    20px;
+
+            }
+
+
+            .mobile-menu {
+
+                display: block;
+
+            }
+
+
+            .search {
+
+                display: none;
+
+            }
+
+
+            .profile-info {
+
+                display: none;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-group.full {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .side-column {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-card {
+
+                padding:
+                    18px;
+
+            }
+
+
+            .form-actions {
+
+                flex-direction:
+                    column-reverse;
+
+                align-items:
+                    stretch;
+
+            }
+
+
+            .left-actions,
+            .right-actions {
+
+                width: 100%;
+
+            }
+
+
+            .btn {
+
+                flex: 1;
+
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .main {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .top-actions {
+
+                gap: 6px;
+
+            }
+
+
+            .profile-mini {
+
+                display: none;
+
+            }
+
+
+            .page-title h1 {
+
+                font-size: 20px;
+
+            }
+
+
+            .salary-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .reminder-box {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                JT
+            </div>
+
+            <div class="logo-text">
+                JobTrack<span>Pro</span>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+
+        <nav class="nav">
+
+
+            <a
+                href="dashboard.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="applications.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ▣
+                </span>
+
+                Applications
+
+            </a>
+
+
+            <a
+                href="add-job.html"
+                class="nav-link active"
+            >
+
+                <span class="nav-icon">
+                    ＋
+                </span>
+
+                Add Job
+
+            </a>
+
+
+            <a
+                href="interviews.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                Interviews
+
+            </a>
+
+
+            <a
+                href="saved.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ♡
+                </span>
+
+                Saved Jobs
+
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ◒
+                </span>
+
+                Analytics
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="menu-title">
+            Account
+        </div>
+
+
+        <nav class="nav">
+
+
+            <a
+                href="profile.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ◯
+                </span>
+
+                Profile
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                Settings
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+
+            <div class="help-card">
+
+                <h4>
+                    Need some help?
+                </h4>
+
+                <p>
+                    Keep your applications organized
+                    and never miss an opportunity.
+                </p>
+
+                <button class="help-btn">
+                    View Guide →
+                </button>
+
+            </div>
+
+
+            <a
+                href="login.html"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <div
+        class="overlay"
+        id="overlay"
+    ></div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:12px;
+                "
+            >
+
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                >
+                    ☰
+                </button>
+
+
+                <div class="page-title">
+
+                    <h1>
+                        Add Application
+                    </h1>
+
+                    <p>
+                        Save a new job opportunity to your tracker.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="top-actions">
+
+
+                <div class="search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                    >
+
+                </div>
+
+
+                <button class="icon-btn">
+
+                    🔔
+
+                    <span
+                        class="notification-dot"
+                    ></span>
+
+                </button>
+
+
+                <div class="profile-mini">
+
+                    <div class="avatar">
+                        RV
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            Roli Verma
+                        </strong>
+
+                        <span>
+                            Job Seeker
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- BREADCRUMB -->
+
+        <div class="breadcrumb">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <span>
+                /
+            </span>
+
+            <a href="applications.html">
+                Applications
+            </a>
+
+            <span>
+                /
+            </span>
+
+            <span class="current">
+                Add Application
+            </span>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="form-layout">
+
+
+            <!-- =================================================
+                 FORM CARD
+            ================================================== -->
+
+            <form
+                class="form-card"
+                id="jobForm"
+            >
+
+
+                <!-- =================================================
+                     SECTION 1
+                ================================================== -->
+
+                <section class="section">
+
+
+                    <div class="section-header">
+
+
+                        <div class="section-number">
+                            01
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Company & Position
+                            </h2>
+
+                            <p>
+                                Tell us about the opportunity.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Company Name
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="company"
+                                placeholder="e.g. Google"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Job Title
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="role"
+                                placeholder="e.g. Software Engineer"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Department
+                            </label>
+
+                            <input
+                                type="text"
+                                id="department"
+                                placeholder="e.g. Engineering"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Job Type
+                                <span>*</span>
+                            </label>
+
+                            <select
+                                id="jobType"
+                                required
+                            >
+
+                                <option value="">
+                                    Select job type
+                                </option>
+
+                                <option value="full-time">
+                                    Full Time
+                                </option>
+
+                                <option value="internship">
+                                    Internship
+                                </option>
+
+                                <option value="part-time">
+                                    Part Time
+                                </option>
+
+                                <option value="contract">
+                                    Contract
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     SECTION 2
+                ================================================== -->
+
+                <section class="section">
+
+
+                    <div class="section-header">
+
+
+                        <div class="section-number">
+                            02
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Job Details
+                            </h2>
+
+                            <p>
+                                Add location, salary and application details.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Location
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="location"
+                                placeholder="e.g. Noida, India"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Work Mode
+                            </label>
+
+                            <select
+                                id="workMode"
+                            >
+
+                                <option value="onsite">
+                                    On-site
+                                </option>
+
+                                <option value="hybrid">
+                                    Hybrid
+                                </option>
+
+                                <option value="remote">
+                                    Remote
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Salary / Package
+                            </label>
+
+
+                            <div class="salary-grid">
+
+
+                                <select
+                                    id="salaryType"
+                                >
+
+                                    <option value="lpa">
+                                        LPA
+                                    </option>
+
+                                    <option value="month">
+                                        / Month
+                                    </option>
+
+                                    <option value="year">
+                                        / Year
+                                    </option>
+
+                                    <option value="stipend">
+                                        Stipend
+                                    </option>
+
+                                </select>
+
+
+                                <input
+                                    type="text"
+                                    id="salary"
+                                    placeholder="e.g. 8"
+                                >
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Applied Date
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="appliedDate"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Job Posting URL
+                            </label>
+
+
+                            <div class="url-wrapper">
+
+                                <span class="url-icon">
+                                    🔗
+                                </span>
+
+                                <input
+                                    type="url"
+                                    id="jobUrl"
+                                    placeholder="https://company.com/careers/job"
+                                >
+
+                            </div>
+
+
+                            <span class="input-help">
+                                Add the original job posting link so you can find it later.
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     SECTION 3
+                ================================================== -->
+
+                <section class="section">
+
+
+                    <div class="section-header">
+
+
+                        <div class="section-number">
+                            03
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Application Status
+                            </h2>
+
+                            <p>
+                                Track where you are in the hiring process.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Current Status
+                                <span>*</span>
+                            </label>
+
+
+                            <select
+                                id="status"
+                                required
+                            >
+
+                                <option value="applied">
+                                    Applied
+                                </option>
+
+                                <option value="interview">
+                                    Interview
+                                </option>
+
+                                <option value="selected">
+                                    Selected
+                                </option>
+
+                                <option value="rejected">
+                                    Rejected
+                                </option>
+
+                            </select>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Source
+                            </label>
+
+
+                            <select
+                                id="source"
+                            >
+
+                                <option value="linkedin">
+                                    LinkedIn
+                                </option>
+
+                                <option value="naukri">
+                                    Naukri
+                                </option>
+
+                                <option value="company">
+                                    Company Website
+                                </option>
+
+                                <option value="referral">
+                                    Referral
+                                </option>
+
+                                <option value="other">
+                                    Other
+                                </option>
+
+                            </select>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     SECTION 4
+                ================================================== -->
+
+                <section class="section">
+
+
+                    <div class="section-header">
+
+
+                        <div class="section-number">
+                            04
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Notes & Follow-up
+                            </h2>
+
+                            <p>
+                                Keep useful information about this application.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Notes
+                            </label>
+
+
+                            <textarea
+                                id="notes"
+                                placeholder="Add recruiter name, interview details, preparation notes, requirements, etc."
+                            ></textarea>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Follow-up Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="followUpDate"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Reminder
+                            </label>
+
+
+                            <select id="reminder">
+
+                                <option value="none">
+                                    No Reminder
+                                </option>
+
+                                <option value="1">
+                                    1 Day Before
+                                </option>
+
+                                <option value="2">
+                                    2 Days Before
+                                </option>
+
+                                <option value="7">
+                                    1 Week Before
+                                </option>
+
+                            </select>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     SECTION 5
+                ================================================== -->
+
+                <section class="section">
+
+
+                    <div class="section-header">
+
+
+                        <div class="section-number">
+                            05
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Preferences
+                            </h2>
+
+                            <p>
+                                Customize how you want to track this application.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="toggle-row">
+
+
+                        <div class="toggle-info">
+
+                            <strong>
+                                Add to Saved Jobs
+                            </strong>
+
+                            <span>
+                                Keep this application in your favorites.
+                            </span>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="favorite"
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+                    <br>
+
+
+                    <div class="toggle-row">
+
+
+                        <div class="toggle-info">
+
+                            <strong>
+                                Follow-up Reminder
+                            </strong>
+
+                            <span>
+                                Remind me to follow up with the recruiter.
+                            </span>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="followReminder"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     FORM ACTIONS
+                ================================================== -->
+
+                <div class="form-actions">
+
+
+                    <div class="left-actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="cancelForm()"
+                        >
+                            Cancel
+                        </button>
+
+                    </div>
+
+
+                    <div class="right-actions">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="saveDraft()"
+                        >
+                            Save Draft
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            ✓ Save Application
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <aside class="side-column">
+
+
+                <!-- TIPS -->
+
+                <div class="info-card">
+
+
+                    <h3>
+                        💡 Application Tips
+                    </h3>
+
+
+                    <div class="tips">
+
+
+                        <div class="tip">
+
+                            <div class="tip-icon">
+                                ✓
+                            </div>
+
+                            <div class="tip-content">
+
+                                <strong>
+                                    Add the job URL
+                                </strong>
+
+                                <p>
+                                    Save the original posting so
+                                    you can review it before interviews.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="tip">
+
+                            <div class="tip-icon">
+                                ◷
+                            </div>
+
+                            <div class="tip-content">
+
+                                <strong>
+                                    Set a follow-up
+                                </strong>
+
+                                <p>
+                                    Follow up after a few days if
+                                    you haven't heard back.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="tip">
+
+                            <div class="tip-icon">
+                                ✦
+                            </div>
+
+                            <div class="tip-content">
+
+                                <strong>
+                                    Add useful notes
+                                </strong>
+
+                                <p>
+                                    Record recruiter names,
+                                    rounds and important details.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- PROGRESS -->
+
+                <div class="progress-card">
+
+
+                    <h3>
+                        Your Job Search
+                    </h3>
+
+
+                    <p>
+                        You're building a strong application
+                        pipeline. Keep tracking consistently.
+                    </p>
+
+
+                    <div class="progress-bar">
+
+                        <span></span>
+
+                    </div>
+
+
+                    <div class="progress-label">
+
+                        <span>
+                            Career progress
+                        </span>
+
+                        <strong>
+                            65%
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- RECENT -->
+
+                <div class="info-card">
+
+
+                    <h3>
+                        📌 Recent Activity
+                    </h3>
+
+
+                    <div class="tips">
+
+
+                        <div class="tip">
+
+                            <div class="tip-icon">
+                                +
+                            </div>
+
+                            <div class="tip-content">
+
+                                <strong>
+                                    Google added
+                                </strong>
+
+                                <p>
+                                    Software Engineer application
+                                    was added recently.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="tip">
+
+                            <div class="tip-icon">
+                                ◷
+                            </div>
+
+                            <div class="tip-content">
+
+                                <strong>
+                                    Interview scheduled
+                                </strong>
+
+                                <p>
+                                    Microsoft technical interview
+                                    is coming up.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- SUCCESS MESSAGE -->
+
+<div
+    class="success-message"
+    id="successMessage"
+>
+
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <strong>
+            Application Saved
+        </strong>
+
+        <span>
+            Your application has been added successfully.
+        </span>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("overlay");
+
+
+    mobileMenu.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.toggle("open");
+
+            overlay.classList.toggle("active");
+
+        }
+    );
+
+
+    overlay.addEventListener(
+        "click",
+        () => {
+
+            sidebar.classList.remove("open");
+
+            overlay.classList.remove("active");
+
+        }
+    );
+
+
+    /* =====================================================
+       DEFAULT DATE
+    ===================================================== */
+
+    const appliedDate =
+        document.getElementById("appliedDate");
+
+
+    const today =
+        new Date();
+
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+    appliedDate.value =
+        `${year}-${month}-${day}`;
+
+
+    /* =====================================================
+       FORM SUBMIT
+    ===================================================== */
+
+    const jobForm =
+        document.getElementById("jobForm");
+
+
+    jobForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const company =
+                document
+                    .getElementById("company")
+                    .value
+                    .trim();
+
+
+            const role =
+                document
+                    .getElementById("role")
+                    .value
+                    .trim();
+
+
+            const jobType =
+                document
+                    .getElementById("jobType")
+                    .value;
+
+
+            const location =
+                document
+                    .getElementById("location")
+                    .value
+                    .trim();
+
+
+            const status =
+                document
+                    .getElementById("status")
+                    .value;
+
+
+            if (
+                !company ||
+                !role ||
+                !jobType ||
+                !location
+            ) {
+
+                alert(
+                    "Please fill all required fields."
+                );
+
+                return;
+
+            }
+
+
+            /*
+                Demo save.
+
+                Later this section will become:
+
+                fetch(
+                    "http://localhost:5000/api/jobs",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer YOUR_JWT"
+                        },
+
+                        body: JSON.stringify({
+                            company,
+                            role,
+                            jobType,
+                            location,
+                            status
+                        })
+                    }
+                )
+            */
+
+
+            const success =
+                document.getElementById(
+                    "successMessage"
+                );
+
+
+            success.classList.add("show");
+
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        "applications.html";
+
+                },
+                1500
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CANCEL
+    ===================================================== */
+
+    function cancelForm() {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to cancel?"
+            );
+
+
+        if (confirmed) {
+
+            window.location.href =
+                "applications.html";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SAVE DRAFT
+    ===================================================== */
+
+    function saveDraft() {
+
+        const company =
+            document
+                .getElementById("company")
+                .value
+                .trim();
+
+
+        if (!company) {
+
+            alert(
+                "Enter at least the company name to save a draft."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Draft saved successfully! (Demo)"
+        );
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATION
+    ===================================================== */
+
+    document
+        .querySelector(".icon-btn")
+        .addEventListener(
+            "click",
+            () => {
+
+                alert(
+                    "You have 3 upcoming interviews."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       URL VALIDATION
+    ===================================================== */
+
+    const jobUrl =
+        document.getElementById("jobUrl");
+
+
+    jobUrl.addEventListener(
+        "blur",
+        function() {
+
+            if (
+                this.value &&
+                !this.value.startsWith("http")
+            ) {
+
+                this.setCustomValidity(
+                    "Please enter a valid URL starting with http:// or https://"
+                );
+
+            } else {
+
+                this.setCustomValidity("");
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       FORM ANIMATION
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".section, .info-card, .progress-card"
+        )
+        .forEach(
+            (element, index) => {
+
+                element.style.opacity = "0";
+
+                element.style.transform =
+                    "translateY(12px)";
+
+
+                setTimeout(
+                    () => {
+
+                        element.style.transition =
+                            "0.5s ease";
+
+                        element.style.opacity =
+                            "1";
+
+                        element.style.transform =
+                            "translateY(0)";
+
+                    },
+                    index * 80
+                );
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+</html>
