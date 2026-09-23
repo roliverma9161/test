@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | JobTrack Pro</title>
+
+    <meta
+        name="description"
+        content="JobTrack Pro Dashboard - Track your job applications, interviews and career progress."
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #070b17;
+            --sidebar: #0b1020;
+            --card: #10172a;
+            --card-hover: #141d34;
+            --border: rgba(255,255,255,0.08);
+
+            --text: #f5f7ff;
+            --muted: #8e99b5;
+
+            --primary: #7c5cff;
+            --primary-light: #9a83ff;
+            --cyan: #22d3ee;
+
+            --green: #22c55e;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --blue: #3b82f6;
+
+            --shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(124,92,255,0.12),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================
+           APP LAYOUT
+        ========================= */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 260px;
+            background: rgba(11,16,32,0.96);
+            border-right: 1px solid var(--border);
+
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 24px 16px;
+
+            z-index: 1000;
+
+            transition: 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 4px 12px 28px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+            color: white;
+            font-size: 19px;
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 30px rgba(124,92,255,0.25);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--primary-light);
+        }
+
+        .menu-title {
+            font-size: 10px;
+            color: #64708d;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+
+            padding: 0 13px;
+            margin: 10px 0;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            padding: 12px 13px;
+
+            border-radius: 12px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.25s;
+        }
+
+        .nav-link:hover {
+            background: rgba(124,92,255,0.09);
+            color: white;
+        }
+
+        .nav-link.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(124,92,255,0.2),
+                    rgba(124,92,255,0.06)
+                );
+
+            color: white;
+
+            border: 1px solid rgba(124,92,255,0.18);
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .help-card {
+            padding: 16px;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.13),
+                    rgba(34,211,238,0.06)
+                );
+
+            border: 1px solid var(--border);
+
+            margin-bottom: 15px;
+        }
+
+        .help-card h4 {
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .help-card p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .help-btn {
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: white;
+
+            padding: 8px 11px;
+            border-radius: 8px;
+
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+
+            min-height: 100vh;
+
+            padding: 24px 32px 40px;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 28px;
+        }
+
+        .mobile-menu {
+            display: none;
+
+            border: 1px solid var(--border);
+            background: var(--card);
+
+            color: white;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .page-title p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search {
+            width: 220px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            padding: 0 12px;
+        }
+
+        .search span {
+            color: var(--muted);
+            margin-right: 8px;
+        }
+
+        .search input {
+            width: 100%;
+
+            background: transparent;
+            border: none;
+            outline: none;
+
+            color: white;
+            font-size: 12px;
+        }
+
+        .search input::placeholder {
+            color: #69738e;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            border: 1px solid var(--border);
+            background: var(--card);
+
+            color: white;
+
+            cursor: pointer;
+
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+
+            width: 7px;
+            height: 7px;
+
+            background: var(--red);
+
+            border-radius: 50%;
+
+            top: 8px;
+            right: 8px;
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 39px;
+            height: 39px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #4f46e5
+                );
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .profile-info span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* =========================
+           WELCOME CARD
+        ========================= */
+
+        .welcome {
+            padding: 25px 28px;
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(34,211,238,0.15),
+                    transparent 25%
+                ),
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,0.18),
+                    rgba(16,23,42,0.9)
+                );
+
+            box-shadow: var(--shadow);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 24px;
+        }
+
+        .welcome-content h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-content p {
+            color: var(--muted);
+            font-size: 13px;
+            max-width: 600px;
+        }
+
+        .welcome-btn {
+            margin-top: 17px;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #5b4adf
+                );
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(124,92,255,0.2);
+        }
+
+        .welcome-visual {
+            width: 125px;
+            height: 125px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                conic-gradient(
+                    var(--primary) 0deg,
+                    var(--cyan) 260deg,
+                    rgba(255,255,255,0.08) 260deg
+                );
+
+            position: relative;
+        }
+
+        .welcome-visual::after {
+            content: "72%";
+
+            position: absolute;
+
+            width: 92px;
+            height: 92px;
+
+            border-radius: 50%;
+
+            background: #10172a;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           STATS
+        ========================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 17px;
+
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            padding: 20px;
+
+            border-radius: 17px;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            background: var(--card-hover);
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+        .purple {
+            background: rgba(124,92,255,0.13);
+            color: var(--primary-light);
+        }
+
+        .blue {
+            background: rgba(59,130,246,0.13);
+            color: #60a5fa;
+        }
+
+        .green {
+            background: rgba(34,197,94,0.13);
+            color: #4ade80;
+        }
+
+        .red {
+            background: rgba(239,68,68,0.13);
+            color: #f87171;
+        }
+
+        .trend {
+            font-size: 10px;
+            color: var(--green);
+        }
+
+        .stat-card h3 {
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* =========================
+           CONTENT GRID
+        ========================= */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.65fr)
+                minmax(280px, 0.85fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .card-header h3 {
+            font-size: 14px;
+        }
+
+        .view-link {
+            color: var(--primary-light);
+            font-size: 11px;
+        }
+
+        /* =========================
+           APPLICATION PIPELINE
+        ========================= */
+
+        .pipeline {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+        }
+
+        .pipeline-item {
+            padding: 15px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.025);
+
+            border: 1px solid var(--border);
+        }
+
+        .pipeline-label {
+            color: var(--muted);
+            font-size: 10px;
+
+            margin-bottom: 10px;
+        }
+
+        .pipeline-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 4px;
+
+            background: rgba(255,255,255,0.07);
+
+            border-radius: 10px;
+
+            margin-top: 11px;
+
+            overflow: hidden;
+        }
+
+        .progress span {
+            display: block;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+        }
+
+        /* =========================
+           APPLICATION TABLE
+        ========================= */
+
+        .applications {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        .applications th {
+            text-align: left;
+
+            color: #69738e;
+
+            font-size: 10px;
+            font-weight: 500;
+
+            padding: 10px 8px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .applications td {
+            padding: 14px 8px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+            font-size: 11px;
+        }
+
+        .applications tr:last-child td {
+            border-bottom: none;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .company-logo {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: rgba(124,92,255,0.12);
+
+            color: var(--primary-light);
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .company strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .company span {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            margin-top: 3px;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 5px 8px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .status-applied {
+            color: #60a5fa;
+            background: rgba(59,130,246,0.12);
+        }
+
+        .status-interview {
+            color: #fbbf24;
+            background: rgba(245,158,11,0.12);
+        }
+
+        .status-selected {
+            color: #4ade80;
+            background: rgba(34,197,94,0.12);
+        }
+
+        .status-rejected {
+            color: #f87171;
+            background: rgba(239,68,68,0.12);
+        }
+
+        /* =========================
+           INTERVIEWS
+        ========================= */
+
+        .interview {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .interview:last-child {
+            border-bottom: none;
+        }
+
+        .date-box {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 10px;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(124,92,255,0.1);
+
+            border: 1px solid rgba(124,92,255,0.12);
+        }
+
+        .date-box strong {
+            font-size: 14px;
+        }
+
+        .date-box span {
+            font-size: 8px;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+        }
+
+        .interview-info {
+            flex: 1;
+        }
+
+        .interview-info strong {
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 4px;
+        }
+
+        .interview-info span {
+            color: var(--muted);
+
+            font-size: 9px;
+        }
+
+        .interview-type {
+            font-size: 9px;
+
+            color: var(--cyan);
+        }
+
+        /* =========================
+           CAREER PROGRESS
+        ========================= */
+
+        .career-stat {
+            margin-bottom: 18px;
+        }
+
+        .career-stat:last-child {
+            margin-bottom: 0;
+        }
+
+        .career-stat-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+        }
+
+        .career-stat-header span {
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .career-stat-header strong {
+            font-size: 10px;
+        }
+
+        .career-progress {
+            height: 6px;
+
+            background: rgba(255,255,255,0.06);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .career-progress span {
+            display: block;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--cyan)
+                );
+
+            border-radius: inherit;
+        }
+
+        /* =========================
+           QUICK ACTIONS
+        ========================= */
+
+        .quick-actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+        .quick-action {
+            padding: 13px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,0.025);
+
+            border: 1px solid var(--border);
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .quick-action:hover {
+            color: white;
+
+            border-color:
+                rgba(124,92,255,0.35);
+
+            background:
+                rgba(124,92,255,0.08);
+        }
+
+        .quick-action span {
+            display: block;
+
+            font-size: 17px;
+
+            margin-bottom: 7px;
+        }
+
+        /* =========================
+           MOBILE OVERLAY
+        ========================= */
+
+        .overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0,0,0,0.55);
+
+            z-index: 900;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-visual {
+                display: none;
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .overlay.active {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .topbar {
+                gap: 12px;
+            }
+
+            .page-title {
+                flex: 1;
+            }
+
+            .page-title h1 {
+                font-size: 19px;
+            }
+
+            .search {
+                display: none;
+            }
+
+            .profile-info {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .main {
+                padding: 16px;
+            }
+
+            .topbar {
+                margin-bottom: 20px;
+            }
+
+            .top-actions {
+                gap: 6px;
+            }
+
+            .welcome {
+                padding: 20px;
+            }
+
+            .welcome-content h2 {
+                font-size: 19px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-card h3 {
+                font-size: 22px;
+            }
+
+            .pipeline {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .applications th:nth-child(3),
+            .applications td:nth-child(3),
+            .applications th:nth-child(4),
+            .applications td:nth-child(4) {
+                display: none;
+            }
+
+            .card {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 420px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .profile-mini {
+                display: none;
+            }
+
+            .page-title p {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                JT
+            </div>
+
+            <div class="logo-text">
+                JobTrack<span>Pro</span>
+            </div>
+
+        </div>
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+        <nav class="nav">
+
+            <a href="dashboard.html" class="nav-link active">
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </a>
+
+            <a href="applications.html" class="nav-link">
+                <span class="nav-icon">▣</span>
+                Applications
+            </a>
+
+            <a href="add-job.html" class="nav-link">
+                <span class="nav-icon">＋</span>
+                Add Job
+            </a>
+
+            <a href="interviews.html" class="nav-link">
+                <span class="nav-icon">◷</span>
+                Interviews
+            </a>
+
+            <a href="saved.html" class="nav-link">
+                <span class="nav-icon">♡</span>
+                Saved Jobs
+            </a>
+
+            <a href="analytics.html" class="nav-link">
+                <span class="nav-icon">◒</span>
+                Analytics
+            </a>
+
+        </nav>
+
+        <div class="menu-title">
+            Account
+        </div>
+
+        <nav class="nav">
+
+            <a href="profile.html" class="nav-link">
+                <span class="nav-icon">◯</span>
+                Profile
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <span class="nav-icon">⚙</span>
+                Settings
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="help-card">
+
+                <h4>Need some help?</h4>
+
+                <p>
+                    Organize your job search and stay
+                    consistent with your career goals.
+                </p>
+
+                <button class="help-btn">
+                    View Guide →
+                </button>
+
+            </div>
+
+            <a href="login.html" class="nav-link">
+                <span class="nav-icon">↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <div class="overlay" id="overlay"></div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:12px;">
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                >
+                    ☰
+                </button>
+
+                <div class="page-title">
+
+                    <h1>Dashboard</h1>
+
+                    <p>
+                        Here's what's happening with your job search.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="search">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search applications..."
+                        id="searchInput"
+                    >
+
+                </div>
+
+                <button class="icon-btn">
+                    🔔
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="profile-mini">
+
+                    <div class="avatar">
+                        RV
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>Roli Verma</strong>
+
+                        <span>Job Seeker</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <div class="welcome-content">
+
+                <h2>
+                    Good evening, Roli 👋
+                </h2>
+
+                <p>
+                    Keep going! You have
+                    <strong>12 active applications</strong>
+                    and <strong>3 interviews</strong>
+                    coming up.
+                </p>
+
+                <button
+                    class="welcome-btn"
+                    onclick="goToAddJob()"
+                >
+                    + Add New Application
+                </button>
+
+            </div>
+
+
+            <div class="welcome-visual"></div>
+
+        </section>
+
+
+        <!-- STAT CARDS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon purple">
+                        ▣
+                    </div>
+
+                    <span class="trend">
+                        ↑ 18%
+                    </span>
+
+                </div>
+
+                <h3>24</h3>
+
+                <p>
+                    Total Applications
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon blue">
+                        ◷
+                    </div>
+
+                    <span class="trend">
+                        ↑ 8%
+                    </span>
+
+                </div>
+
+                <h3>7</h3>
+
+                <p>
+                    Interviews
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <span class="trend">
+                        +2
+                    </span>
+
+                </div>
+
+                <h3>3</h3>
+
+                <p>
+                    Selected
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon red">
+                        ×
+                    </div>
+
+                    <span style="color:var(--muted);font-size:10px;">
+                        This month
+                    </span>
+
+                </div>
+
+                <h3>5</h3>
+
+                <p>
+                    Rejected
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTENT -->
+
+        <section class="content-grid">
+
+            <!-- LEFT -->
+
+            <div>
+
+                <!-- PIPELINE -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Application Pipeline
+                        </h3>
+
+                        <a
+                            href="applications.html"
+                            class="view-link"
+                        >
+                            View All →
+                        </a>
+
+                    </div>
+
+
+                    <div class="pipeline">
+
+                        <div class="pipeline-item">
+
+                            <div class="pipeline-label">
+                                Applied
+                            </div>
+
+                            <div class="pipeline-value">
+                                12
+                            </div>
+
+                            <div class="progress">
+                                <span style="width:75%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-item">
+
+                            <div class="pipeline-label">
+                                Interview
+                            </div>
+
+                            <div class="pipeline-value">
+                                6
+                            </div>
+
+                            <div class="progress">
+                                <span style="width:50%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-item">
+
+                            <div class="pipeline-label">
+                                Selected
+                            </div>
+
+                            <div class="pipeline-value">
+                                3
+                            </div>
+
+                            <div class="progress">
+                                <span style="width:30%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="pipeline-item">
+
+                            <div class="pipeline-label">
+                                Rejected
+                            </div>
+
+                            <div class="pipeline-value">
+                                5
+                            </div>
+
+                            <div class="progress">
+                                <span style="width:40%"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RECENT APPLICATIONS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Recent Applications
+                        </h3>
+
+                        <a
+                            href="applications.html"
+                            class="view-link"
+                        >
+                            View All →
+                        </a>
+
+                    </div>
+
+
+                    <div style="overflow-x:auto;">
+
+                        <table class="applications">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>COMPANY</th>
+                                    <th>ROLE</th>
+                                    <th>DATE</th>
+                                    <th>STATUS</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="applicationsTable">
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="company">
+
+                                            <div class="company-logo">
+                                                G
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    Google
+                                                </strong>
+
+                                                <span>
+                                                    Mountain View
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Software Engineer
+                                    </td>
+
+                                    <td>
+                                        Sep 20, 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="status status-interview">
+                                            Interview
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="company">
+
+                                            <div class="company-logo">
+                                                M
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    Microsoft
+                                                </strong>
+
+                                                <span>
+                                                    Hyderabad
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Full Stack Developer
+                                    </td>
+
+                                    <td>
+                                        Sep 18, 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="status status-applied">
+                                            Applied
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="company">
+
+                                            <div class="company-logo">
+                                                A
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    Amazon
+                                                </strong>
+
+                                                <span>
+                                                    Bangalore
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        SDE Intern
+                                    </td>
+
+                                    <td>
+                                        Sep 15, 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="status status-selected">
+                                            Selected
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="company">
+
+                                            <div class="company-logo">
+                                                T
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    TCS
+                                                </strong>
+
+                                                <span>
+                                                    Noida
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Java Developer
+                                    </td>
+
+                                    <td>
+                                        Sep 12, 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="status status-rejected">
+                                            Rejected
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div>
+
+                <!-- UPCOMING INTERVIEWS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Upcoming Interviews
+                        </h3>
+
+                        <a
+                            href="interviews.html"
+                            class="view-link"
+                        >
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="interview">
+
+                        <div class="date-box">
+
+                            <strong>
+                                24
+                            </strong>
+
+                            <span>
+                                Sep
+                            </span>
+
+                        </div>
+
+                        <div class="interview-info">
+
+                            <strong>
+                                Microsoft
+                            </strong>
+
+                            <span>
+                                10:30 AM • Technical
+                            </span>
+
+                        </div>
+
+                        <span class="interview-type">
+                            Online
+                        </span>
+
+                    </div>
+
+
+                    <div class="interview">
+
+                        <div class="date-box">
+
+                            <strong>
+                                27
+                            </strong>
+
+                            <span>
+                                Sep
+                            </span>
+
+                        </div>
+
+                        <div class="interview-info">
+
+                            <strong>
+                                Google
+                            </strong>
+
+                            <span>
+                                02:00 PM • HR Round
+                            </span>
+
+                        </div>
+
+                        <span class="interview-type">
+                            Online
+                        </span>
+
+                    </div>
+
+
+                    <div class="interview">
+
+                        <div class="date-box">
+
+                            <strong>
+                                30
+                            </strong>
+
+                            <span>
+                                Sep
+                            </span>
+
+                        </div>
+
+                        <div class="interview-info">
+
+                            <strong>
+                                Amazon
+                            </strong>
+
+                            <span>
+                                11:00 AM • Final
+                            </span>
+
+                        </div>
+
+                        <span class="interview-type">
+                            Online
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CAREER PROGRESS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Career Progress
+                        </h3>
+
+                    </div>
+
+
+                    <div class="career-stat">
+
+                        <div class="career-stat-header">
+
+                            <span>
+                                Applications
+                            </span>
+
+                            <strong>
+                                72%
+                            </strong>
+
+                        </div>
+
+                        <div class="career-progress">
+                            <span style="width:72%"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="career-stat">
+
+                        <div class="career-stat-header">
+
+                            <span>
+                                Interview Rate
+                            </span>
+
+                            <strong>
+                                58%
+                            </strong>
+
+                        </div>
+
+                        <div class="career-progress">
+                            <span style="width:58%"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="career-stat">
+
+                        <div class="career-stat-header">
+
+                            <span>
+                                Success Rate
+                            </span>
+
+                            <strong>
+                                42%
+                            </strong>
+
+                        </div>
+
+                        <div class="career-progress">
+                            <span style="width:42%"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Quick Actions
+                        </h3>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+                        <button
+                            class="quick-action"
+                            onclick="goToAddJob()"
+                        >
+                            <span>＋</span>
+                            Add Job
+                        </button>
+
+                        <button
+                            class="quick-action"
+                            onclick="goToInterviews()"
+                        >
+                            <span>◷</span>
+                            Schedule Interview
+                        </button>
+
+                        <button class="quick-action">
+                            <span>♡</span>
+                            Saved Jobs
+                        </button>
+
+                        <button
+                            class="quick-action"
+                            onclick="goToAnalytics()"
+                        >
+                            <span>◒</span>
+                            View Analytics
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================
+       MOBILE SIDEBAR
+    ========================== */
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("overlay");
+
+
+    mobileMenu.addEventListener("click", () => {
+
+        sidebar.classList.toggle("open");
+
+        overlay.classList.toggle("active");
+
+    });
+
+
+    overlay.addEventListener("click", () => {
+
+        sidebar.classList.remove("open");
+
+        overlay.classList.remove("active");
+
+    });
+
+
+    /* =========================
+       NAVIGATION
+    ========================== */
+
+    function goToAddJob() {
+
+        window.location.href = "add-job.html";
+
+    }
+
+
+    function goToInterviews() {
+
+        window.location.href = "interviews.html";
+
+    }
+
+
+    function goToAnalytics() {
+
+        window.location.href = "analytics.html";
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const rows =
+        document.querySelectorAll(
+            "#applicationsTable tr"
+        );
+
+
+    searchInput.addEventListener("input", function () {
+
+        const value =
+            this.value.toLowerCase().trim();
+
+
+        rows.forEach(row => {
+
+            const text =
+                row.textContent.toLowerCase();
+
+            row.style.display =
+                text.includes(value)
+                    ? ""
+                    : "none";
+
+        });
+
+    });
+
+
+    /* =========================
+       NOTIFICATION
+    ========================== */
+
+    document
+        .querySelector(".icon-btn")
+        .addEventListener("click", () => {
+
+            alert(
+                "You have 3 upcoming interviews."
+            );
+
+        });
+
+
+    /* =========================
+       SIMPLE PAGE ANIMATION
+    ========================== */
+
+    document
+        .querySelectorAll(".stat-card, .card, .welcome")
+        .forEach((element, index) => {
+
+            element.style.opacity = "0";
+            element.style.transform = "translateY(10px)";
+
+            setTimeout(() => {
+
+                element.style.transition =
+                    "0.5s ease";
+
+                element.style.opacity = "1";
+
+                element.style.transform =
+                    "translateY(0)";
+
+            }, index * 70);
+
+        });
+
+</script>
+
+</body>
+</html>
