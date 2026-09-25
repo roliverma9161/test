@@ -1,0 +1,3360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Settings | JobTrack Pro</title>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #070b16;
+      --sidebar: #0b1020;
+      --card: #10172a;
+      --card2: #0d1425;
+
+      --border: rgba(255,255,255,0.08);
+
+      --text: #f5f7ff;
+      --muted: #8e99b5;
+
+      --purple: #8b5cf6;
+      --purple-light: #a78bfa;
+
+      --cyan: #22d3ee;
+      --green: #34d399;
+      --red: #fb7185;
+      --yellow: #fbbf24;
+
+      --shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    body {
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 85% 5%,
+          rgba(139,92,246,0.12),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 15% 80%,
+          rgba(34,211,238,0.07),
+          transparent 25%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+
+    /* =========================================
+       SIDEBAR
+    ========================================= */
+
+    .sidebar {
+
+      position: fixed;
+
+      left: 0;
+      top: 0;
+
+      width: 250px;
+      height: 100vh;
+
+      background: rgba(11,16,32,0.96);
+
+      border-right: 1px solid var(--border);
+
+      padding: 24px 16px;
+
+      z-index: 1000;
+
+      backdrop-filter: blur(20px);
+
+      transition: 0.3s ease;
+    }
+
+
+    .logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      padding: 0 10px 28px;
+    }
+
+
+    .logo-icon {
+
+      width: 40px;
+      height: 40px;
+
+      border-radius: 12px;
+
+      display: grid;
+      place-items: center;
+
+      font-weight: 800;
+      font-size: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          var(--cyan)
+        );
+
+      box-shadow:
+        0 8px 25px rgba(139,92,246,0.3);
+    }
+
+
+    .logo > span {
+
+      font-size: 19px;
+
+      font-weight: 750;
+
+      letter-spacing: -0.5px;
+    }
+
+
+    .logo > span > span {
+      color: var(--purple-light);
+    }
+
+
+    .nav-title {
+
+      color: #59657f;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.5px;
+
+      padding: 0 12px;
+
+      margin: 14px 0 10px;
+    }
+
+
+    .nav-link {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
+      padding: 12px 13px;
+
+      margin-bottom: 4px;
+
+      color: var(--muted);
+
+      border-radius: 11px;
+
+      font-size: 13px;
+
+      font-weight: 550;
+
+      transition: 0.25s ease;
+    }
+
+
+    .nav-link:hover {
+
+      color: white;
+
+      background: rgba(255,255,255,0.05);
+
+      transform: translateX(2px);
+    }
+
+
+    .nav-link.active {
+
+      color: white;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(139,92,246,0.2),
+          rgba(139,92,246,0.06)
+        );
+
+      border:
+        1px solid rgba(139,92,246,0.18);
+    }
+
+
+    .nav-icon {
+
+      width: 20px;
+
+      text-align: center;
+
+      font-size: 16px;
+    }
+
+
+    .sidebar-bottom {
+
+      position: absolute;
+
+      bottom: 20px;
+
+      left: 16px;
+      right: 16px;
+    }
+
+
+    .upgrade-box {
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(139,92,246,0.16),
+          rgba(34,211,238,0.07)
+        );
+
+      border:
+        1px solid rgba(139,92,246,0.2);
+
+      border-radius: 15px;
+
+      padding: 15px;
+
+      margin-bottom: 12px;
+    }
+
+
+    .upgrade-box h4 {
+
+      font-size: 13px;
+
+      margin-bottom: 5px;
+    }
+
+
+    .upgrade-box p {
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+      color: var(--muted);
+
+      margin-bottom: 12px;
+    }
+
+
+    .upgrade-btn {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 8px;
+
+      padding: 9px;
+
+      color: white;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          #6d42d8
+        );
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    .main {
+
+      margin-left: 250px;
+
+      min-height: 100vh;
+    }
+
+
+    .topbar {
+
+      height: 72px;
+
+      border-bottom:
+        1px solid var(--border);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 30px;
+
+      background:
+        rgba(7,11,22,0.75);
+
+      backdrop-filter: blur(18px);
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 500;
+    }
+
+
+    .menu-btn {
+
+      display: none;
+
+      background: none;
+
+      border: none;
+
+      color: white;
+
+      font-size: 22px;
+
+      cursor: pointer;
+    }
+
+
+    .topbar-right {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 18px;
+
+      margin-left: auto;
+    }
+
+
+    .search-box {
+
+      position: relative;
+    }
+
+
+    .search-box input {
+
+      width: 250px;
+
+      height: 38px;
+
+      background: #0d1425;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      outline: none;
+
+      color: white;
+
+      padding:
+        0 14px 0 38px;
+
+      font-size: 12px;
+    }
+
+
+    .search-box span {
+
+      position: absolute;
+
+      left: 13px;
+
+      top: 10px;
+
+      color: #64708d;
+    }
+
+
+    .notification {
+
+      position: relative;
+
+      font-size: 19px;
+
+      cursor: pointer;
+    }
+
+
+    .notification-dot {
+
+      position: absolute;
+
+      top: -2px;
+
+      right: -3px;
+
+      width: 7px;
+
+      height: 7px;
+
+      background: var(--cyan);
+
+      border-radius: 50%;
+
+      border:
+        2px solid var(--bg);
+    }
+
+
+    .top-profile {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+    }
+
+
+    .avatar {
+
+      width: 36px;
+      height: 36px;
+
+      border-radius: 11px;
+
+      display: grid;
+      place-items: center;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          var(--cyan)
+        );
+    }
+
+
+    .top-profile-text strong {
+
+      display: block;
+
+      font-size: 12px;
+    }
+
+
+    .top-profile-text span {
+
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      margin-top: 2px;
+    }
+
+
+    /* =========================================
+       CONTENT
+    ========================================= */
+
+    .content {
+
+      padding:
+        28px 30px 60px;
+
+      max-width: 1250px;
+
+      margin: auto;
+    }
+
+
+    .breadcrumb {
+
+      color: #65708c;
+
+      font-size: 11px;
+
+      margin-bottom: 8px;
+    }
+
+
+    .breadcrumb span {
+
+      color: var(--purple-light);
+    }
+
+
+    .page-heading {
+
+      display: flex;
+
+      align-items: flex-end;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      margin-bottom: 25px;
+    }
+
+
+    .page-heading h1 {
+
+      font-size: 26px;
+
+      letter-spacing: -0.7px;
+    }
+
+
+    .page-heading p {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-top: 6px;
+    }
+
+
+    .save-btn {
+
+      border: none;
+
+      padding:
+        11px 18px;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          #6840d1
+        );
+
+      color: white;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 25px rgba(139,92,246,0.2);
+
+      transition: 0.25s;
+    }
+
+
+    .save-btn:hover {
+
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================================
+       SETTINGS LAYOUT
+    ========================================= */
+
+    .settings-layout {
+
+      display: grid;
+
+      grid-template-columns: 205px minmax(0,1fr);
+
+      gap: 22px;
+
+      align-items: start;
+    }
+
+
+    /* =========================================
+       SETTINGS NAV
+    ========================================= */
+
+    .settings-nav {
+
+      background:
+        rgba(16,23,42,0.82);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 15px;
+
+      padding: 8px;
+
+      position: sticky;
+
+      top: 95px;
+    }
+
+
+    .settings-nav button {
+
+      width: 100%;
+
+      border: none;
+
+      background: transparent;
+
+      color: var(--muted);
+
+      text-align: left;
+
+      padding: 11px;
+
+      border-radius: 9px;
+
+      cursor: pointer;
+
+      font-size: 11px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+
+      transition: 0.2s;
+    }
+
+
+    .settings-nav button:hover {
+
+      background:
+        rgba(255,255,255,0.04);
+
+      color: white;
+    }
+
+
+    .settings-nav button.active {
+
+      color: white;
+
+      background:
+        rgba(139,92,246,0.14);
+
+      border:
+        1px solid rgba(139,92,246,0.16);
+    }
+
+
+    .settings-nav .nav-setting-icon {
+
+      width: 22px;
+
+      text-align: center;
+
+      font-size: 13px;
+    }
+
+
+    /* =========================================
+       SETTING CARDS
+    ========================================= */
+
+    .settings-content {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 20px;
+    }
+
+
+    .settings-card {
+
+      background:
+        rgba(16,23,42,0.82);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 17px;
+
+      padding: 22px;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,0.12);
+    }
+
+
+    .settings-header {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      margin-bottom: 21px;
+    }
+
+
+    .section-icon {
+
+      width: 36px;
+      height: 36px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 10px;
+
+      background:
+        rgba(139,92,246,0.12);
+
+      color: var(--purple-light);
+
+      font-size: 16px;
+    }
+
+
+    .settings-header h3 {
+
+      font-size: 14px;
+    }
+
+
+    .settings-header p {
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      margin-top: 3px;
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    .form-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2,1fr);
+
+      gap: 16px;
+    }
+
+
+    .field {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 7px;
+    }
+
+
+    .field.full {
+
+      grid-column: 1 / -1;
+    }
+
+
+    .field label {
+
+      color: #aeb7ca;
+
+      font-size: 10px;
+
+      font-weight: 650;
+    }
+
+
+    .field input,
+    .field select {
+
+      width: 100%;
+
+      background: #0b1221;
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
+      border-radius: 9px;
+
+      padding: 11px 12px;
+
+      color: white;
+
+      outline: none;
+
+      font-size: 11px;
+
+      transition: 0.2s;
+    }
+
+
+    .field input:focus,
+    .field select:focus {
+
+      border-color:
+        rgba(139,92,246,0.65);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(139,92,246,0.08);
+    }
+
+
+    /* =========================================
+       TOGGLE ROW
+    ========================================= */
+
+    .toggle-list {
+
+      display: flex;
+
+      flex-direction: column;
+    }
+
+
+    .toggle-row {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding: 15px 0;
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.05);
+    }
+
+
+    .toggle-row:first-child {
+
+      padding-top: 0;
+    }
+
+
+    .toggle-row:last-child {
+
+      border-bottom: none;
+
+      padding-bottom: 0;
+    }
+
+
+    .toggle-info {
+
+      flex: 1;
+    }
+
+
+    .toggle-info strong {
+
+      display: block;
+
+      font-size: 11px;
+
+      margin-bottom: 4px;
+    }
+
+
+    .toggle-info span {
+
+      color: #68738c;
+
+      font-size: 9px;
+
+      line-height: 1.5;
+    }
+
+
+    /* =========================================
+       SWITCH
+    ========================================= */
+
+    .switch {
+
+      width: 42px;
+
+      height: 23px;
+
+      position: relative;
+
+      flex-shrink: 0;
+    }
+
+
+    .switch input {
+
+      opacity: 0;
+
+      width: 0;
+      height: 0;
+    }
+
+
+    .slider {
+
+      position: absolute;
+
+      inset: 0;
+
+      background: #29334b;
+
+      border-radius: 30px;
+
+      cursor: pointer;
+
+      transition: 0.25s;
+    }
+
+
+    .slider::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 17px;
+
+      height: 17px;
+
+      left: 3px;
+
+      top: 3px;
+
+      background: white;
+
+      border-radius: 50%;
+
+      transition: 0.25s;
+    }
+
+
+    .switch input:checked + .slider {
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--purple),
+          #7046dc
+        );
+    }
+
+
+    .switch input:checked + .slider::before {
+
+      transform:
+        translateX(19px);
+    }
+
+
+    /* =========================================
+       THEME OPTIONS
+    ========================================= */
+
+    .theme-options {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 12px;
+    }
+
+
+    .theme-option {
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 11px;
+
+      padding: 12px;
+
+      background: #0d1425;
+
+      cursor: pointer;
+
+      transition: 0.2s;
+    }
+
+
+    .theme-option:hover {
+
+      border-color:
+        rgba(139,92,246,0.4);
+    }
+
+
+    .theme-option.selected {
+
+      border-color:
+        var(--purple);
+
+      background:
+        rgba(139,92,246,0.08);
+    }
+
+
+    .theme-preview {
+
+      height: 65px;
+
+      border-radius: 7px;
+
+      margin-bottom: 9px;
+
+      overflow: hidden;
+
+      border:
+        1px solid rgba(255,255,255,0.07);
+    }
+
+
+    .dark-preview {
+
+      background: #080d18;
+    }
+
+
+    .dark-preview::after {
+
+      content: "";
+
+      display: block;
+
+      width: 65%;
+
+      height: 12px;
+
+      background: #8b5cf6;
+
+      margin: 15px;
+
+      border-radius: 4px;
+
+      box-shadow:
+        0 18px 0 #172038,
+        0 36px 0 #172038;
+    }
+
+
+    .light-preview {
+
+      background: #f5f7fb;
+    }
+
+
+    .light-preview::after {
+
+      content: "";
+
+      display: block;
+
+      width: 65%;
+
+      height: 12px;
+
+      background: #8b5cf6;
+
+      margin: 15px;
+
+      border-radius: 4px;
+
+      box-shadow:
+        0 18px 0 #dce1ec,
+        0 36px 0 #dce1ec;
+    }
+
+
+    .system-preview {
+
+      background:
+        linear-gradient(
+          90deg,
+          #080d18 50%,
+          #f5f7fb 50%
+        );
+    }
+
+
+    .system-preview::after {
+
+      content: "◐";
+
+      display: grid;
+
+      place-items: center;
+
+      height: 100%;
+
+      font-size: 24px;
+
+      color: #8b5cf6;
+    }
+
+
+    .theme-option strong {
+
+      display: block;
+
+      font-size: 10px;
+    }
+
+
+    .theme-option span {
+
+      display: block;
+
+      color: #69748e;
+
+      font-size: 9px;
+
+      margin-top: 3px;
+    }
+
+
+    /* =========================================
+       PASSWORD
+    ========================================= */
+
+    .password-wrapper {
+
+      position: relative;
+    }
+
+
+    .password-wrapper input {
+
+      padding-right: 45px;
+    }
+
+
+    .show-password {
+
+      position: absolute;
+
+      right: 10px;
+
+      top: 9px;
+
+      background: transparent;
+
+      border: none;
+
+      color: #69748e;
+
+      cursor: pointer;
+
+      font-size: 13px;
+    }
+
+
+    .password-strength {
+
+      height: 5px;
+
+      background:
+        rgba(255,255,255,0.06);
+
+      border-radius: 20px;
+
+      margin-top: 8px;
+
+      overflow: hidden;
+    }
+
+
+    .password-strength div {
+
+      width: 65%;
+
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--yellow),
+          var(--green)
+        );
+
+      border-radius: inherit;
+    }
+
+
+    .security-status {
+
+      margin-top: 15px;
+
+      padding: 12px;
+
+      border-radius: 9px;
+
+      background:
+        rgba(52,211,153,0.06);
+
+      border:
+        1px solid rgba(52,211,153,0.15);
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+    }
+
+
+    .security-status-icon {
+
+      color: var(--green);
+
+      font-size: 16px;
+    }
+
+
+    .security-status strong {
+
+      display: block;
+
+      font-size: 10px;
+    }
+
+
+    .security-status span {
+
+      color: #68738c;
+
+      font-size: 9px;
+
+      display: block;
+
+      margin-top: 3px;
+    }
+
+
+    /* =========================================
+       SESSION
+    ========================================= */
+
+    .session {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 13px;
+
+      background: #0d1425;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      margin-bottom: 9px;
+    }
+
+
+    .session-icon {
+
+      width: 35px;
+      height: 35px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 9px;
+
+      background:
+        rgba(139,92,246,0.1);
+
+      color: var(--purple-light);
+    }
+
+
+    .session-info {
+
+      flex: 1;
+    }
+
+
+    .session-info strong {
+
+      display: block;
+
+      font-size: 10px;
+    }
+
+
+    .session-info span {
+
+      color: #68738c;
+
+      font-size: 9px;
+
+      display: block;
+
+      margin-top: 3px;
+    }
+
+
+    .current-session {
+
+      color: var(--green);
+
+      font-size: 9px;
+
+      font-weight: 700;
+    }
+
+
+    .logout-session {
+
+      border:
+        1px solid rgba(251,113,133,0.2);
+
+      background:
+        rgba(251,113,133,0.05);
+
+      color: var(--red);
+
+      padding: 6px 9px;
+
+      border-radius: 7px;
+
+      font-size: 9px;
+
+      cursor: pointer;
+    }
+
+
+    /* =========================================
+       DANGER ZONE
+    ========================================= */
+
+    .danger {
+
+      border:
+        1px solid rgba(251,113,133,0.18);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(251,113,133,0.04),
+          rgba(16,23,42,0.8)
+        );
+    }
+
+
+    .danger .section-icon {
+
+      background:
+        rgba(251,113,133,0.1);
+
+      color: var(--red);
+    }
+
+
+    .danger-action {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding: 14px;
+
+      border:
+        1px solid rgba(251,113,133,0.12);
+
+      background:
+        rgba(251,113,133,0.03);
+
+      border-radius: 10px;
+    }
+
+
+    .danger-action strong {
+
+      display: block;
+
+      font-size: 11px;
+    }
+
+
+    .danger-action p {
+
+      color: #68738c;
+
+      font-size: 9px;
+
+      margin-top: 4px;
+
+      line-height: 1.5;
+    }
+
+
+    .delete-btn {
+
+      flex-shrink: 0;
+
+      border:
+        1px solid rgba(251,113,133,0.3);
+
+      background:
+        rgba(251,113,133,0.08);
+
+      color: var(--red);
+
+      border-radius: 8px;
+
+      padding: 8px 12px;
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    .toast {
+
+      position: fixed;
+
+      right: 25px;
+
+      bottom: 25px;
+
+      background: #121c31;
+
+      border:
+        1px solid rgba(52,211,153,0.25);
+
+      color: white;
+
+      padding: 13px 16px;
+
+      border-radius: 11px;
+
+      font-size: 11px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+
+      box-shadow: var(--shadow);
+
+      transform:
+        translateY(100px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: 0.3s ease;
+
+      z-index: 3000;
+    }
+
+
+    .toast.show {
+
+      transform:
+        translateY(0);
+
+      opacity: 1;
+    }
+
+
+    .toast-icon {
+
+      color: var(--green);
+
+      font-size: 16px;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    .overlay {
+
+      display: none;
+
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        rgba(0,0,0,0.6);
+
+      z-index: 900;
+    }
+
+
+    @media(max-width:900px) {
+
+      .settings-layout {
+
+        grid-template-columns: 1fr;
+      }
+
+
+      .settings-nav {
+
+        position: static;
+
+        display: flex;
+
+        overflow-x: auto;
+
+        gap: 4px;
+      }
+
+
+      .settings-nav button {
+
+        min-width: max-content;
+      }
+
+    }
+
+
+    @media(max-width:800px) {
+
+      .sidebar {
+
+        transform:
+          translateX(-100%);
+      }
+
+
+      .sidebar.open {
+
+        transform:
+          translateX(0);
+      }
+
+
+      .overlay.show {
+
+        display: block;
+      }
+
+
+      .main {
+
+        margin-left: 0;
+      }
+
+
+      .menu-btn {
+
+        display: block;
+      }
+
+
+      .topbar {
+
+        padding:
+          0 18px;
+      }
+
+
+      .search-box {
+
+        display: none;
+      }
+
+
+      .content {
+
+        padding:
+          22px 18px 45px;
+      }
+
+    }
+
+
+    @media(max-width:600px) {
+
+      .top-profile-text {
+
+        display: none;
+      }
+
+
+      .page-heading {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+
+      .save-btn {
+
+        width: 100%;
+      }
+
+
+      .form-grid {
+
+        grid-template-columns: 1fr;
+      }
+
+
+      .field.full {
+
+        grid-column: auto;
+      }
+
+
+      .settings-card {
+
+        padding: 17px;
+      }
+
+
+      .theme-options {
+
+        grid-template-columns: 1fr;
+      }
+
+
+      .danger-action {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+
+      .delete-btn {
+
+        width: 100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       SIDEBAR
+  ========================================= -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        JT
+      </div>
+
+      <span>
+        JobTrack <span>Pro</span>
+      </span>
+
+    </div>
+
+
+    <div class="nav-title">
+      Workspace
+    </div>
+
+
+    <a href="dashboard.html" class="nav-link">
+
+      <span class="nav-icon">⌂</span>
+
+      Dashboard
+
+    </a>
+
+
+    <a href="applications.html" class="nav-link">
+
+      <span class="nav-icon">▤</span>
+
+      Applications
+
+    </a>
+
+
+    <a href="add-job.html" class="nav-link">
+
+      <span class="nav-icon">＋</span>
+
+      Add Job
+
+    </a>
+
+
+    <a href="interviews.html" class="nav-link">
+
+      <span class="nav-icon">◷</span>
+
+      Interviews
+
+    </a>
+
+
+    <a href="saved.html" class="nav-link">
+
+      <span class="nav-icon">♡</span>
+
+      Saved Jobs
+
+    </a>
+
+
+    <a href="analytics.html" class="nav-link">
+
+      <span class="nav-icon">◒</span>
+
+      Analytics
+
+    </a>
+
+
+    <div class="nav-title">
+      Account
+    </div>
+
+
+    <a href="profile.html" class="nav-link">
+
+      <span class="nav-icon">◎</span>
+
+      Profile
+
+    </a>
+
+
+    <a href="settings.html" class="nav-link active">
+
+      <span class="nav-icon">⚙</span>
+
+      Settings
+
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+
+      <div class="upgrade-box">
+
+        <h4>
+          Unlock Pro 🚀
+        </h4>
+
+        <p>
+          Get advanced analytics, reminders and unlimited applications.
+        </p>
+
+        <button
+          class="upgrade-btn"
+          onclick="showToast('Pro upgrade coming soon')"
+        >
+          Upgrade Now
+        </button>
+
+      </div>
+
+
+      <a href="login.html" class="nav-link">
+
+        <span class="nav-icon">
+          ↪
+        </span>
+
+        Logout
+
+      </a>
+
+    </div>
+
+  </aside>
+
+
+  <div class="overlay" id="overlay"></div>
+
+
+  <!-- =========================================
+       MAIN
+  ========================================= -->
+
+  <main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+      >
+        ☰
+      </button>
+
+
+      <div class="topbar-right">
+
+
+        <div class="search-box">
+
+          <span>
+            ⌕
+          </span>
+
+          <input
+            type="text"
+            placeholder="Search anything..."
+          />
+
+        </div>
+
+
+        <div
+          class="notification"
+          onclick="showToast('No new notifications')"
+        >
+
+          ♧
+
+          <span class="notification-dot"></span>
+
+        </div>
+
+
+        <div class="top-profile">
+
+          <div class="avatar">
+            RV
+          </div>
+
+
+          <div class="top-profile-text">
+
+            <strong>
+              Roli Verma
+            </strong>
+
+            <span>
+              Job Seeker
+            </span>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================
+         CONTENT
+    ========================================= -->
+
+    <section class="content">
+
+
+      <div class="breadcrumb">
+
+        Account /
+        <span>
+          Settings
+        </span>
+
+      </div>
+
+
+      <div class="page-heading">
+
+
+        <div>
+
+          <h1>
+            Settings
+          </h1>
+
+          <p>
+            Manage your account, preferences and security.
+          </p>
+
+        </div>
+
+
+        <button
+          class="save-btn"
+          onclick="saveSettings()"
+        >
+          ✓ Save Changes
+        </button>
+
+
+      </div>
+
+
+      <!-- =====================================
+           SETTINGS LAYOUT
+      ===================================== -->
+
+      <div class="settings-layout">
+
+
+        <!-- SETTINGS NAVIGATION -->
+
+        <aside class="settings-nav">
+
+
+          <button
+            class="active"
+            onclick="scrollToSection('general', this)"
+          >
+
+            <span class="nav-setting-icon">
+              ⚙
+            </span>
+
+            General
+
+          </button>
+
+
+          <button
+            onclick="scrollToSection('notifications', this)"
+          >
+
+            <span class="nav-setting-icon">
+              🔔
+            </span>
+
+            Notifications
+
+          </button>
+
+
+          <button
+            onclick="scrollToSection('appearance', this)"
+          >
+
+            <span class="nav-setting-icon">
+              ◐
+            </span>
+
+            Appearance
+
+          </button>
+
+
+          <button
+            onclick="scrollToSection('security', this)"
+          >
+
+            <span class="nav-setting-icon">
+              🔐
+            </span>
+
+            Security
+
+          </button>
+
+
+          <button
+            onclick="scrollToSection('preferences', this)"
+          >
+
+            <span class="nav-setting-icon">
+              ⚡
+            </span>
+
+            Job Preferences
+
+          </button>
+
+
+          <button
+            onclick="scrollToSection('danger', this)"
+          >
+
+            <span class="nav-setting-icon">
+              ⚠
+            </span>
+
+            Danger Zone
+
+          </button>
+
+
+        </aside>
+
+
+        <!-- SETTINGS CONTENT -->
+
+        <div class="settings-content">
+
+
+          <!-- =================================
+               GENERAL
+          ================================== -->
+
+          <div
+            class="settings-card"
+            id="general"
+          >
+
+
+            <div class="settings-header">
+
+
+              <div class="section-icon">
+                ⚙
+              </div>
+
+
+              <div>
+
+                <h3>
+                  General Settings
+                </h3>
+
+                <p>
+                  Manage your basic account preferences.
+                </p>
+
+              </div>
+
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+              <div class="field">
+
+                <label>
+                  Language
+                </label>
+
+                <select id="language">
+
+                  <option selected>
+                    English
+                  </option>
+
+                  <option>
+                    Hindi
+                  </option>
+
+                  <option>
+                    Hinglish
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Time Zone
+                </label>
+
+                <select id="timezone">
+
+                  <option selected>
+                    (GMT+05:30) India Standard Time
+                  </option>
+
+                  <option>
+                    (GMT+00:00) UTC
+                  </option>
+
+                  <option>
+                    (GMT+01:00) Europe/London
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Date Format
+                </label>
+
+                <select>
+
+                  <option selected>
+                    DD MMM YYYY
+                  </option>
+
+                  <option>
+                    MM/DD/YYYY
+                  </option>
+
+                  <option>
+                    YYYY-MM-DD
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Default Currency
+                </label>
+
+                <select>
+
+                  <option selected>
+                    INR — ₹
+                  </option>
+
+                  <option>
+                    USD — $
+                  </option>
+
+                  <option>
+                    EUR — €
+                  </option>
+
+                </select>
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================
+               NOTIFICATIONS
+          ================================== -->
+
+          <div
+            class="settings-card"
+            id="notifications"
+          >
+
+
+            <div class="settings-header">
+
+              <div class="section-icon">
+                🔔
+              </div>
+
+              <div>
+
+                <h3>
+                  Notification Settings
+                </h3>
+
+                <p>
+                  Choose what updates you want to receive.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="toggle-list">
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Interview Reminders
+                  </strong>
+
+                  <span>
+                    Get notified before your upcoming interviews.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                    checked
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Follow-up Reminders
+                  </strong>
+
+                  <span>
+                    Remind me when an application needs follow-up.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                    checked
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Application Updates
+                  </strong>
+
+                  <span>
+                    Receive updates about tracked applications.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                    checked
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Weekly Career Summary
+                  </strong>
+
+                  <span>
+                    Get a weekly overview of your job search activity.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                    checked
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Product Updates
+                  </strong>
+
+                  <span>
+                    Receive news about new JobTrack Pro features.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================
+               APPEARANCE
+          ================================== -->
+
+          <div
+            class="settings-card"
+            id="appearance"
+          >
+
+
+            <div class="settings-header">
+
+              <div class="section-icon">
+                ◐
+              </div>
+
+              <div>
+
+                <h3>
+                  Appearance
+                </h3>
+
+                <p>
+                  Customize how JobTrack Pro looks.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="theme-options">
+
+
+              <div
+                class="theme-option selected"
+                onclick="selectTheme(this, 'dark')"
+              >
+
+                <div class="theme-preview dark-preview"></div>
+
+                <strong>
+                  Dark
+                </strong>
+
+                <span>
+                  Easy on the eyes
+                </span>
+
+              </div>
+
+
+              <div
+                class="theme-option"
+                onclick="selectTheme(this, 'light')"
+              >
+
+                <div class="theme-preview light-preview"></div>
+
+                <strong>
+                  Light
+                </strong>
+
+                <span>
+                  Clean & bright
+                </span>
+
+              </div>
+
+
+              <div
+                class="theme-option"
+                onclick="selectTheme(this, 'system')"
+              >
+
+                <div class="theme-preview system-preview"></div>
+
+                <strong>
+                  System
+                </strong>
+
+                <span>
+                  Follow device theme
+                </span>
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================
+               SECURITY
+          ================================== -->
+
+          <div
+            class="settings-card"
+            id="security"
+          >
+
+
+            <div class="settings-header">
+
+              <div class="section-icon">
+                🔐
+              </div>
+
+              <div>
+
+                <h3>
+                  Security
+                </h3>
+
+                <p>
+                  Keep your JobTrack Pro account secure.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+              <div class="field">
+
+                <label>
+                  Current Password
+                </label>
+
+                <div class="password-wrapper">
+
+                  <input
+                    type="password"
+                    id="currentPassword"
+                    placeholder="Enter current password"
+                  />
+
+                  <button
+                    class="show-password"
+                    onclick="togglePassword('currentPassword', this)"
+                  >
+                    ◉
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  New Password
+                </label>
+
+                <div class="password-wrapper">
+
+                  <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password"
+                    oninput="updatePasswordStrength()"
+                  />
+
+                  <button
+                    class="show-password"
+                    onclick="togglePassword('newPassword', this)"
+                  >
+                    ◉
+                  </button>
+
+                </div>
+
+                <div class="password-strength">
+
+                  <div id="passwordStrength"></div>
+
+                </div>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Confirm New Password
+                </label>
+
+                <div class="password-wrapper">
+
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm new password"
+                  />
+
+                  <button
+                    class="show-password"
+                    onclick="togglePassword('confirmPassword', this)"
+                  >
+                    ◉
+                  </button>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+
+            <div class="security-status">
+
+
+              <div class="security-status-icon">
+                ✓
+              </div>
+
+
+              <div>
+
+                <strong>
+                  Your account is protected
+                </strong>
+
+                <span>
+                  Password authentication is enabled and your email is verified.
+                </span>
+
+              </div>
+
+
+            </div>
+
+
+            <div style="margin-top:18px;">
+
+              <h4 style="font-size:11px;margin-bottom:12px;">
+                Active Sessions
+              </h4>
+
+
+              <div class="session">
+
+                <div class="session-icon">
+                  💻
+                </div>
+
+
+                <div class="session-info">
+
+                  <strong>
+                    Windows · Chrome
+                  </strong>
+
+                  <span>
+                    Ghaziabad, India · Active now
+                  </span>
+
+                </div>
+
+
+                <span class="current-session">
+                  Current
+                </span>
+
+              </div>
+
+
+              <div class="session">
+
+                <div class="session-icon">
+                  📱
+                </div>
+
+
+                <div class="session-info">
+
+                  <strong>
+                    Android · Chrome
+                  </strong>
+
+                  <span>
+                    Last active 2 days ago
+                  </span>
+
+                </div>
+
+
+                <button
+                  class="logout-session"
+                  onclick="showToast('Session signed out')"
+                >
+                  Sign Out
+                </button>
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================
+               JOB PREFERENCES
+          ================================== -->
+
+          <div
+            class="settings-card"
+            id="preferences"
+          >
+
+
+            <div class="settings-header">
+
+              <div class="section-icon">
+                ⚡
+              </div>
+
+              <div>
+
+                <h3>
+                  Job Preferences
+                </h3>
+
+                <p>
+                  Customize the opportunities you want to track.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+              <div class="field">
+
+                <label>
+                  Preferred Job Type
+                </label>
+
+                <select>
+
+                  <option selected>
+                    Full-time
+                  </option>
+
+                  <option>
+                    Internship
+                  </option>
+
+                  <option>
+                    Part-time
+                  </option>
+
+                  <option>
+                    Contract
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Preferred Work Mode
+                </label>
+
+                <select>
+
+                  <option selected>
+                    Hybrid
+                  </option>
+
+                  <option>
+                    Remote
+                  </option>
+
+                  <option>
+                    On-site
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Preferred Location
+                </label>
+
+                <input
+                  type="text"
+                  value="Delhi NCR"
+                />
+
+              </div>
+
+
+              <div class="field">
+
+                <label>
+                  Minimum Expected Package
+                </label>
+
+                <input
+                  type="text"
+                  value="₹6 LPA"
+                />
+
+              </div>
+
+
+            </div>
+
+
+            <div
+              class="toggle-list"
+              style="margin-top:20px;"
+            >
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Smart Job Recommendations
+                  </strong>
+
+                  <span>
+                    Get recommendations based on your profile and skills.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                    checked
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+              <div class="toggle-row">
+
+                <div class="toggle-info">
+
+                  <strong>
+                    Internship Opportunities
+                  </strong>
+
+                  <span>
+                    Include internship opportunities in recommendations.
+                  </span>
+
+                </div>
+
+
+                <label class="switch">
+
+                  <input
+                    type="checkbox"
+                    checked
+                  />
+
+                  <span class="slider"></span>
+
+                </label>
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- =================================
+               DANGER ZONE
+          ================================== -->
+
+          <div
+            class="settings-card danger"
+            id="danger"
+          >
+
+
+            <div class="settings-header">
+
+              <div class="section-icon">
+                ⚠
+              </div>
+
+              <div>
+
+                <h3>
+                  Danger Zone
+                </h3>
+
+                <p>
+                  Irreversible account actions.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="danger-action">
+
+
+              <div>
+
+                <strong>
+                  Delete Account
+                </strong>
+
+                <p>
+                  Permanently delete your account, applications,
+                  interviews and all associated data.
+                </p>
+
+              </div>
+
+
+              <button
+                class="delete-btn"
+                onclick="deleteAccount()"
+              >
+                Delete Account
+              </button>
+
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================
+       TOAST
+  ========================================= -->
+
+  <div
+    class="toast"
+    id="toast"
+  >
+
+    <span class="toast-icon">
+      ✓
+    </span>
+
+    <span id="toastMessage">
+      Settings saved successfully
+    </span>
+
+  </div>
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+
+  <script>
+
+
+    /* =========================================
+       MOBILE SIDEBAR
+    ========================================= */
+
+    const menuBtn =
+      document.getElementById("menuBtn");
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+    const overlay =
+      document.getElementById("overlay");
+
+
+    menuBtn.addEventListener(
+      "click",
+      () => {
+
+        sidebar.classList.toggle("open");
+
+        overlay.classList.toggle("show");
+
+      }
+    );
+
+
+    overlay.addEventListener(
+      "click",
+      () => {
+
+        sidebar.classList.remove("open");
+
+        overlay.classList.remove("show");
+
+      }
+    );
+
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      const messageElement =
+        document.getElementById("toastMessage");
+
+
+      messageElement.textContent =
+        message;
+
+
+      toast.classList.add("show");
+
+
+      clearTimeout(toastTimer);
+
+
+      toastTimer = setTimeout(
+        () => {
+
+          toast.classList.remove("show");
+
+        },
+        3000
+      );
+
+    }
+
+
+    /* =========================================
+       SAVE SETTINGS
+    ========================================= */
+
+    function saveSettings() {
+
+      showToast(
+        "Settings saved successfully ✓"
+      );
+
+
+      /*
+      =========================================
+      FUTURE BACKEND API
+      =========================================
+
+      fetch("http://localhost:5000/api/settings", {
+
+        method: "PUT",
+
+        headers: {
+          "Content-Type": "application/json",
+
+          "Authorization":
+            "Bearer YOUR_JWT"
+        },
+
+        body: JSON.stringify({
+
+          language,
+          timezone,
+          dateFormat,
+          currency,
+
+          notifications: {
+            interviewReminders,
+            followUpReminders,
+            applicationUpdates,
+            weeklySummary,
+            productUpdates
+          },
+
+          appearance: {
+            theme
+          },
+
+          preferences: {
+            jobType,
+            workMode,
+            location,
+            salary
+          }
+
+        })
+
+      });
+
+      =========================================
+      */
+
+    }
+
+
+    /* =========================================
+       SETTINGS NAVIGATION
+    ========================================= */
+
+    function scrollToSection(
+      sectionId,
+      button
+    ) {
+
+      document
+        .querySelectorAll(".settings-nav button")
+        .forEach(btn => {
+
+          btn.classList.remove("active");
+
+        });
+
+
+      button.classList.add("active");
+
+
+      const section =
+        document.getElementById(sectionId);
+
+
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }
+
+
+    /* =========================================
+       THEME
+    ========================================= */
+
+    function selectTheme(
+      element,
+      theme
+    ) {
+
+      document
+        .querySelectorAll(".theme-option")
+        .forEach(option => {
+
+          option.classList.remove("selected");
+
+        });
+
+
+      element.classList.add("selected");
+
+
+      if (theme === "light") {
+
+        showToast(
+          "Light theme preview selected"
+        );
+
+      }
+
+      else if (theme === "system") {
+
+        showToast(
+          "System theme selected"
+        );
+
+      }
+
+      else {
+
+        showToast(
+          "Dark theme selected"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       PASSWORD VISIBILITY
+    ========================================= */
+
+    function togglePassword(
+      inputId,
+      button
+    ) {
+
+      const input =
+        document.getElementById(inputId);
+
+
+      if (input.type === "password") {
+
+        input.type = "text";
+
+        button.textContent = "◉";
+
+      }
+
+      else {
+
+        input.type = "password";
+
+        button.textContent = "◉";
+
+      }
+
+    }
+
+
+    /* =========================================
+       PASSWORD STRENGTH
+    ========================================= */
+
+    function updatePasswordStrength() {
+
+      const password =
+        document.getElementById(
+          "newPassword"
+        ).value;
+
+
+      const strength =
+        document.getElementById(
+          "passwordStrength"
+        );
+
+
+      let width = 10;
+
+
+      if (password.length >= 4) {
+        width = 30;
+      }
+
+      if (password.length >= 8) {
+        width = 55;
+      }
+
+      if (
+        password.length >= 8 &&
+        /[A-Z]/.test(password) &&
+        /[0-9]/.test(password)
+      ) {
+
+        width = 75;
+
+      }
+
+      if (
+        password.length >= 10 &&
+        /[A-Z]/.test(password) &&
+        /[0-9]/.test(password) &&
+        /[^A-Za-z0-9]/.test(password)
+      ) {
+
+        width = 100;
+
+      }
+
+
+      strength.style.width =
+        width + "%";
+
+    }
+
+
+    /* =========================================
+       DELETE ACCOUNT
+    ========================================= */
+
+    function deleteAccount() {
+
+      const confirmation =
+        confirm(
+          "Are you sure you want to delete your JobTrack Pro account? This action cannot be undone."
+        );
+
+
+      if (confirmation) {
+
+        showToast(
+          "Account deletion request submitted"
+        );
+
+
+        /*
+        FUTURE BACKEND:
+
+        fetch(
+          "http://localhost:5000/api/auth/account",
+          {
+            method: "DELETE",
+
+            headers: {
+              "Authorization":
+                "Bearer YOUR_JWT"
+            }
+          }
+        );
+
+        */
+
+      }
+
+    }
+
+
+  </script>
+
+</body>
+</html>
