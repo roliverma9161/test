@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile | JobTrack Pro</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #070b16;
+      --sidebar: #0b1020;
+      --card: #10172a;
+      --card-2: #0d1425;
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f7ff;
+      --muted: #8e99b5;
+      --purple: #8b5cf6;
+      --purple-light: #a78bfa;
+      --cyan: #22d3ee;
+      --green: #34d399;
+      --red: #fb7185;
+      --yellow: #fbbf24;
+      --shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 85% 5%, rgba(139,92,246,0.12), transparent 25%),
+        radial-gradient(circle at 15% 80%, rgba(34,211,238,0.07), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: rgba(11,16,32,0.96);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+      transition: 0.3s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 10px 28px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      box-shadow: 0 8px 25px rgba(139,92,246,0.3);
+    }
+
+    .logo span {
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span span {
+      color: var(--purple-light);
+    }
+
+    .nav-title {
+      color: #59657f;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0 12px;
+      margin: 14px 0 10px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 13px;
+      margin-bottom: 4px;
+      color: var(--muted);
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 550;
+      transition: 0.25s ease;
+    }
+
+    .nav-link:hover {
+      color: white;
+      background: rgba(255,255,255,0.05);
+      transform: translateX(2px);
+    }
+
+    .nav-link.active {
+      color: white;
+      background: linear-gradient(
+        90deg,
+        rgba(139,92,246,0.2),
+        rgba(139,92,246,0.06)
+      );
+      border: 1px solid rgba(139,92,246,0.18);
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sidebar-bottom {
+      position: absolute;
+      bottom: 20px;
+      left: 16px;
+      right: 16px;
+    }
+
+    .upgrade-box {
+      background: linear-gradient(
+        135deg,
+        rgba(139,92,246,0.16),
+        rgba(34,211,238,0.07)
+      );
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+
+    .upgrade-box h4 {
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .upgrade-box p {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .upgrade-btn {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      padding: 9px;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--purple), #6d42d8);
+    }
+
+    /* ================= MAIN ================= */
+
+    .main {
+      margin-left: 250px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 72px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      background: rgba(7,11,22,0.75);
+      backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-left: auto;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      width: 250px;
+      height: 38px;
+      background: #0d1425;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      color: white;
+      padding: 0 14px 0 38px;
+      font-size: 12px;
+    }
+
+    .search-box span {
+      position: absolute;
+      left: 13px;
+      top: 10px;
+      color: #64708d;
+    }
+
+    .notification {
+      position: relative;
+      font-size: 19px;
+      cursor: pointer;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: -2px;
+      right: -3px;
+      width: 7px;
+      height: 7px;
+      background: var(--cyan);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+
+    .top-profile {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+    }
+
+    .top-profile-text strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .top-profile-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 2px;
+    }
+
+    /* ================= CONTENT ================= */
+
+    .content {
+      padding: 28px 30px 50px;
+      max-width: 1450px;
+      margin: auto;
+    }
+
+    .breadcrumb {
+      color: #65708c;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+
+    .breadcrumb span {
+      color: var(--purple-light);
+    }
+
+    .page-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .page-heading h1 {
+      font-size: 26px;
+      letter-spacing: -0.7px;
+    }
+
+    .page-heading p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .save-btn {
+      border: none;
+      padding: 11px 18px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--purple), #6840d1);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(139,92,246,0.2);
+      transition: 0.25s;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* ================= PROFILE HERO ================= */
+
+    .profile-hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(139,92,246,0.18), transparent 30%),
+        linear-gradient(135deg, #11182c, #0d1425);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .profile-hero::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -70px;
+      bottom: -100px;
+      border-radius: 50%;
+      background: rgba(34,211,238,0.08);
+      filter: blur(10px);
+    }
+
+    .profile-main {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .large-avatar {
+      width: 88px;
+      height: 88px;
+      flex-shrink: 0;
+      border-radius: 23px;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      box-shadow: 0 15px 35px rgba(139,92,246,0.25);
+      border: 4px solid rgba(255,255,255,0.06);
+    }
+
+    .profile-info h2 {
+      font-size: 21px;
+      margin-bottom: 6px;
+    }
+
+    .profile-info p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .profile-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      color: #7e8aa7;
+      font-size: 11px;
+    }
+
+    .profile-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .completion {
+      margin-left: auto;
+      width: 220px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .completion-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+
+    .completion-top span {
+      color: var(--muted);
+    }
+
+    .completion-top strong {
+      color: var(--cyan);
+    }
+
+    .progress {
+      height: 7px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress div {
+      height: 100%;
+      width: 88%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+    }
+
+    .completion p {
+      color: #65708c;
+      font-size: 10px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* ================= GRID ================= */
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 22px;
+    }
+
+    .left-column,
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(16,23,42,0.82);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: rgba(139,92,246,0.12);
+      color: var(--purple-light);
+      font-size: 15px;
+    }
+
+    .card-title h3 {
+      font-size: 14px;
+    }
+
+    .card-title p {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .edit-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: #aeb7ca;
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 17px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      color: #aeb7ca;
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: #0b1221;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 9px;
+      padding: 11px 12px;
+      color: white;
+      outline: none;
+      font-size: 11px;
+      transition: 0.2s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(139,92,246,0.65);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.08);
+    }
+
+    .field textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #4e5a75;
+    }
+
+    /* ================= SKILLS ================= */
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.18);
+      color: #c8b8ff;
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    .skill button {
+      border: none;
+      background: transparent;
+      color: #7766a7;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .add-skill {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .add-skill input {
+      flex: 1;
+      background: #0b1221;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: white;
+      padding: 9px 10px;
+      outline: none;
+      font-size: 11px;
+    }
+
+    .add-skill button {
+      border: 1px solid rgba(34,211,238,0.2);
+      background: rgba(34,211,238,0.08);
+      color: var(--cyan);
+      padding: 0 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* ================= EXPERIENCE ================= */
+
+    .timeline {
+      position: relative;
+      padding-left: 27px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 7px;
+      bottom: 7px;
+      width: 1px;
+      background: rgba(139,92,246,0.25);
+    }
+
+    .experience {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .experience:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -25px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--purple);
+      border: 3px solid #10172a;
+      box-shadow: 0 0 0 1px rgba(139,92,246,0.35);
+    }
+
+    .experience h4 {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .experience .company {
+      color: var(--purple-light);
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .experience .date {
+      color: #66718c;
+      font-size: 9px;
+      margin-bottom: 8px;
+    }
+
+    .experience p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* ================= EDUCATION ================= */
+
+    .education-item {
+      padding: 14px;
+      border: 1px solid var(--border);
+      background: #0d1425;
+      border-radius: 11px;
+      margin-bottom: 10px;
+    }
+
+    .education-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .education-item h4 {
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .education-item p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .education-year {
+      color: var(--cyan) !important;
+      margin-top: 5px;
+    }
+
+    /* ================= RESUME ================= */
+
+    .resume-box {
+      border: 1px dashed rgba(139,92,246,0.35);
+      background: rgba(139,92,246,0.05);
+      padding: 17px;
+      border-radius: 11px;
+    }
+
+    .resume-file {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .file-icon {
+      width: 39px;
+      height: 39px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: rgba(251,113,133,0.1);
+      color: var(--red);
+      font-size: 17px;
+    }
+
+    .resume-info {
+      flex: 1;
+    }
+
+    .resume-info strong {
+      display: block;
+      font-size: 10px;
+    }
+
+    .resume-info span {
+      display: block;
+      color: #69748e;
+      font-size: 9px;
+      margin-top: 4px;
+    }
+
+    .resume-action {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: #bbc3d4;
+      border-radius: 7px;
+      padding: 7px 9px;
+      font-size: 9px;
+      cursor: pointer;
+    }
+
+    .upload-btn {
+      width: 100%;
+      margin-top: 11px;
+      border: 1px dashed rgba(34,211,238,0.25);
+      background: rgba(34,211,238,0.04);
+      color: var(--cyan);
+      border-radius: 8px;
+      padding: 9px;
+      cursor: pointer;
+      font-size: 10px;
+    }
+
+    /* ================= SOCIAL ================= */
+
+    .social-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #0d1425;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 10px;
+    }
+
+    .social-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.05);
+      font-size: 11px;
+    }
+
+    .social-item input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: 10px;
+    }
+
+    /* ================= ACCOUNT ================= */
+
+    .account-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .account-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .account-row span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .account-row strong {
+      font-size: 10px;
+      color: #dbe1ee;
+      text-align: right;
+    }
+
+    .verified {
+      color: var(--green) !important;
+    }
+
+    /* ================= TOGGLE ================= */
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .toggle-row:last-child {
+      border-bottom: none;
+    }
+
+    .toggle-info strong {
+      display: block;
+      font-size: 10px;
+      margin-bottom: 3px;
+    }
+
+    .toggle-info span {
+      color: #68738c;
+      font-size: 9px;
+    }
+
+    .switch {
+      width: 38px;
+      height: 21px;
+      position: relative;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #29334b;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.25s;
+    }
+
+    .switch input:checked + .slider {
+      background: var(--purple);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(17px);
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #121c31;
+      border: 1px solid rgba(52,211,153,0.25);
+      color: white;
+      padding: 13px 16px;
+      border-radius: 11px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: var(--shadow);
+      transform: translateY(100px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s ease;
+      z-index: 3000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      color: var(--green);
+      font-size: 16px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 900;
+    }
+
+    @media (max-width: 1100px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .right-column {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .completion {
+        width: 180px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .overlay.show {
+        display: block;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .search-box {
+        display: none;
+      }
+
+      .content {
+        padding: 22px 18px 40px;
+      }
+
+      .page-heading {
+        align-items: flex-start;
+      }
+
+      .profile-main {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .completion {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+      }
+
+      .right-column {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .top-profile-text {
+        display: none;
+      }
+
+      .page-heading {
+        flex-direction: column;
+      }
+
+      .save-btn {
+        width: 100%;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .card {
+        padding: 17px;
+      }
+
+      .profile-hero {
+        padding: 20px;
+      }
+
+      .profile-meta {
+        flex-direction: column;
+        gap: 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= SIDEBAR ================= -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+      <div class="logo-icon">JT</div>
+      <span>JobTrack <span>Pro</span></span>
+    </div>
+
+    <div class="nav-title">Workspace</div>
+
+    <a href="dashboard.html" class="nav-link">
+      <span class="nav-icon">⌂</span>
+      Dashboard
+    </a>
+
+    <a href="applications.html" class="nav-link">
+      <span class="nav-icon">▤</span>
+      Applications
+    </a>
+
+    <a href="add-job.html" class="nav-link">
+      <span class="nav-icon">＋</span>
+      Add Job
+    </a>
+
+    <a href="interviews.html" class="nav-link">
+      <span class="nav-icon">◷</span>
+      Interviews
+    </a>
+
+    <a href="saved.html" class="nav-link">
+      <span class="nav-icon">♡</span>
+      Saved Jobs
+    </a>
+
+    <a href="analytics.html" class="nav-link">
+      <span class="nav-icon">◒</span>
+      Analytics
+    </a>
+
+    <div class="nav-title">Account</div>
+
+    <a href="profile.html" class="nav-link active">
+      <span class="nav-icon">◎</span>
+      Profile
+    </a>
+
+    <a href="settings.html" class="nav-link">
+      <span class="nav-icon">⚙</span>
+      Settings
+    </a>
+
+    <div class="sidebar-bottom">
+
+      <div class="upgrade-box">
+        <h4>Unlock Pro 🚀</h4>
+        <p>Get advanced analytics, reminders and unlimited applications.</p>
+        <button class="upgrade-btn" onclick="showToast('Pro upgrade coming soon')">
+          Upgrade Now
+        </button>
+      </div>
+
+      <a href="login.html" class="nav-link">
+        <span class="nav-icon">↪</span>
+        Logout
+      </a>
+
+    </div>
+
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+      <button class="menu-btn" id="menuBtn">☰</button>
+
+      <div class="topbar-right">
+
+        <div class="search-box">
+          <span>⌕</span>
+          <input type="text" placeholder="Search anything..." />
+        </div>
+
+        <div class="notification" onclick="showToast('No new notifications')">
+          ♧
+          <span class="notification-dot"></span>
+        </div>
+
+        <div class="top-profile">
+          <div class="avatar">RV</div>
+
+          <div class="top-profile-text">
+            <strong>Roli Verma</strong>
+            <span>Job Seeker</span>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="content">
+
+      <div class="breadcrumb">
+        Account / <span>Profile</span>
+      </div>
+
+      <div class="page-heading">
+
+        <div>
+          <h1>My Profile</h1>
+          <p>Manage your professional identity and career information.</p>
+        </div>
+
+        <button class="save-btn" onclick="saveProfile()">
+          ✓ Save Changes
+        </button>
+
+      </div>
+
+      <!-- PROFILE HERO -->
+
+      <div class="profile-hero">
+
+        <div class="profile-main">
+
+          <div class="large-avatar">
+            RV
+          </div>
+
+          <div class="profile-info">
+
+            <h2>Roli Verma</h2>
+
+            <p>
+              MERN Stack Developer · Java & Spring Boot Enthusiast
+            </p>
+
+            <div class="profile-meta">
+
+              <span>✉ roli@example.com</span>
+
+              <span>⌖ Delhi NCR, India</span>
+
+              <span>◉ Open to Opportunities</span>
+
+            </div>
+
+          </div>
+
+          <div class="completion">
+
+            <div class="completion-top">
+              <span>Profile Completion</span>
+              <strong>88%</strong>
+            </div>
+
+            <div class="progress">
+              <div></div>
+            </div>
+
+            <p>
+              Complete your profile to improve your professional visibility.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PROFILE GRID -->
+
+      <div class="profile-grid">
+
+        <!-- LEFT -->
+
+        <div class="left-column">
+
+          <!-- PERSONAL INFORMATION -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">👤</div>
+
+                <div>
+                  <h3>Personal Information</h3>
+                  <p>Your basic personal details</p>
+                </div>
+
+              </div>
+
+              <button class="edit-btn">Edit</button>
+
+            </div>
+
+            <div class="form-grid">
+
+              <div class="field">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  value="Roli Verma"
+                />
+              </div>
+
+              <div class="field">
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  value="roli@example.com"
+                />
+              </div>
+
+              <div class="field">
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  placeholder="+91 XXXXX XXXXX"
+                  value="+91 98765 43210"
+                />
+              </div>
+
+              <div class="field">
+                <label>Location</label>
+                <input
+                  type="text"
+                  value="Delhi NCR, India"
+                />
+              </div>
+
+              <div class="field full">
+                <label>Professional Bio</label>
+
+                <textarea
+                  placeholder="Write a short professional introduction..."
+                >Computer Science student and aspiring full-stack developer passionate about building modern web applications using React, Node.js, MongoDB, Java and Spring Boot.</textarea>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- PROFESSIONAL INFORMATION -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">💼</div>
+
+                <div>
+                  <h3>Professional Information</h3>
+                  <p>Tell recruiters about your career profile</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="form-grid">
+
+              <div class="field">
+                <label>Current Role</label>
+                <input
+                  type="text"
+                  value="MERN Stack Developer"
+                />
+              </div>
+
+              <div class="field">
+                <label>Experience Level</label>
+
+                <select>
+                  <option>Fresher</option>
+                  <option>Entry Level</option>
+                  <option>1–2 Years</option>
+                  <option>2–5 Years</option>
+                  <option>5+ Years</option>
+                </select>
+
+              </div>
+
+              <div class="field">
+                <label>Preferred Role</label>
+
+                <input
+                  type="text"
+                  value="Java / Spring Boot Developer"
+                />
+
+              </div>
+
+              <div class="field">
+                <label>Expected Salary</label>
+
+                <input
+                  type="text"
+                  value="₹6–8 LPA"
+                />
+
+              </div>
+
+              <div class="field">
+                <label>Preferred Work Mode</label>
+
+                <select>
+                  <option>Hybrid</option>
+                  <option>Remote</option>
+                  <option>On-site</option>
+                </select>
+
+              </div>
+
+              <div class="field">
+                <label>Availability</label>
+
+                <select>
+                  <option>Immediately</option>
+                  <option>Within 15 Days</option>
+                  <option>Within 30 Days</option>
+                </select>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- SKILLS -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">⚡</div>
+
+                <div>
+                  <h3>Skills</h3>
+                  <p>Your technical skills</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="skills" id="skills">
+
+              <div class="skill">
+                React.js
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                JavaScript
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                Node.js
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                Express.js
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                MongoDB
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                Java
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                Spring Boot
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+              <div class="skill">
+                Git & GitHub
+                <button onclick="removeSkill(this)">×</button>
+              </div>
+
+            </div>
+
+            <div class="add-skill">
+
+              <input
+                type="text"
+                id="skillInput"
+                placeholder="Add a skill..."
+              />
+
+              <button onclick="addSkill()">
+                + Add
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- EXPERIENCE -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">⌁</div>
+
+                <div>
+                  <h3>Experience</h3>
+                  <p>Your professional journey</p>
+                </div>
+
+              </div>
+
+              <button class="edit-btn" onclick="showToast('Add experience form coming soon')">
+                + Add
+              </button>
+
+            </div>
+
+            <div class="timeline">
+
+              <div class="experience">
+
+                <div class="timeline-dot"></div>
+
+                <h4>MERN Stack Developer Intern</h4>
+
+                <div class="company">
+                  SkillManthan Technologies Pvt. Ltd.
+                </div>
+
+                <div class="date">
+                  May 2026 — July 2026
+                </div>
+
+                <p>
+                  Worked on modern web development using React.js,
+                  JavaScript and full-stack development concepts.
+                </p>
+
+              </div>
+
+              <div class="experience">
+
+                <div class="timeline-dot"></div>
+
+                <h4>Computer Science Student</h4>
+
+                <div class="company">
+                  Nitra Technical Campus
+                </div>
+
+                <div class="date">
+                  2025 — 2028
+                </div>
+
+                <p>
+                  Studying Computer Science and Engineering with focus on
+                  web development, Java, databases and problem solving.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- EDUCATION -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">🎓</div>
+
+                <div>
+                  <h3>Education</h3>
+                  <p>Your academic background</p>
+                </div>
+
+              </div>
+
+              <button
+                class="edit-btn"
+                onclick="showToast('Add education form coming soon')"
+              >
+                + Add
+              </button>
+
+            </div>
+
+            <div class="education-item">
+
+              <h4>B.Tech — Computer Science & Engineering</h4>
+
+              <p>
+                Nitra Technical Campus, Ghaziabad
+              </p>
+
+              <p class="education-year">
+                2025 — 2028
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="right-column">
+
+          <!-- RESUME -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">📄</div>
+
+                <div>
+                  <h3>Resume</h3>
+                  <p>Your latest resume</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="resume-box">
+
+              <div class="resume-file">
+
+                <div class="file-icon">
+                  PDF
+                </div>
+
+                <div class="resume-info">
+
+                  <strong>Roli_Verma_Resume.pdf</strong>
+
+                  <span>
+                    Uploaded recently · 1.2 MB
+                  </span>
+
+                </div>
+
+                <button
+                  class="resume-action"
+                  onclick="showToast('Resume preview coming soon')"
+                >
+                  View
+                </button>
+
+              </div>
+
+              <button
+                class="upload-btn"
+                onclick="showToast('Resume upload will connect to backend')"
+              >
+                ↑ Upload New Resume
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- SOCIAL LINKS -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">🔗</div>
+
+                <div>
+                  <h3>Social Profiles</h3>
+                  <p>Professional links</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="social-list">
+
+              <div class="social-item">
+
+                <div class="social-icon">in</div>
+
+                <input
+                  type="text"
+                  value="linkedin.com/in/roli-verma"
+                />
+
+              </div>
+
+              <div class="social-item">
+
+                <div class="social-icon">⌘</div>
+
+                <input
+                  type="text"
+                  value="github.com/roliverma9161"
+                />
+
+              </div>
+
+              <div class="social-item">
+
+                <div class="social-icon">◉</div>
+
+                <input
+                  type="text"
+                  value="roliverma.vercel.app"
+                />
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ACCOUNT -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">🔐</div>
+
+                <div>
+                  <h3>Account</h3>
+                  <p>Account information</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="account-row">
+
+              <span>Email</span>
+
+              <strong class="verified">
+                ✓ Verified
+              </strong>
+
+            </div>
+
+            <div class="account-row">
+
+              <span>Account Type</span>
+
+              <strong>Free Plan</strong>
+
+            </div>
+
+            <div class="account-row">
+
+              <span>Member Since</span>
+
+              <strong>September 2026</strong>
+
+            </div>
+
+            <div class="account-row">
+
+              <span>User ID</span>
+
+              <strong>JT-10248</strong>
+
+            </div>
+
+          </div>
+
+          <!-- NOTIFICATIONS -->
+
+          <div class="card">
+
+            <div class="card-header">
+
+              <div class="card-title">
+
+                <div class="section-icon">🔔</div>
+
+                <div>
+                  <h3>Preferences</h3>
+                  <p>Profile visibility & alerts</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="toggle-row">
+
+              <div class="toggle-info">
+
+                <strong>Job Alerts</strong>
+
+                <span>Receive relevant job alerts</span>
+
+              </div>
+
+              <label class="switch">
+
+                <input type="checkbox" checked />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+            <div class="toggle-row">
+
+              <div class="toggle-info">
+
+                <strong>Profile Visibility</strong>
+
+                <span>Allow recruiters to discover you</span>
+
+              </div>
+
+              <label class="switch">
+
+                <input type="checkbox" checked />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+            <div class="toggle-row">
+
+              <div class="toggle-info">
+
+                <strong>Interview Reminders</strong>
+
+                <span>Get reminders before interviews</span>
+
+              </div>
+
+              <label class="switch">
+
+                <input type="checkbox" checked />
+
+                <span class="slider"></span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- TOAST -->
+
+  <div class="toast" id="toast">
+
+    <span class="toast-icon">✓</span>
+
+    <span id="toastMessage">
+      Changes saved successfully
+    </span>
+
+  </div>
+
+  <script>
+
+    /* ================= MOBILE SIDEBAR ================= */
+
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("show");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    });
+
+
+    /* ================= TOAST ================= */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+      const toast = document.getElementById("toast");
+      const toastMessage = document.getElementById("toastMessage");
+
+      toastMessage.textContent = message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+
+    /* ================= SAVE PROFILE ================= */
+
+    function saveProfile() {
+
+      const name = document.getElementById("fullName").value.trim();
+
+      if (!name) {
+        showToast("Please enter your name");
+        return;
+      }
+
+      showToast("Profile changes saved successfully ✓");
+
+      /*
+      ===========================================
+      FUTURE BACKEND API
+      ===========================================
+
+      fetch("http://localhost:5000/api/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer YOUR_JWT"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          location,
+          bio,
+          currentRole,
+          preferredRole,
+          expectedSalary,
+          workMode,
+          availability,
+          skills,
+          linkedin,
+          github,
+          portfolio
+        })
+      })
+      */
+    }
+
+
+    /* ================= ADD SKILL ================= */
+
+    function addSkill() {
+
+      const input = document.getElementById("skillInput");
+      const value = input.value.trim();
+
+      if (!value) {
+        showToast("Enter a skill first");
+        return;
+      }
+
+      const skill = document.createElement("div");
+
+      skill.className = "skill";
+
+      skill.innerHTML = `
+        ${value}
+        <button onclick="removeSkill(this)">×</button>
+      `;
+
+      document.getElementById("skills").appendChild(skill);
+
+      input.value = "";
+
+      showToast(`${value} added to your skills`);
+    }
+
+
+    /* ================= REMOVE SKILL ================= */
+
+    function removeSkill(button) {
+
+      const skill = button.parentElement;
+
+      const name = skill.childNodes[0].textContent.trim();
+
+      skill.remove();
+
+      showToast(`${name} removed`);
+    }
+
+
+    /* ================= ENTER TO ADD SKILL ================= */
+
+    document
+      .getElementById("skillInput")
+      .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+          event.preventDefault();
+          addSkill();
+        }
+
+      });
+
+
+    /* ================= DEMO EDIT BUTTONS ================= */
+
+    document.querySelectorAll(".edit-btn").forEach(button => {
+
+      if (!button.textContent.includes("+ Add")) {
+
+        button.addEventListener("click", () => {
+          showToast("Profile section is ready to edit");
+        });
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
