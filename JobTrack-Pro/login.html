@@ -1168,142 +1168,64 @@
                         ></div>
 
 
-                        <div
-                            class="success-message"
-                            id="successMessage"
-                        ></div>
-
+                        <div class="success-message" id="successMessage"></div>
                     </div>
-
-
 
                     <!-- OPTIONS -->
 
                     <div class="form-options">
-
                         <label class="remember">
-
-                            <input
-                                type="checkbox"
-                                id="remember"
-                            >
-
+                            <input type="checkbox" id="remember">
                             Remember me
-
                         </label>
 
-
-                        <a
-                            href="#"
-                            class="forgot-password"
-                        >
+                        <a href="#" class="forgot-password" >
                             Forgot Password?
                         </a>
-
                     </div>
-
-
 
                     <!-- LOGIN BUTTON -->
 
-                    <button
-                        type="submit"
-                        class="login-btn"
-                        id="loginBtn"
-                    >
-
-                        <span id="buttonText">
-                            Login to Account →
-                        </span>
-
-                        <span
-                            class="spinner"
-                            id="spinner"
-                        ></span>
-
+                    <button type="submit"class="login-btn" id="loginBtn">
+                        <span id="buttonText">Login to Account →</span>
+                        <span class="spinner"id="spinner"></span>
                     </button>
-
-
                 </form>
-
-
 
                 <!-- DIVIDER -->
 
-                <div class="divider">
-
-                    OR CONTINUE WITH
-
-                </div>
-
-
+                <div class="divider">OR CONTINUE WITH</div>
 
                 <!-- SOCIAL -->
 
                 <div class="social-login">
-
-                    <button
-                        type="button"
-                        class="social-btn"
-                    >
-
-                        <span>
-                            G
-                        </span>
-
+                    <button type="button" class="social-btn">
+                        <span> G </span>
                         Google
-
                     </button>
 
-
-                    <button
-                        type="button"
-                        class="social-btn"
-                    >
-
-                        <span>
-                            in
-                        </span>
-
-                        LinkedIn
-
+                    <button type="button" class="social-btn">
+                        <span>in</span>LinkedIn
                     </button>
-
                 </div>
-
-
 
                 <!-- REGISTER -->
 
                 <p class="register-text">
-
                     Don't have an account?
-
-                    <a href="register.html">
-                        Create Account
-                    </a>
-
+                    <a href="register.html">Create Account </a>
                 </p>
-
-
             </section>
-
         </div>
-
     </main>
-
 
     <!-- =========================
          FOOTER
     ========================== -->
 
     <div class="page-footer">
-
         © 2026 JobTrack Pro · Your career, organized.
-
     </div>
-
-
 
     <!-- =========================
          JAVASCRIPT
@@ -1311,52 +1233,36 @@
 
     <script>
 
-
         /* =========================
            PASSWORD SHOW / HIDE
         ========================== */
 
         const passwordInput =
             document.getElementById("password");
-
         const passwordToggle =
             document.getElementById("passwordToggle");
-
-
         passwordToggle.addEventListener(
             "click",
             () => {
-
                 if (
                     passwordInput.type === "password"
                 ) {
-
                     passwordInput.type = "text";
-
                     passwordToggle.textContent = "🙈";
-
                     passwordToggle.setAttribute(
                         "aria-label",
                         "Hide password"
                     );
-
                 } else {
-
                     passwordInput.type = "password";
-
                     passwordToggle.textContent = "👁";
-
                     passwordToggle.setAttribute(
                         "aria-label",
                         "Show password"
                     );
-
                 }
-
             }
         );
-
-
 
         /* =========================
            LOGIN FORM
@@ -1364,100 +1270,65 @@
 
         const loginForm =
             document.getElementById("loginForm");
-
         const loginBtn =
             document.getElementById("loginBtn");
-
         const buttonText =
             document.getElementById("buttonText");
-
         const spinner =
             document.getElementById("spinner");
-
         const errorMessage =
             document.getElementById("errorMessage");
-
         const successMessage =
             document.getElementById("successMessage");
-
-
         loginForm.addEventListener(
             "submit",
             function (event) {
-
                 event.preventDefault();
-
-
                 /* Clear old messages */
 
                 errorMessage.classList.remove("show");
-
                 successMessage.classList.remove("show");
-
-
                 const email =
                     document
                         .getElementById("email")
                         .value
                         .trim();
-
                 const password =
                     passwordInput.value;
-
-
                 /* =====================
                    BASIC VALIDATION
                 ====================== */
 
                 if (!email || !password) {
-
                     errorMessage.textContent =
                         "Please enter your email and password.";
-
                     errorMessage.classList.add("show");
-
                     return;
                 }
-
-
                 if (!email.includes("@")) {
-
                     errorMessage.textContent =
                         "Please enter a valid email address.";
-
                     errorMessage.classList.add("show");
-
                     return;
                 }
-
-
                 if (password.length < 6) {
-
                     errorMessage.textContent =
                         "Password must contain at least 6 characters.";
-
                     errorMessage.classList.add("show");
-
                     return;
                 }
-
 
                 /* =====================
                    LOADING STATE
                 ====================== */
 
                 loginBtn.disabled = true;
-
                 buttonText.style.display = "none";
-
                 spinner.style.display = "block";
-
 
                 /*
                     TEMPORARY FRONTEND DEMO
-
                     Later this section will be replaced with:
-
                     fetch("http://localhost:5000/api/auth/login", {
                         method: "POST",
                         headers: {
@@ -1468,25 +1339,16 @@
                             password
                         })
                     })
-
                     Backend will return JWT token.
                 */
 
-
                 setTimeout(() => {
-
                     spinner.style.display = "none";
-
                     buttonText.style.display = "inline";
-
                     loginBtn.disabled = false;
-
-
                     successMessage.textContent =
                         "Demo login successful! Backend authentication will be connected next.";
-
                     successMessage.classList.add("show");
-
 
                     /*
                         Later:
@@ -1496,13 +1358,9 @@
                         window.location.href =
                             "dashboard.html";
                     */
-
                 }, 1200);
-
             }
         );
-
-
 
         /* =========================
            CLEAR ERROR ON INPUT
@@ -1513,19 +1371,13 @@
             .addEventListener(
                 "input",
                 () => {
-
                     errorMessage.classList.remove("show");
-
                 }
             );
-
-
         passwordInput.addEventListener(
             "input",
             () => {
-
                 errorMessage.classList.remove("show");
-
             }
         );
 
