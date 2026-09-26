@@ -243,7 +243,7 @@
            BACK HOME
         ========================== */
 
-        .back-home {
+       /* .back-home {
 
             color: #cbd5e1;
 
@@ -264,7 +264,23 @@
 
             transform: translateX(-3px);
         }
+*/
+         .back-home {
+    display: inline-flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    color: white;
+    background: var(--gradient);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
 
+.back-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
 
         /* =========================
            MAIN
@@ -1141,9 +1157,8 @@
             <div class="logo-icon">✓</div>
             <span class="logo-name">JobTrack Pro</span>
         </a>
-        <button class="btn btn-primary">
+        
             <a href="index.html"class="back-home">← Back to Home</a>
-        </button>
         
     </header>
 
