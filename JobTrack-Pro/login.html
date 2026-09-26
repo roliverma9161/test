@@ -855,216 +855,140 @@
         ========================== */
 
         .register-text {
-
             text-align: center;
-
             color: #64748b;
-
             font-size: 11px;
-
             margin-top: 25px;
         }
-
         .register-text a {
-
             color: #818cf8;
-
             font-weight: 600;
-
             transition: 0.3s;
         }
-
         .register-text a:hover {
-
             color: #a5b4fc;
         }
-
 
         /* =========================
            ERROR MESSAGE
         ========================== */
 
         .error-message {
-
             display: none;
-
             margin-top: 10px;
-
             padding: 10px 12px;
-
             border-radius: 8px;
-
             background:
                 rgba(248,113,113,0.08);
-
             border:
                 1px solid
                 rgba(248,113,113,0.15);
-
             color: #fca5a5;
-
             font-size: 11px;
         }
-
         .error-message.show {
-
             display: block;
         }
-
 
         /* =========================
            SUCCESS MESSAGE
         ========================== */
 
         .success-message {
-
             display: none;
-
             margin-top: 10px;
-
             padding: 10px 12px;
-
             border-radius: 8px;
-
             background:
                 rgba(74,222,128,0.08);
-
             border:
                 1px solid
                 rgba(74,222,128,0.15);
-
             color: #86efac;
-
             font-size: 11px;
         }
-
         .success-message.show {
-
             display: block;
         }
-
 
         /* =========================
            LOADING
         ========================== */
 
         .spinner {
-
             display: none;
-
             width: 16px;
             height: 16px;
-
             border:
                 2px solid
                 rgba(255,255,255,0.35);
-
             border-top-color: white;
-
             border-radius: 50%;
-
             animation:
                 spin 0.7s linear infinite;
-
             margin: auto;
         }
-
         @keyframes spin {
-
             to {
                 transform: rotate(360deg);
             }
         }
-
 
         /* =========================
            FOOTER
         ========================== */
 
         .page-footer {
-
             position: fixed;
-
             bottom: 14px;
-
             left: 0;
-
             width: 100%;
-
             text-align: center;
-
             color: #334155;
-
             font-size: 9px;
-
             pointer-events: none;
         }
-
 
         /* =========================
            RESPONSIVE
         ========================== */
 
         @media (max-width: 850px) {
-
             .login-wrapper {
-
                 grid-template-columns: 1fr;
-
                 max-width: 520px;
             }
-
             .login-info {
-
                 display: none;
             }
-
             .login-form-area {
-
                 padding: 45px 35px;
             }
         }
-
-
         @media (max-width: 500px) {
-
             .navbar {
-
                 padding: 0 20px;
             }
-
             .back-home {
-
                 font-size: 15px;
                 padding: 12px 24px;
                 border-radius: 10px;
             }
-
             .login-page {
-
                 padding:
                     100px 15px 40px;
             }
-
             .login-form-area {
-
                 padding: 35px 22px;
             }
-
             .form-heading h2 {
-
                 font-size: 24px;
             }
-
             .social-login {
-
                 grid-template-columns: 1fr;
             }
-
             .page-footer {
-
                 position: static;
-
                 padding:
                     0 20px 20px;
             }
