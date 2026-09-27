@@ -877,24 +877,17 @@
         .interview-info {
             flex: 1;
         }
-
         .interview-info strong {
             display: block;
-
             font-size: 11px;
-
             margin-bottom: 4px;
         }
-
         .interview-info span {
             color: var(--muted);
-
             font-size: 9px;
         }
-
         .interview-type {
             font-size: 9px;
-
             color: var(--cyan);
         }
 
@@ -905,50 +898,36 @@
         .career-stat {
             margin-bottom: 18px;
         }
-
         .career-stat:last-child {
             margin-bottom: 0;
         }
-
         .career-stat-header {
             display: flex;
-
             justify-content: space-between;
-
             margin-bottom: 7px;
         }
-
         .career-stat-header span {
             font-size: 10px;
             color: var(--muted);
         }
-
         .career-stat-header strong {
             font-size: 10px;
         }
-
         .career-progress {
             height: 6px;
-
             background: rgba(255,255,255,0.06);
-
             border-radius: 20px;
-
             overflow: hidden;
         }
-
         .career-progress span {
             display: block;
-
             height: 100%;
-
             background:
                 linear-gradient(
                     90deg,
                     var(--primary),
                     var(--cyan)
                 );
-
             border-radius: inherit;
         }
 
@@ -958,46 +937,33 @@
 
         .quick-actions {
             display: grid;
-
             grid-template-columns:
                 repeat(2, 1fr);
-
             gap: 10px;
         }
 
         .quick-action {
             padding: 13px;
-
             border-radius: 11px;
-
             background: rgba(255,255,255,0.025);
-
             border: 1px solid var(--border);
-
             color: var(--muted);
-
             font-size: 10px;
-
             cursor: pointer;
-
             transition: 0.2s;
         }
 
         .quick-action:hover {
             color: white;
-
             border-color:
                 rgba(124,92,255,0.35);
-
             background:
                 rgba(124,92,255,0.08);
         }
 
         .quick-action span {
             display: block;
-
             font-size: 17px;
-
             margin-bottom: 7px;
         }
 
@@ -1007,13 +973,9 @@
 
         .overlay {
             display: none;
-
             position: fixed;
-
             inset: 0;
-
             background: rgba(0,0,0,0.55);
-
             z-index: 900;
         }
 
@@ -1022,132 +984,101 @@
         ========================= */
 
         @media (max-width: 1100px) {
-
             .stats-grid {
                 grid-template-columns:
                     repeat(2, 1fr);
             }
-
             .content-grid {
                 grid-template-columns: 1fr;
             }
-
             .welcome-visual {
                 display: none;
             }
         }
-
         @media (max-width: 850px) {
-
             .sidebar {
                 transform: translateX(-100%);
             }
-
             .sidebar.open {
                 transform: translateX(0);
             }
-
             .overlay.active {
                 display: block;
             }
-
             .main {
                 margin-left: 0;
                 width: 100%;
                 padding: 20px;
             }
-
             .mobile-menu {
                 display: block;
             }
-
             .topbar {
                 gap: 12px;
             }
-
             .page-title {
                 flex: 1;
             }
-
             .page-title h1 {
                 font-size: 19px;
             }
-
             .search {
                 display: none;
             }
-
             .profile-info {
                 display: none;
             }
         }
-
         @media (max-width: 600px) {
-
             .main {
                 padding: 16px;
             }
-
             .topbar {
                 margin-bottom: 20px;
             }
-
             .top-actions {
                 gap: 6px;
             }
-
             .welcome {
                 padding: 20px;
             }
-
             .welcome-content h2 {
                 font-size: 19px;
             }
-
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
 
                 gap: 10px;
             }
-
             .stat-card {
                 padding: 15px;
             }
-
             .stat-card h3 {
                 font-size: 22px;
             }
-
             .pipeline {
                 grid-template-columns: 1fr 1fr;
             }
-
             .applications th:nth-child(3),
             .applications td:nth-child(3),
             .applications th:nth-child(4),
             .applications td:nth-child(4) {
                 display: none;
             }
-
             .card {
                 padding: 15px;
             }
         }
-
         @media (max-width: 420px) {
-
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-
             .pipeline {
                 grid-template-columns: 1fr 1fr;
             }
-
             .profile-mini {
                 display: none;
             }
-
             .page-title p {
                 display: none;
             }
