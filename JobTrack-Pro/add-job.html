@@ -7,740 +7,413 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
     <title>Add Application | JobTrack Pro</title>
 
     <meta
         name="description"
-        content="Add and manage your job applications with JobTrack Pro."
-    >
-
+        content="Add and manage your job applications with JobTrack Pro.">
     <style>
 
         /* =====================================================
            RESET
         ===================================================== */
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-
         :root {
-
             --bg: #070b17;
             --sidebar: #0b1020;
-
             --card: #10172a;
             --card-hover: #141d34;
-
             --border: rgba(255,255,255,0.08);
-
             --text: #f5f7ff;
             --muted: #8e99b5;
-
             --primary: #7c5cff;
             --primary-light: #9a83ff;
-
             --cyan: #22d3ee;
-
             --green: #22c55e;
             --yellow: #f59e0b;
             --red: #ef4444;
             --blue: #3b82f6;
-
             --shadow:
                 0 20px 50px rgba(0,0,0,0.25);
-
         }
-
-
         body {
-
             font-family:
                 Inter,
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
-
             background:
-
                 radial-gradient(
                     circle at 80% 0%,
                     rgba(124,92,255,0.12),
                     transparent 30%
                 ),
-
                 var(--bg);
-
             color: var(--text);
-
             min-height: 100vh;
-
         }
-
-
         button,
         input,
         select,
         textarea {
-
             font-family: inherit;
-
         }
-
-
         a {
-
             text-decoration: none;
-
             color: inherit;
-
         }
-
 
         /* =====================================================
            APP
         ===================================================== */
-
         .app {
-
             display: flex;
-
             min-height: 100vh;
-
         }
-
 
         /* =====================================================
            SIDEBAR
         ===================================================== */
-
         .sidebar {
-
             width: 260px;
-
             background:
                 rgba(11,16,32,0.96);
-
             border-right:
                 1px solid var(--border);
-
             position: fixed;
-
             top: 0;
             left: 0;
             bottom: 0;
-
             padding: 24px 16px;
-
             display: flex;
-
             flex-direction: column;
-
             z-index: 1000;
-
             transition: 0.3s ease;
-
         }
-
-
         .logo {
-
             display: flex;
-
             align-items: center;
-
             gap: 12px;
-
             padding:
                 4px 12px 28px;
-
         }
-
-
         .logo-icon {
-
             width: 42px;
             height: 42px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             border-radius: 13px;
-
             background:
-
                 linear-gradient(
                     135deg,
                     var(--primary),
                     var(--cyan)
                 );
-
             color: white;
-
             font-size: 18px;
-
             font-weight: 800;
-
             box-shadow:
                 0 10px 30px
                 rgba(124,92,255,0.25);
-
         }
-
-
         .logo-text {
-
             font-size: 20px;
-
             font-weight: 800;
-
             letter-spacing: -0.5px;
-
         }
-
-
         .logo-text span {
-
             color:
                 var(--primary-light);
-
         }
-
-
         .menu-title {
-
             font-size: 10px;
-
             color: #64708d;
-
             text-transform: uppercase;
-
             letter-spacing: 1.5px;
-
             padding:
                 0 13px;
-
             margin:
                 10px 0;
-
         }
-
-
         .nav {
-
             display: flex;
-
             flex-direction: column;
-
             gap: 5px;
-
         }
-
-
         .nav-link {
-
             display: flex;
-
             align-items: center;
-
             gap: 13px;
-
             padding:
                 12px 13px;
-
             border-radius: 12px;
-
             color: var(--muted);
-
             font-size: 14px;
-
             font-weight: 500;
-
             transition: 0.25s;
-
         }
-
-
         .nav-link:hover {
-
             background:
                 rgba(124,92,255,0.09);
-
             color: white;
-
         }
-
-
         .nav-link.active {
-
             background:
-
                 linear-gradient(
                     90deg,
                     rgba(124,92,255,0.2),
                     rgba(124,92,255,0.06)
                 );
-
             color: white;
-
             border:
                 1px solid
                 rgba(124,92,255,0.18);
-
         }
-
-
         .nav-icon {
-
             width: 20px;
-
             text-align: center;
-
             font-size: 17px;
-
         }
-
-
         .sidebar-bottom {
-
             margin-top: auto;
-
         }
-
-
         .help-card {
-
             padding: 16px;
-
             border-radius: 15px;
-
             background:
-
                 linear-gradient(
                     135deg,
                     rgba(124,92,255,0.13),
                     rgba(34,211,238,0.06)
                 );
-
             border:
                 1px solid var(--border);
-
             margin-bottom: 15px;
-
         }
-
-
         .help-card h4 {
-
             font-size: 13px;
-
             margin-bottom: 6px;
-
         }
-
-
         .help-card p {
-
             font-size: 11px;
-
             line-height: 1.5;
-
             color: var(--muted);
-
             margin-bottom: 12px;
-
         }
-
-
         .help-btn {
-
             border: none;
-
             background:
                 rgba(255,255,255,0.08);
-
             color: white;
-
             padding:
                 8px 11px;
-
             border-radius: 8px;
-
             font-size: 11px;
-
             cursor: pointer;
-
         }
-
 
         /* =====================================================
            MAIN
         ===================================================== */
-
         .main {
-
             margin-left: 260px;
-
             width:
                 calc(100% - 260px);
-
             min-height: 100vh;
-
             padding:
                 24px 32px 50px;
-
         }
-
 
         /* =====================================================
            TOPBAR
         ===================================================== */
-
         .topbar {
-
             min-height: 58px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             margin-bottom: 28px;
-
         }
-
-
         .mobile-menu {
-
             display: none;
-
             width: 42px;
             height: 42px;
-
             border:
                 1px solid var(--border);
-
             background:
                 var(--card);
-
             color: white;
-
             border-radius: 11px;
-
             cursor: pointer;
-
             font-size: 19px;
-
         }
-
-
         .page-title h1 {
-
             font-size: 25px;
-
             letter-spacing: -0.6px;
-
             margin-bottom: 5px;
-
         }
-
-
         .page-title p {
-
             color: var(--muted);
-
             font-size: 13px;
-
         }
-
-
         .top-actions {
-
             display: flex;
-
             align-items: center;
-
             gap: 12px;
-
         }
-
-
         .search {
-
             width: 220px;
-
             height: 40px;
-
             display: flex;
-
             align-items: center;
-
             padding:
                 0 12px;
-
             background:
                 var(--card);
-
             border:
                 1px solid var(--border);
-
             border-radius: 10px;
-
         }
-
-
         .search span {
-
             color: var(--muted);
-
             margin-right: 8px;
-
         }
-
-
         .search input {
-
             width: 100%;
-
             background: transparent;
-
             border: none;
-
             outline: none;
-
             color: white;
-
             font-size: 12px;
-
         }
-
-
         .search input::placeholder {
-
             color: #69738e;
-
         }
-
-
         .icon-btn {
-
             width: 40px;
             height: 40px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             border:
                 1px solid var(--border);
-
             background:
                 var(--card);
-
             color: white;
-
             border-radius: 10px;
-
             cursor: pointer;
-
             position: relative;
-
         }
-
-
         .notification-dot {
-
             position: absolute;
-
             top: 8px;
             right: 8px;
-
             width: 7px;
             height: 7px;
-
             border-radius: 50%;
-
             background:
                 var(--red);
-
         }
-
-
         .profile-mini {
-
             display: flex;
-
             align-items: center;
-
             gap: 9px;
-
         }
-
-
         .avatar {
-
             width: 39px;
             height: 39px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             border-radius: 11px;
-
             background:
-
                 linear-gradient(
                     135deg,
                     var(--primary),
                     #4f46e5
                 );
-
             font-size: 13px;
-
             font-weight: 700;
-
         }
-
-
         .profile-info strong {
-
             display: block;
-
             font-size: 12px;
-
         }
-
-
         .profile-info span {
-
             display: block;
-
             color: var(--muted);
-
             font-size: 10px;
-
         }
-
 
         /* =====================================================
            BREADCRUMB
         ===================================================== */
 
         .breadcrumb {
-
             display: flex;
-
             align-items: center;
-
             gap: 7px;
-
             margin-bottom: 22px;
-
             font-size: 10px;
-
             color: var(--muted);
-
         }
-
-
         .breadcrumb a:hover {
-
             color: white;
-
         }
-
-
         .breadcrumb .current {
-
             color:
                 var(--primary-light);
-
         }
-
 
         /* =====================================================
            FORM LAYOUT
         ===================================================== */
 
         .form-layout {
-
             display: grid;
-
             grid-template-columns:
                 minmax(0, 1fr)
                 290px;
-
             gap: 20px;
-
             align-items: start;
-
         }
-
 
         /* =====================================================
            FORM CARD
         ===================================================== */
 
         .form-card {
-
             background:
                 var(--card);
-
             border:
                 1px solid var(--border);
-
             border-radius: 18px;
-
             padding: 25px;
-
             box-shadow:
                 var(--shadow);
-
         }
-
-
         .section {
-
             padding-bottom: 25px;
-
             margin-bottom: 25px;
-
             border-bottom:
                 1px solid var(--border);
-
         }
-
-
         .section:last-child {
-
             padding-bottom: 0;
-
             margin-bottom: 0;
-
             border-bottom: none;
-
         }
-
-
         .section-header {
-
             display: flex;
-
             align-items: center;
-
             gap: 12px;
             margin-bottom: 20px;
         }
@@ -1442,43 +1115,22 @@
 
             <a
                 href="profile.html"
-                class="nav-link"
-            >
-
-                <span class="nav-icon">
-                    ◯
-                </span>
-
-                Profile
+                class="nav-link">
+                <span class="nav-icon"> ◯ </span>Profile
 
             </a>
 
 
             <a
                 href="settings.html"
-                class="nav-link"
-            >
-
-                <span class="nav-icon">
-                    ⚙
-                </span>
-
-                Settings
-
+                class="nav-link">
+                <span class="nav-icon"> ⚙</span>Settings
             </a>
-
-
         </nav>
-
-
         <div class="sidebar-bottom">
-
-
             <div class="help-card">
 
-                <h4>
-                    Need some help?
-                </h4>
+                <h4>Need some help?</h4>
 
                 <p>
                     Keep your applications organized
@@ -1494,29 +1146,14 @@
 
             <a
                 href="login.html"
-                class="nav-link"
-            >
-
-                <span class="nav-icon">
-                    ↪
-                </span>
-
-                Logout
-
+                class="nav-link">
+                <span class="nav-icon"> ↪</span>Logout
             </a>
-
-
         </div>
-
-
     </aside>
-
-
     <div
         class="overlay"
-        id="overlay"
-    ></div>
-
+        id="overlay"></div>
 
     <!-- =====================================================
          MAIN
@@ -1528,21 +1165,12 @@
         <!-- TOPBAR -->
 
         <header class="topbar">
-
-
             <div
-                style="
-                    display:flex;
-                    align-items:center;
-                    gap:12px;
-                "
-            >
+                style=" display:flex; align-items:center;gap:12px;">
 
 
                 <button
-                    class="mobile-menu"
-                    id="mobileMenu"
-                >
+                    class="mobile-menu" id="mobileMenu">
                     ☰
                 </button>
 
