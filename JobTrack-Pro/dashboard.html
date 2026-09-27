@@ -1338,301 +1338,131 @@
         <!-- WELCOME -->
 
         <section class="welcome">
-
             <div class="welcome-content">
-
-                <h2>
-                    Good evening, Roli 👋
-                </h2>
-
+                <h2> Good evening, Roli 👋</h2>
                 <p>
                     Keep going! You have
                     <strong>12 active applications</strong>
                     and <strong>3 interviews</strong>
                     coming up.
                 </p>
-
-                <button
-                    class="welcome-btn"
-                    onclick="goToAddJob()"
-                >
-                    + Add New Application
-                </button>
-
+                <button class="welcome-btn" onclick="goToAddJob()">+ Add New Application</button>
             </div>
-
-
             <div class="welcome-visual"></div>
-
         </section>
-
 
         <!-- STAT CARDS -->
 
         <section class="stats-grid">
-
             <div class="stat-card">
-
                 <div class="stat-top">
-
-                    <div class="stat-icon purple">
-                        ▣
-                    </div>
-
-                    <span class="trend">
-                        ↑ 18%
-                    </span>
-
+                    <div class="stat-icon purple">▣</div>
+                    <span class="trend"> ↑ 18%</span>
                 </div>
-
                 <h3>24</h3>
-
-                <p>
-                    Total Applications
-                </p>
-
+                <p>Total Applications</p>
             </div>
-
-
             <div class="stat-card">
-
                 <div class="stat-top">
-
-                    <div class="stat-icon blue">
-                        ◷
-                    </div>
-
-                    <span class="trend">
-                        ↑ 8%
-                    </span>
-
+                    <div class="stat-icon blue"> ◷</div>
+                    <span class="trend"> ↑ 8%</span>
                 </div>
-
                 <h3>7</h3>
-
-                <p>
-                    Interviews
-                </p>
-
+                <p>Interviews</p>
             </div>
-
-
             <div class="stat-card">
-
                 <div class="stat-top">
-
-                    <div class="stat-icon green">
-                        ✓
-                    </div>
-
-                    <span class="trend">
-                        +2
-                    </span>
-
+                    <div class="stat-icon green">✓</div>
+                    <span class="trend">+2</span>
                 </div>
-
                 <h3>3</h3>
-
-                <p>
-                    Selected
-                </p>
-
+                <p>Selected</p>
             </div>
-
-
             <div class="stat-card">
-
                 <div class="stat-top">
-
-                    <div class="stat-icon red">
-                        ×
-                    </div>
-
+                    <div class="stat-icon red">×</div>
                     <span style="color:var(--muted);font-size:10px;">
                         This month
                     </span>
-
                 </div>
-
                 <h3>5</h3>
-
-                <p>
-                    Rejected
-                </p>
-
+                <p>Rejected</p>
             </div>
-
         </section>
-
-
+    
         <!-- CONTENT -->
 
         <section class="content-grid">
-
             <!-- LEFT -->
-
             <div>
-
                 <!-- PIPELINE -->
 
                 <div class="card">
-
                     <div class="card-header">
-
-                        <h3>
-                            Application Pipeline
-                        </h3>
-
-                        <a
-                            href="applications.html"
-                            class="view-link"
-                        >
-                            View All →
-                        </a>
-
+                        <h3>Application Pipeline</h3>
+                        <a href="applications.html"class="view-link" >View All →</a>
                     </div>
-
-
                     <div class="pipeline">
-
                         <div class="pipeline-item">
-
-                            <div class="pipeline-label">
-                                Applied
-                            </div>
-
-                            <div class="pipeline-value">
-                                12
-                            </div>
-
+                            <div class="pipeline-label">Applied</div>
+                            <div class="pipeline-value">12</div>
                             <div class="progress">
                                 <span style="width:75%"></span>
                             </div>
-
                         </div>
-
-
                         <div class="pipeline-item">
-
-                            <div class="pipeline-label">
-                                Interview
-                            </div>
-
-                            <div class="pipeline-value">
-                                6
-                            </div>
-
+                            <div class="pipeline-label">Interview</div>
+                            <div class="pipeline-value">6</div>
                             <div class="progress">
                                 <span style="width:50%"></span>
                             </div>
-
                         </div>
-
-
                         <div class="pipeline-item">
-
-                            <div class="pipeline-label">
-                                Selected
-                            </div>
-
-                            <div class="pipeline-value">
-                                3
-                            </div>
-
+                            <div class="pipeline-label">Selected</div>
+                            <div class="pipeline-value">3</div>
                             <div class="progress">
                                 <span style="width:30%"></span>
                             </div>
-
                         </div>
-
-
                         <div class="pipeline-item">
-
-                            <div class="pipeline-label">
-                                Rejected
-                            </div>
-
-                            <div class="pipeline-value">
-                                5
-                            </div>
-
+                            <div class="pipeline-label">Rejected</div>
+                            <div class="pipeline-value">5</div>
                             <div class="progress">
                                 <span style="width:40%"></span>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
 
                 <!-- RECENT APPLICATIONS -->
 
                 <div class="card">
-
                     <div class="card-header">
-
-                        <h3>
-                            Recent Applications
-                        </h3>
-
-                        <a
-                            href="applications.html"
-                            class="view-link"
-                        >
-                            View All →
-                        </a>
-
+                        <h3> Recent Applications</h3>
+                        <a href="applications.html"class="view-link">View All →</a>
                     </div>
-
-
                     <div style="overflow-x:auto;">
-
                         <table class="applications">
-
                             <thead>
-
                                 <tr>
-
                                     <th>COMPANY</th>
                                     <th>ROLE</th>
                                     <th>DATE</th>
                                     <th>STATUS</th>
-
                                 </tr>
-
                             </thead>
-
                             <tbody id="applicationsTable">
-
                                 <tr>
-
                                     <td>
-
                                         <div class="company">
-
-                                            <div class="company-logo">
-                                                G
-                                            </div>
-
+                                            <div class="company-logo">G</div>
                                             <div>
-
-                                                <strong>
-                                                    Google
-                                                </strong>
-
-                                                <span>
-                                                    Mountain View
-                                                </span>
-
+                                                <strong>Google</strong>
+                                                <span>Mountain View</span>
                                             </div>
-
                                         </div>
-
                                     </td>
-                                    <td>
-                                        Software Engineer</td>
+                                    <td>Software Engineer</td>
                                     <td>Sep 20, 2026</td>
                                     <td>
                                         <span class="status status-interview">Interview</span>
