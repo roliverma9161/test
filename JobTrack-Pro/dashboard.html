@@ -1813,241 +1813,106 @@
 
 
                     <div class="interview">
-
                         <div class="date-box">
-
-                            <strong>
-                                24
-                            </strong>
-
-                            <span>
-                                Sep
-                            </span>
-
+                            <strong>24</strong>
+                            <span>Sep</span>
                         </div>
-
                         <div class="interview-info">
-
-                            <strong>
-                                Microsoft
-                            </strong>
-
-                            <span>
-                                10:30 AM • Technical
-                            </span>
-
+                            <strong>Microsoft</strong>
+                            <span>10:30 AM • Technical</span>
                         </div>
-
-                        <span class="interview-type">
-                            Online
-                        </span>
-
+                        <span class="interview-type"> Online</span>
                     </div>
-
-
                     <div class="interview">
-
                         <div class="date-box">
-
-                            <strong>
-                                27
-                            </strong>
-
-                            <span>
-                                Sep
-                            </span>
-
+                            <strong>27</strong>
+                            <span>Sep</span>
                         </div>
-
                         <div class="interview-info">
-
-                            <strong>
-                                Google
-                            </strong>
-
-                            <span>
-                                02:00 PM • HR Round
-                            </span>
-
+                            <strong> Google</strong>
+                            <span>02:00 PM • HR Round</span>
                         </div>
-
-                        <span class="interview-type">
-                            Online
-                        </span>
-
+                        <span class="interview-type">Online</span>
                     </div>
-
-
                     <div class="interview">
-
                         <div class="date-box">
-
-                            <strong>
-                                30
-                            </strong>
-
-                            <span>
-                                Sep
-                            </span>
-
+                            <strong>30</strong>
+                            <span>Sep</span>
                         </div>
-
                         <div class="interview-info">
-
-                            <strong>
-                                Amazon
-                            </strong>
-
-                            <span>
-                                11:00 AM • Final
-                            </span>
-
+                            <strong>Amazon</strong>
+                            <span>11:00 AM • Final</span>
                         </div>
-
-                        <span class="interview-type">
-                            Online
-                        </span>
-
+                        <span class="interview-type">Online</span>
                     </div>
-
                 </div>
-
-
                 <!-- CAREER PROGRESS -->
 
                 <div class="card">
-
                     <div class="card-header">
-
-                        <h3>
-                            Career Progress
-                        </h3>
-
+                        <h3>Career Progress</h3>
                     </div>
-
-
                     <div class="career-stat">
-
                         <div class="career-stat-header">
-
-                            <span>
-                                Applications
-                            </span>
-
-                            <strong>
-                                72%
-                            </strong>
-
+                            <span>Applications</span>
+                            <strong>72%</strong>
                         </div>
-
                         <div class="career-progress">
                             <span style="width:72%"></span>
                         </div>
-
                     </div>
-
-
                     <div class="career-stat">
-
                         <div class="career-stat-header">
-
-                            <span>
-                                Interview Rate
-                            </span>
-
-                            <strong>
-                                58%
-                            </strong>
-
+                            <span>Interview Rate</span>
+                            <strong>58%</strong>
                         </div>
-
                         <div class="career-progress">
                             <span style="width:58%"></span>
                         </div>
-
                     </div>
 
-
                     <div class="career-stat">
-
                         <div class="career-stat-header">
-
-                            <span>
-                                Success Rate
-                            </span>
-
-                            <strong>
-                                42%
-                            </strong>
-
+                            <span>Success Rate</span>
+                            <strong>42%</strong>
                         </div>
-
                         <div class="career-progress">
                             <span style="width:42%"></span>
                         </div>
-
                     </div>
-
                 </div>
-
-
                 <!-- QUICK ACTIONS -->
 
                 <div class="card">
-
                     <div class="card-header">
-
-                        <h3>
-                            Quick Actions
-                        </h3>
-
+                        <h3>Quick Actions</h3>
                     </div>
-
-
                     <div class="quick-actions">
 
                         <button
-                            class="quick-action"
-                            onclick="goToAddJob()"
-                        >
-                            <span>＋</span>
-                            Add Job
+                            class="quick-action" onclick="goToAddJob()">
+                            <span>＋</span>Add Job
                         </button>
 
                         <button
-                            class="quick-action"
-                            onclick="goToInterviews()"
-                        >
-                            <span>◷</span>
-                            Schedule Interview
+                            class="quick-action"onclick="goToInterviews()">
+                            <span>◷</span>Schedule Interview
                         </button>
 
                         <button class="quick-action">
-                            <span>♡</span>
-                            Saved Jobs
+                            <span>♡</span>Saved Jobs
                         </button>
 
                         <button
-                            class="quick-action"
-                            onclick="goToAnalytics()"
-                        >
-                            <span>◒</span>
-                            View Analytics
+                            class="quick-action" onclick="goToAnalytics()" >
+                            <span>◒</span>View Analytics
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
-
     </main>
-
 </div>
-
-
 <script>
 
     /* =========================
@@ -2056,56 +1921,32 @@
 
     const mobileMenu =
         document.getElementById("mobileMenu");
-
     const sidebar =
         document.getElementById("sidebar");
-
     const overlay =
         document.getElementById("overlay");
-
-
     mobileMenu.addEventListener("click", () => {
-
         sidebar.classList.toggle("open");
-
         overlay.classList.toggle("active");
-
     });
-
-
     overlay.addEventListener("click", () => {
-
         sidebar.classList.remove("open");
-
         overlay.classList.remove("active");
-
     });
-
 
     /* =========================
        NAVIGATION
     ========================== */
 
     function goToAddJob() {
-
         window.location.href = "add-job.html";
-
     }
-
-
     function goToInterviews() {
-
         window.location.href = "interviews.html";
-
     }
-
-
     function goToAnalytics() {
-
         window.location.href = "analytics.html";
-
     }
-
 
     /* =========================
        SEARCH
@@ -2113,33 +1954,22 @@
 
     const searchInput =
         document.getElementById("searchInput");
-
     const rows =
         document.querySelectorAll(
             "#applicationsTable tr"
         );
-
-
     searchInput.addEventListener("input", function () {
-
         const value =
             this.value.toLowerCase().trim();
-
-
         rows.forEach(row => {
-
             const text =
                 row.textContent.toLowerCase();
-
             row.style.display =
                 text.includes(value)
                     ? ""
                     : "none";
-
         });
-
     });
-
 
     /* =========================
        NOTIFICATION
@@ -2148,13 +1978,10 @@
     document
         .querySelector(".icon-btn")
         .addEventListener("click", () => {
-
             alert(
                 "You have 3 upcoming interviews."
             );
-
         });
-
 
     /* =========================
        SIMPLE PAGE ANIMATION
@@ -2163,22 +1990,15 @@
     document
         .querySelectorAll(".stat-card, .card, .welcome")
         .forEach((element, index) => {
-
             element.style.opacity = "0";
             element.style.transform = "translateY(10px)";
-
             setTimeout(() => {
-
                 element.style.transition =
                     "0.5s ease";
-
                 element.style.opacity = "1";
-
                 element.style.transform =
                     "translateY(0)";
-
             }, index * 70);
-
         });
 
 </script>
