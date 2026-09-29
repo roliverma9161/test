@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Interviews | JobTrack Pro</title>
-
     <style>
         * {
             margin: 0;
@@ -14,45 +12,36 @@
             font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
                 "Segoe UI", sans-serif;
         }
-
         :root {
             --bg: #080b16;
             --sidebar: #0d1120;
             --card: #111625;
             --card2: #151b2d;
             --border: rgba(255,255,255,0.08);
-
             --text: #f5f7ff;
             --muted: #8992aa;
-
             --primary: #7c5cff;
             --primary2: #9b82ff;
-
             --cyan: #22d3ee;
             --green: #34d399;
             --yellow: #fbbf24;
             --red: #fb7185;
-
             --shadow: 0 20px 60px rgba(0,0,0,0.35);
         }
-
         body {
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
         }
-
         button,
         input,
         select,
         textarea {
             font: inherit;
         }
-
         button {
             cursor: pointer;
         }
-
         a {
             text-decoration: none;
             color: inherit;
@@ -68,104 +57,82 @@
             top: 0;
             width: 250px;
             height: 100vh;
-
             background: linear-gradient(
                 180deg,
                 #0e1220,
                 #0a0d18
             );
-
             border-right: 1px solid var(--border);
             padding: 24px 16px;
-
             z-index: 100;
         }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 11px;
             padding: 0 10px 30px;
         }
-
         .logo-icon {
             width: 42px;
             height: 42px;
             border-radius: 13px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             background: linear-gradient(
                 135deg,
                 var(--primary),
                 var(--cyan)
             );
-
             font-size: 19px;
             font-weight: 900;
-
             box-shadow: 0 10px 30px rgba(124,92,255,0.35);
         }
-
         .logo-text {
             font-size: 18px;
             font-weight: 800;
             letter-spacing: -0.4px;
         }
-
         .logo-text span {
             color: var(--primary2);
         }
-
         .menu-title {
             color: #59627a;
             font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.4px;
-
             padding: 0 12px;
             margin-bottom: 10px;
         }
-
         .nav {
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
-
         .nav a {
             display: flex;
             align-items: center;
             gap: 13px;
-
             padding: 12px 13px;
             border-radius: 11px;
-
             color: var(--muted);
             font-size: 13px;
             font-weight: 600;
-
             transition: 0.25s ease;
         }
-
         .nav a:hover {
             background: rgba(255,255,255,0.05);
             color: white;
             transform: translateX(2px);
         }
-
         .nav a.active {
             color: white;
-
             background: linear-gradient(
                 90deg,
                 rgba(124,92,255,0.22),
                 rgba(124,92,255,0.07)
             );
-
             border: 1px solid rgba(124,92,255,0.18);
         }
         .nav-icon {
