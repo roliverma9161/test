@@ -580,14 +580,10 @@
         .sort-select {
             background: #0c101d;
             color: var(--muted);
-
             border: 1px solid var(--border);
             border-radius: 8px;
-
             padding: 8px 11px;
-
             outline: none;
-
             font-size: 11px;
         }
 
@@ -600,151 +596,110 @@
             flex-direction: column;
             gap: 12px;
         }
-
         .interview-card {
             display: grid;
-
             grid-template-columns: 58px 1fr auto;
-
             gap: 17px;
-
             padding: 18px;
-
             background: var(--card);
             border: 1px solid var(--border);
-
             border-radius: 15px;
-
             transition: 0.25s;
         }
-
         .interview-card:hover {
             border-color: rgba(124,92,255,0.28);
             transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
-
         .company-logo {
             width: 52px;
             height: 52px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 14px;
-
             background: linear-gradient(
                 135deg,
                 rgba(124,92,255,0.2),
                 rgba(34,211,238,0.12)
             );
-
             border: 1px solid rgba(124,92,255,0.2);
-
             font-size: 17px;
             font-weight: 800;
         }
-
         .interview-info h3 {
             font-size: 14px;
             margin-bottom: 5px;
         }
-
         .company {
             color: var(--muted);
             font-size: 11px;
             margin-bottom: 12px;
         }
-
         .details {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-
         .detail {
             display: flex;
             align-items: center;
             gap: 5px;
-
             color: #a8b0c4;
-
             font-size: 10px;
-
             padding: 6px 8px;
-
             background: rgba(255,255,255,0.035);
             border-radius: 7px;
         }
-
         .interview-right {
             min-width: 150px;
-
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             justify-content: space-between;
         }
-
         .status {
             display: inline-flex;
             align-items: center;
             gap: 5px;
-
             padding: 6px 9px;
-
             border-radius: 20px;
-
             font-size: 9px;
             font-weight: 700;
         }
-
         .status.upcoming {
             background: rgba(34,211,238,0.09);
             color: var(--cyan);
         }
-
         .status.completed {
             background: rgba(52,211,153,0.09);
             color: var(--green);
         }
-
         .status.rescheduled {
             background: rgba(251,191,36,0.09);
             color: var(--yellow);
         }
-
         .actions {
             display: flex;
             gap: 6px;
         }
-
         .action-btn {
             width: 30px;
             height: 30px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             background: rgba(255,255,255,0.04);
-
             border: 1px solid var(--border);
-
             color: var(--muted);
-
             border-radius: 8px;
-
             transition: 0.2s;
         }
-
         .action-btn:hover {
             color: white;
             border-color: rgba(124,92,255,0.3);
             background: rgba(124,92,255,0.1);
         }
-
         .action-btn.delete:hover {
             color: var(--red);
             border-color: rgba(251,113,133,0.3);
@@ -757,38 +712,27 @@
 
         .empty-state {
             display: none;
-
             padding: 55px 20px;
             text-align: center;
-
             background: var(--card);
             border: 1px solid var(--border);
-
             border-radius: 15px;
         }
-
         .empty-icon {
             width: 60px;
             height: 60px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             margin: auto auto 14px;
-
             border-radius: 17px;
-
             background: rgba(124,92,255,0.12);
-
             font-size: 25px;
         }
-
         .empty-state h3 {
             font-size: 16px;
             margin-bottom: 7px;
         }
-
         .empty-state p {
             color: var(--muted);
             font-size: 11px;
@@ -801,105 +745,75 @@
 
         .modal-overlay {
             position: fixed;
-
             inset: 0;
-
             display: none;
             align-items: center;
             justify-content: center;
-
             background: rgba(0,0,0,0.65);
-
             backdrop-filter: blur(8px);
-
             z-index: 500;
         }
-
         .modal {
             width: min(560px, 92%);
-
             background: #111625;
-
             border: 1px solid var(--border);
-
             border-radius: 18px;
-
             padding: 25px;
-
             box-shadow: 0 30px 90px rgba(0,0,0,0.5);
-
             animation: modalIn 0.25s ease;
         }
-
         @keyframes modalIn {
             from {
                 opacity: 0;
                 transform: translateY(20px) scale(0.97);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
         }
-
         .modal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             margin-bottom: 22px;
         }
-
         .modal-header h3 {
             font-size: 17px;
         }
-
         .close-modal {
             width: 32px;
             height: 32px;
-
             border: 1px solid var(--border);
-
             background: transparent;
             color: var(--muted);
-
             border-radius: 8px;
         }
-
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
         }
-
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 7px;
         }
-
         .form-group.full {
             grid-column: 1 / -1;
         }
-
         .form-group label {
             font-size: 10px;
             color: #aeb5c8;
             font-weight: 600;
         }
-
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-
             background: #0c101d;
-
             border: 1px solid var(--border);
-
             border-radius: 9px;
-
             padding: 10px 11px;
             outline: none;
             color: white;
