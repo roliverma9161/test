@@ -1271,272 +1271,149 @@
 
 
         .status-rejected {
-
             color: #f87171;
-
             background:
                 rgba(239,68,68,0.12);
-
         }
-
-
         .actions {
-
             display: flex;
-
             align-items: center;
-
             gap: 5px;
-
         }
-
-
         .action-btn {
-
             width: 29px;
-
             height: 29px;
-
             border:
                 1px solid var(--border);
-
             background:
                 rgba(255,255,255,0.025);
-
             color: var(--muted);
-
             border-radius: 7px;
-
             cursor: pointer;
-
             transition: 0.2s;
-
         }
-
-
         .action-btn:hover {
-
             color: white;
-
             border-color:
                 rgba(124,92,255,0.35);
-
             background:
                 rgba(124,92,255,0.08);
-
         }
-
-
         .favorite.active {
-
             color: #fbbf24;
-
         }
-
 
         /* =========================
            PAGINATION
         ========================= */
 
         .pagination {
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             padding: 16px 20px;
-
             border-top:
                 1px solid var(--border);
-
         }
-
-
         .pagination-info {
-
             color: var(--muted);
-
             font-size: 10px;
-
         }
-
-
         .page-buttons {
-
             display: flex;
-
             gap: 5px;
-
         }
-
-
         .page-btn {
-
             width: 29px;
-
             height: 29px;
-
             border:
                 1px solid var(--border);
-
             background:
                 rgba(255,255,255,0.025);
-
             color: var(--muted);
-
             border-radius: 7px;
-
             cursor: pointer;
-
             font-size: 10px;
-
         }
-
-
         .page-btn.active {
-
             color: white;
-
             background:
                 var(--primary);
-
             border-color:
                 var(--primary);
-
         }
-
 
         /* =========================
            EMPTY STATE
         ========================= */
 
         .empty {
-
             display: none;
-
             text-align: center;
-
             padding: 60px 20px;
-
         }
-
-
         .empty-icon {
-
             width: 65px;
-
             height: 65px;
-
             margin: 0 auto 15px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             border-radius: 18px;
-
             background:
                 rgba(124,92,255,0.1);
-
             color:
                 var(--primary-light);
-
             font-size: 27px;
-
         }
-
-
         .empty h3 {
-
             font-size: 15px;
-
             margin-bottom: 7px;
-
         }
-
-
         .empty p {
-
             color: var(--muted);
-
             font-size: 11px;
-
         }
-
 
         /* =========================
            MOBILE OVERLAY
         ========================= */
 
         .overlay {
-
             display: none;
-
             position: fixed;
-
             inset: 0;
-
             background:
                 rgba(0,0,0,0.55);
-
             z-index: 900;
-
         }
-
 
         /* =========================
            RESPONSIVE
         ========================= */
 
         @media (max-width: 1100px) {
-
             .stats {
-
                 grid-template-columns:
                     repeat(2, 1fr);
-
             }
-
-
             .filters {
-
                 grid-template-columns:
                     1fr 1fr;
-
             }
-
-
             .clear-btn {
-
                 width: 100%;
-
             }
-
         }
-
-
         @media (max-width: 850px) {
-
             .sidebar {
-
                 transform:
                     translateX(-100%);
-
             }
-
-
             .sidebar.open {
-
                 transform:
                     translateX(0);
-
             }
-
-
             .overlay.active {
                 display: block;
             }
